@@ -18,7 +18,7 @@
             <!-- 나중에 상태는 안보이게 라디오버튼으로 대체 할 것 -->
             <td>{{status}}</td>
             <td>
-                <div class="btn-group={{id}}" role="group" aria-label="Basic radio toggle button group">
+                <div class="btn-group-{{id}}" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check" name="btnradio-{{id}}" id="ready-{{id}}" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="ready-{{id}}">준비</label>
 
@@ -51,18 +51,58 @@
     </div>
 </div>
 
-<!--
 <script>
+    // {
+    //     document.addEventListener("DOMContentLoaded", function() {
+    //         // 모든 작업 항목을 반복하여 상태를 반영
+    //         const todoItems = document.querySelectorAll("tr");
+    //         todoItems.forEach(function(row) {
+    //             const statusCell = row.querySelector("td:nth-child(3)"); // 상태 표시 셀
+    //             const status = statusCell.textContent.trim(); // 상태 텍스트 가져오기
+    //
+    //             // 각 상태에 맞는 라디오 버튼을 checked 처리
+    //             const radioGroup = row.querySelector('.btn-group');
+    //             if (status === "준비") {
+    //                 radioGroup.querySelector("#ready-" + row.querySelector("th").textContent).checked = true;
+    //             } else if (status === "진행중") {
+    //                 radioGroup.querySelector("#proceed-" + row.querySelector("th").textContent).checked = true;
+    //             } else if (status === "중단됨") {
+    //                 radioGroup.querySelector("#stop-" + row.querySelector("th").textContent).checked = true;
+    //             } else if (status === "완료") {
+    //                 radioGroup.querySelector("#completed-" + row.querySelector("th").textContent).checked = true;
+    //             }
+    //         });
+    //     });
+    //
+    // }
+
     {
-        const taskAddBtn = document.querySelector("#task-add-btn");
-        taskAddBtn.addEventListener("click", function() {
-            const task = {
-                title : document.querySelector("#new-task").value,
-                status : "준비"
-            }
+        const statusBtn = document.querySelectorAll(".btn-check");
+        statusBtn.forEach(function(btn) {
+            btn.addEventListener("change", function(){
+                const taskId = this.id.split("-")[1]; // id에서 숫자 부분 추출
+                const newStatus = this.id.split("-")[0];
+                console.log(`ID ${taskId}의 작업상태가 ${newStatus}로 변경되었습니다.`);
+
+                const task = {
+                    id : taskId,
+                    status : newStatus
+                }
+
+                const url = `/api/todos/updateStatus/${taskId}`;
+                fetch(url, {
+                    method : "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body : JSON.stringify(task)
+                }).then(response => {
+                    const msg = (response.ok) ? "상태변경완료" : "알 수 없는 오류";
+                    window.location.reload();
+                })
+            })
         })
     }
 </script>
--->
 
 {{>layouts/footer}}

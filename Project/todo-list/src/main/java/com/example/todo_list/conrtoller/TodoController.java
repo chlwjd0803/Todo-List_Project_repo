@@ -18,8 +18,8 @@ import java.util.List;
 public class TodoController {
     @Autowired
     private TodoRepository todoRepository;
-    @Autowired
-    private TodoService todoService;
+//    @Autowired
+//    private TodoService todoService;
 
     // 전체 목록 보기
     @GetMapping("/todos")

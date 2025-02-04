@@ -1,0 +1,68 @@
+{{>layouts/header}}
+
+<table class="table">
+    <thead>
+    <tr>
+        <!-- 나중에 Id는 보이지 않게 수정할 것 -->
+        <th scope="col">Id</th>
+        <th scope="col">작업</th>
+        <th scope="col">상태 표시</th>
+        <th scope="col">상태 변경</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#todoList}}
+        <tr>
+            <th>{{id}}</th>
+            <td>{{title}}</td>
+            <!-- 나중에 상태는 안보이게 라디오버튼으로 대체 할 것 -->
+            <td>{{status}}</td>
+            <td>
+                <div class="btn-group={{id}}" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio-{{id}}" id="ready-{{id}}" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="ready-{{id}}">준비</label>
+
+                    <input type="radio" class="btn-check" name="btnradio-{{id}}" id="proceed-{{id}}" autocomplete="off">
+                    <label class="btn btn-outline-warning" for="proceed-{{id}}">진행중</label>
+
+                    <input type="radio" class="btn-check" name="btnradio-{{id}}" id="stop-{{id}}" autocomplete="off">
+                    <label class="btn btn-outline-danger" for="stop-{{id}}">중단됨</label>
+
+                    <input type="radio" class="btn-check" name="btnradio-{{id}}" id="completed-{{id}}" autocomplete="off">
+                    <label class="btn btn-outline-success" for="completed-{{id}}">완료</label>
+                </div>
+            </td>
+        </tr>
+    {{/todoList}}
+    </tbody>
+</table>
+
+<div class="card m-2" id="todo-new">
+    <div class="card-body">
+        <!-- 할일 추가 폼 -->
+        <form action="/todos/add" method="post">
+            <div class="mb-3">
+                <label for="new-task" class="form-label">작업이름</label>
+                <input type="text" class="form-control" id="new-task" name="title">
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="task-add-btn">작업 추가</button>
+        </form>
+    </div>
+</div>
+
+<!--
+<script>
+    {
+        const taskAddBtn = document.querySelector("#task-add-btn");
+        taskAddBtn.addEventListener("click", function() {
+            const task = {
+                title : document.querySelector("#new-task").value,
+                status : "준비"
+            }
+        })
+    }
+</script>
+-->
+
+{{>layouts/footer}}

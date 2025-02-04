@@ -1,1 +1,13 @@
-# Todo-List_Project_repo
+# Todo-List_Project_repo<br><br>
+
+# 투두 리스트 토이 프로젝트<br>
+## 사용 기술 스택
+Spring boot 3(Java, mustache)
+
+## 업데이트 내용
+### 2025/02/04 -A
+> 기본 틀 완성
+>   > 엔티티, 리포지토리, DTO, 컨트롤러 기본 코드 작성
+>   > 헤더, 푸터 기본 레이아웃 작성
+> 작업 상태에 대한 라디오버튼 추가
+> 작업 만들기 기능 추가(초기)

@@ -4,7 +4,7 @@
 ## 사용 기술 스택
 Spring boot 3(Java, mustache)
 
-## 업데이트 태그 기준 (2025/02/06 이후로 유효, 이전은 첫 커밋만 Major, 나머지는 Major->Minor, Minor->Patch)
+## 업데이트 태그 기준
 - Major : 새로운 틀이 생기거나 중요한 기능이 추가되었을때
 - Minor : 세부 기능이 추가되었을때
 - Patch : 버그수정, 주석, README 등 문서 수정

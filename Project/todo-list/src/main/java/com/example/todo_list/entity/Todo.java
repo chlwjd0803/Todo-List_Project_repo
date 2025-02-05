@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,4 +18,5 @@ public class Todo {
     private String title; //작업 제목
     @Column
     private String status; //작업 상태(준비, 진행, 중단, 완료 등 4단계로 구성 예정)
+
 }

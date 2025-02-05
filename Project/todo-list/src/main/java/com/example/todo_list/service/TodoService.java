@@ -18,6 +18,7 @@ public class TodoService {
 
     public List<Todo> index() { return todoRepository.findAll(); }
 
+
     public Todo addTask(TodoDto dto) {
         Todo todoEntity = dto.toEntity();
         if(todoEntity.getId() != null) return null;
@@ -29,10 +30,10 @@ public class TodoService {
                 () -> new IllegalArgumentException("할 일을 찾을 수 없음"));
         //log.info(newStatus);
         // 아래를 단순 비교 연산자를 이용하면 오류가 발생하여 equals를 써야함
-        if(Objects.equals(newStatus, "ready")) newStatus = "준비";
-        else if(Objects.equals(newStatus, "proceed")) newStatus = "진행중";
-        else if(Objects.equals(newStatus, "stop")) newStatus = "중단됨";
-        else if(Objects.equals(newStatus, "completed")) newStatus = "완료";
+        if(Objects.equals(newStatus, "준비")) newStatus = "준비";
+        else if(Objects.equals(newStatus, "진행중")) newStatus = "진행중";
+        else if(Objects.equals(newStatus, "중단됨")) newStatus = "중단됨";
+        else if(Objects.equals(newStatus, "완료")) newStatus = "완료";
         else throw new IllegalArgumentException("상태가 잘못됨");
         todo.setStatus(newStatus);
         todoRepository.save(todo);

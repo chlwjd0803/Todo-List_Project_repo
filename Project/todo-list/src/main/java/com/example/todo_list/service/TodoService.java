@@ -5,7 +5,9 @@ import com.example.todo_list.entity.Todo;
 import com.example.todo_list.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +18,7 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public List<Todo> index() { return todoRepository.findAll(); }
+    public List<Todo> index() { return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id")); }
 
 
     public Todo addTask(TodoDto dto) {
@@ -25,6 +27,7 @@ public class TodoService {
         return todoRepository.save(todoEntity);
     }
 
+    @Transactional
     public String updateStatus(Long id, String newStatus) {
         Todo todo = todoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("할 일을 찾을 수 없음"));
@@ -38,5 +41,22 @@ public class TodoService {
         todo.setStatus(newStatus);
         todoRepository.save(todo);
         return newStatus;
+    }
+
+    @Transactional
+    public TodoDto taskEdit(Long id, TodoDto dto) {
+        Todo target = todoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("수정 실패, 대상 작업이 존재하지 않습니다."));
+        target.patch(dto);
+        Todo edited = todoRepository.save(target);
+        return TodoDto.createTodoDto(edited);
+    }
+
+    @Transactional
+    public TodoDto taskDelete(Long id) {
+        Todo target = todoRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("삭제 대상 id가 없습니다."));
+        todoRepository.delete(target);
+        return TodoDto.createTodoDto(target);
     }
 }

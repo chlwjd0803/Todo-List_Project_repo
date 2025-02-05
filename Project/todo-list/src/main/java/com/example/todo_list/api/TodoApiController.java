@@ -40,6 +40,19 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @PatchMapping("/api/todos/editTask/{id}")
+    public ResponseEntity<TodoDto> taskEdit(@PathVariable Long id, @RequestBody TodoDto dto) {
+        TodoDto editDto = todoService.taskEdit(id, dto);
+        log.info(editDto.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(editDto);
+    }
+
+    @DeleteMapping("/api/todos/deleteTask/{id}")
+    public ResponseEntity<TodoDto> taskDelete(@PathVariable Long id){
+        TodoDto deleteDto = todoService.taskDelete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(deleteDto);
+    }
+
 
 
 }

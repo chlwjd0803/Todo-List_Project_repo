@@ -6,6 +6,7 @@ import com.example.todo_list.repository.TodoRepository;
 import com.example.todo_list.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class TodoController {
     // 전체 목록 보기
     @GetMapping("/todos")
     public String index(Model md){
-        List<Todo> todos = todoRepository.findAll();
+        List<Todo> todos = todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         md.addAttribute("todoList", todos);
         return "todos/index";
     }

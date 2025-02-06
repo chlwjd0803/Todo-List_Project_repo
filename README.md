@@ -16,14 +16,11 @@
 
 ---
 
-## 사용 기술 스택
-- **Spring Boot 3**  
+## 사용 기술 스택 
   ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
   
-- **Java**  
   ![Java](https://img.shields.io/badge/Java-A0522D?style=for-the-badge&logo=java&logoColor=white)
-  
-- **Mustache 템플릿 엔진**  
+   
   ![Mustache](https://img.shields.io/badge/Mustache-800000?style=for-the-badge&logo=https%3A%2F%2Fimg.icons8.com%2Fios-filled%2F50%2F000000%2Fmoustache.png&logoWidth=15&logoColor=white)
 
 ---
@@ -41,6 +38,10 @@
 - **작업상태 기준 목록 정렬로 뷰페이지 변화**
 - JavaScript 파일 분리
 - 일반 컨트롤러 → 서비스 위임 구축 *(미완성)*
+- 카테고리 필드를 백엔드 코드에 추가
+- 작업추가에 카테고리 지정 기능 추가
+- 작업수정에 카테고리 수정 기능 추가
+- 카테고리 필터링 기능 버튼 구현 *(미완성)*
 
 ### 2025/02/05 {#20250205}
 - 라디오버튼 표시 기능 폐기 → 일반 버튼 채택
@@ -54,7 +55,7 @@
 - **기본 틀 완성**
   - 엔티티, 리포지토리, DTO, 컨트롤러 기본 코드 작성
   - 헤더, 푸터 기본 레이아웃 작성
-- 작업 상태 라디오 버튼 추가
+- 작업 상태 ~~라디오 버튼~~ 추가
 - 작업 만들기 기능 추가 *(초기)*
 - API 컨트롤러 기본 구현
 - 서비스 분리 기본 구현
@@ -69,11 +70,13 @@
 - 작업 우선순위 지정
 - 일부 사용자화 가능한 정렬 방식
 - 작업 카테고리화
+- 통계 페이지 추가
 
 ---
 
 ## 향후 업데이트 계획
-- 작업 상태별 개수 분류
+- ~~작업 상태별 개수 분류~~
+- 카테고리 필터링 기능 완성
 
 ---
 

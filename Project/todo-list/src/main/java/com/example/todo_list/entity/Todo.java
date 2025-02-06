@@ -24,9 +24,8 @@ public class Todo {
 
     public void patch(TodoDto dto) {
         if(this.id != dto.getId()) throw new IllegalArgumentException("잘못된 id가 입력되었습니다.");
-
         if(dto.getTitle() != null) this.title = dto.getTitle();
-        if(dto.getStatus() != null) this.status = dto.getStatus();
-        // 생각해보니 딱히 status는 수정할 필요가 없다.
+        //if(dto.getStatus() != null) this.status = dto.getStatus();
+        if(dto.getCategory() != null) this.category = dto.getCategory();
     }
 }

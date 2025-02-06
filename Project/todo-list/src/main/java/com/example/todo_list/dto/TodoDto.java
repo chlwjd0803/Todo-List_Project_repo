@@ -25,6 +25,7 @@ public class TodoDto {
 
     public Todo toEntity(){
         if(this.status == null) this.status = "준비";
+        if(this.category == null || this.category.isEmpty()) this.category = "할일";
         return new Todo(id, title, status, category);
     }
 }

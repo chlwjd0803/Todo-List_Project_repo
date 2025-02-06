@@ -25,14 +25,16 @@ public class TodoController {
     // 전체 목록 보기, 서비스 사용
     @GetMapping("/todos")
     public String index(Model md){
-        List<Todo> todos = todoService.index();
-        md.addAttribute("todoList", todos);
+        // List<Todo> todos = todoService.index();
+        // md.addAttribute("todoList", todos);
 
+        List<String> categories = todoService.getCategories(); // 중복되지 않는 카테고리 들고오기
         List<Todo> readyTodos = todoService.index("준비");
         List<Todo> inProgressTodos = todoService.index("진행중");
         List<Todo> stoppedTodos = todoService.index("중단됨");
         List<Todo> completedTodos = todoService.index("완료");
 
+        md.addAttribute("categories", categories);
         md.addAttribute("readyList", readyTodos);
         md.addAttribute("inProgressList", inProgressTodos);
         md.addAttribute("stoppedList", stoppedTodos);
@@ -40,7 +42,7 @@ public class TodoController {
         return "todos/index";
     }
 
-    // 서비스 미사용
+    // 서비스 미사용(컨트롤러에서 모두 처리)
     @PostMapping("/todos/add")
     public String addTask(TodoDto dto){
         log.info(dto.toString());

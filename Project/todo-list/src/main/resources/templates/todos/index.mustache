@@ -11,21 +11,48 @@
 
     .fixed-table{
         table-layout: fixed;
-        width: 50%;
+        width: 75%;
     }
 
     .fixed-table th, .fixed-table td{
         width: 100%;
         word-wrap: break-word;  /* 요소가 튀어나가지 않게 한도내에서 강제 줄바꿈 */
     }
+
+    .btn-custom {
+        border-radius: 20px !important;          /* 둥근 모서리 적용 */
+        padding: 8px 16px;            /* 내부 여백 조절 */
+        font-size: 14px;              /* 폰트 크기 조절 */
+        transition: all 0.2s ease;    /* 호버 시 부드러운 변환 효과 */
+        margin-left: 5px;
+    }
+    .btn-custom:hover {
+        /* 호버 시 살짝 밝은 배경색 또는 그림자 효과 추가 */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    .btn-select-category {
+        margin: 20px;
+    }
+
 </style>
+
+<div class="btn-group btn-select-category" role="group" aria-label="Basic checkbox toggle button group">
+    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked>
+    <label class="btn btn-outline-primary btn-custom" for="btncheck1">전체</label>
+
+    {{#categories}}
+        <input type="checkbox" class="btn-check" id="btncheck-{{.}}" autocomplete="off" checked>
+        <label class="btn btn-outline-info btn-custom" for="btncheck-{{.}}">{{.}}</label>
+    {{/categories}}
+</div>
 
 <section class="status-sec">
     <h2>준비</h2>
     <table class="table fixed-table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>번호</th>
+                <th>카테고리</th>
                 <th>작업</th>
                 <th>상태변경</th>
             </tr>
@@ -34,12 +61,14 @@
             {{#readyList}}
                 <tr>
                     <td>{{id}}</td>
+                    <td>{{category}}</td>
                     <td>
                         {{title}}
                         <button type="button" class="btn btn-sm btn-outline-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
+                                data-bs-category="{{category}}"
                                 data-bs-title="{{title}}"
                                 data-bs-status="{{status}}">
                             수정
@@ -51,10 +80,10 @@
                     <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
                     <td>
                         <div class="btn-group" role="group">
-                            <button class="btn btn-outline-primary status-btn {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                            <button class="btn btn-outline-warning status-btn {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                            <button class="btn btn-outline-danger status-btn {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                            <button class="btn btn-outline-success status-btn {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
                         </div>
                     </td>
                 </tr>
@@ -68,7 +97,8 @@
     <table class="table fixed-table">
         <thead>
         <tr>
-            <th>Id</th>
+            <th>번호</th>
+            <th>카테고리</th>
             <th>작업</th>
             <th>상태변경</th>
         </tr>
@@ -77,12 +107,14 @@
         {{#inProgressList}}
             <tr>
                 <td>{{id}}</td>
+                <td>{{category}}</td>
                 <td>
                     {{title}}
                     <button type="button" class="btn btn-sm btn-outline-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#task-edit-modal"
                             data-bs-id="{{id}}"
+                            data-bs-category="{{category}}"
                             data-bs-title="{{title}}"
                             data-bs-status="{{status}}">
                         수정
@@ -94,10 +126,10 @@
                 <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
                 <td>
                     <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary status-btn {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                        <button class="btn btn-outline-warning status-btn {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                        <button class="btn btn-outline-danger status-btn {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                        <button class="btn btn-outline-success status-btn {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                        <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                        <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                        <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                        <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
                     </div>
                 </td>
             </tr>
@@ -111,7 +143,8 @@
     <table class="table fixed-table">
         <thead>
         <tr>
-            <th>Id</th>
+            <th>번호</th>
+            <th>카테고리</th>
             <th>작업</th>
             <th>상태변경</th>
         </tr>
@@ -120,12 +153,14 @@
         {{#stoppedList}}
             <tr>
                 <td>{{id}}</td>
+                <td>{{category}}</td>
                 <td>
                     {{title}}
                     <button type="button" class="btn btn-sm btn-outline-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#task-edit-modal"
                             data-bs-id="{{id}}"
+                            data-bs-category="{{category}}"
                             data-bs-title="{{title}}"
                             data-bs-status="{{status}}">
                         수정
@@ -137,10 +172,10 @@
                 <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
                 <td>
                     <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary status-btn {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                        <button class="btn btn-outline-warning status-btn {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                        <button class="btn btn-outline-danger status-btn {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                        <button class="btn btn-outline-success status-btn {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                        <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                        <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                        <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                        <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
                     </div>
                 </td>
             </tr>
@@ -154,7 +189,8 @@
     <table class="table fixed-table">
         <thead>
         <tr>
-            <th>Id</th>
+            <th>번호</th>
+            <th>카테고리</th>
             <th>작업</th>
             <th>상태변경</th>
         </tr>
@@ -163,12 +199,14 @@
         {{#completedList}}
             <tr>
                 <td>{{id}}</td>
+                <td>{{category}}</td>
                 <td>
                     {{title}}
                     <button type="button" class="btn btn-sm btn-outline-primary"
                             data-bs-toggle="modal"
                             data-bs-target="#task-edit-modal"
                             data-bs-id="{{id}}"
+                            data-bs-category="{{category}}"
                             data-bs-title="{{title}}"
                             data-bs-status="{{status}}">
                         수정
@@ -180,10 +218,10 @@
                 <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
                 <td>
                     <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary status-btn {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                        <button class="btn btn-outline-warning status-btn {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                        <button class="btn btn-outline-danger status-btn {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                        <button class="btn btn-outline-success status-btn {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                        <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                        <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                        <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                        <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
                     </div>
                 </td>
             </tr>
@@ -192,66 +230,26 @@
     </table>
 </section>
 
-
-<!-- 기존 id 단순 정렬 코드 -->
-<!--<table class="table">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        &lt;!&ndash; 나중에 Id는 보이지 않게 수정할 것 &ndash;&gt;-->
-<!--        <th scope="col">Id</th>-->
-<!--        <th scope="col">작업</th>-->
-<!--        <th scope="col">상태변경</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <tbody>-->
-<!--    {{#todoList}}-->
-<!--        <tr>-->
-<!--            <th>{{id}}</th>-->
-<!--            <td>-->
-<!--                {{title}}-->
-<!--                &lt;!&ndash; Button trigger modal &ndash;&gt;-->
-<!--                <button type="button" class="btn btn-sm btn-outline-primary"-->
-<!--                        data-bs-toggle="modal"-->
-<!--                        data-bs-target="#task-edit-modal"-->
-<!--                        data-bs-id="{{id}}"-->
-<!--                        data-bs-title="{{title}}"-->
-<!--                        data-bs-status="{{status}}">-->
-<!--                    수정-->
-<!--                </button>-->
-
-<!--                <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"-->
-<!--                data-task-id="{{id}}">삭제</button>-->
-<!--            </td>-->
-<!--            &lt;!&ndash; 나중에 상태는 안보이게 라디오버튼으로 대체 할 것 &ndash;&gt;-->
-<!--&lt;!&ndash;            <td>{{status}}</td>&ndash;&gt;-->
-<!--            <td class="status-text" data-status="{{status}}">{{status}}</td>  &lt;!&ndash; Mustache 값 활용, css에서 숨김처리함 &ndash;&gt;-->
-<!--            <td>-->
-<!--                <div class="btn-group" role="group">-->
-<!--                    <button class="btn btn-outline-primary status-btn {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>-->
-<!--                    <button class="btn btn-outline-warning status-btn {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>-->
-<!--                    <button class="btn btn-outline-danger status-btn {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>-->
-<!--                    <button class="btn btn-outline-success status-btn {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>-->
-<!--                </div>-->
-<!--            </td>-->
-
-<!--        </tr>-->
-<!--    {{/todoList}}-->
-<!--    </tbody>-->
-<!--</table>-->
-
 <div class="card m-2" id="todo-new">
     <div class="card-body">
         <!-- 할일 추가 폼 -->
         <form action="/todos/add" method="post">
             <div class="mb-3">
-                <label for="new-task" class="form-label">작업이름</label>
-                <input type="text" class="form-control" id="new-task" name="title">
+                <label for="new-task-category" class="form-label">카테고리</label>
+                <input type="text" class="form-control" id="new-task-category" name="category">
+            </div>
+
+            <div class="mb-3">
+                <label for="new-task-name" class="form-label">작업이름</label>
+                <input type="text" class="form-control" id="new-task-name" name="title">
             </div>
 
             <button type="submit" class="btn btn-primary" id="task-add-btn">작업 추가</button>
         </form>
     </div>
 </div>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="task-edit-modal" tabindex="-1">
@@ -264,13 +262,18 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="edit-task-title" class="form-label">수정 할 이름</label>
+                        <label for="edit-task-category" class="form-label">카테고리</label>
+                        <input type="text" class="form-control" id="edit-task-category">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit-task-title" class="form-label">작업이름</label>
                         <input type="text" class="form-control" id="edit-task-title">
                     </div>
                     <input type="hidden" id="edit-task-id">
                     <input type="hidden" id="edit-task-status">
 
-                    <button type="button" class="btn btn-primary" id="task-edit-btn">작업 수정</button>
+                    <button type="button" class="btn btn-primary" id="task-edit-btn">수정하기</button>
                 </form>
             </div>
         </div>

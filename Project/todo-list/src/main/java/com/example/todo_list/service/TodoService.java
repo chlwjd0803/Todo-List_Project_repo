@@ -17,8 +17,10 @@ import java.util.Objects;
 public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
-
+    // 기존 아이디 정렬
     public List<Todo> index() { return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id")); }
+    // 상태별로 나누어 정렬하기 위한 오버로딩 메소드
+    public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
 
 
     public Todo addTask(TodoDto dto) {

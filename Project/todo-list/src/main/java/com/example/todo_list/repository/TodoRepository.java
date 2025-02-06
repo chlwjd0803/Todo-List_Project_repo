@@ -10,4 +10,6 @@ import java.util.List;
 public interface TodoRepository extends JpaRepository<Todo, Long> {
     @Override
     List<Todo> findAll();
+
+    List<Todo> findByStatusOrderById(String status);
 }

@@ -19,17 +19,28 @@ import java.util.List;
 public class TodoController {
     @Autowired
     private TodoRepository todoRepository;
-//    @Autowired
-//    private TodoService todoService;
+    @Autowired
+    private TodoService todoService;
 
-    // 전체 목록 보기
+    // 전체 목록 보기, 서비스 사용
     @GetMapping("/todos")
     public String index(Model md){
-        List<Todo> todos = todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        List<Todo> todos = todoService.index();
         md.addAttribute("todoList", todos);
+
+        List<Todo> readyTodos = todoService.index("준비");
+        List<Todo> inProgressTodos = todoService.index("진행중");
+        List<Todo> stoppedTodos = todoService.index("중단됨");
+        List<Todo> completedTodos = todoService.index("완료");
+
+        md.addAttribute("readyList", readyTodos);
+        md.addAttribute("inProgressList", inProgressTodos);
+        md.addAttribute("stoppedList", stoppedTodos);
+        md.addAttribute("completedList", completedTodos);
         return "todos/index";
     }
 
+    // 서비스 미사용
     @PostMapping("/todos/add")
     public String addTask(TodoDto dto){
         log.info(dto.toString());

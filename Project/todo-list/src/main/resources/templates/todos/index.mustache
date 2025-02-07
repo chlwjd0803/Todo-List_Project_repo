@@ -1,69 +1,73 @@
 {{>layouts/header}}
 
 <style>
-    .status-text{
-        display : none;
+    .status-text {
+        display: none;
     }
-
-    .status-sec{
-        margin: 50px;
+    /* 여백을 줄여서 전체 공간을 콤팩트하게 */
+    .status-sec {
+        margin: 20px;
     }
-
-    .fixed-table{
+    /* 테이블 너비 축소 */
+    .fixed-table {
         table-layout: fixed;
-        width: 75%;
+        width: 60%;
     }
-
-    .fixed-table th, .fixed-table td{
+    .fixed-table th, .fixed-table td {
         width: 100%;
-        word-wrap: break-word;  /* 요소가 튀어나가지 않게 한도내에서 강제 줄바꿈 */
+        word-wrap: break-word;  /* 내용이 넘치지 않도록 줄바꿈 */
     }
-
     .btn-custom {
-        border-radius: 20px !important;          /* 둥근 모서리 적용 */
-        padding: 8px 16px;            /* 내부 여백 조절 */
-        font-size: 14px;              /* 폰트 크기 조절 */
-        transition: all 0.2s ease;    /* 호버 시 부드러운 변환 효과 */
+        border-radius: 20px !important;
+        padding: 8px 16px;
+        font-size: 14px;
+        transition: all 0.2s ease;
         margin-left: 5px;
     }
     .btn-custom:hover {
-        /* 호버 시 살짝 밝은 배경색 또는 그림자 효과 추가 */
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
-    .btn-select-category {
-        margin: 20px;
-    }
-
 </style>
 
-<div class="btn-group btn-select-category" role="group" aria-label="Basic checkbox toggle button group">
-    <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" checked>
-    <label class="btn btn-outline-primary btn-custom" for="btncheck1">전체</label>
-
-    {{#categories}}
-        <input type="checkbox" class="btn-check" id="btncheck-{{.}}" autocomplete="off" checked>
-        <label class="btn btn-outline-info btn-custom" for="btncheck-{{.}}">{{.}}</label>
-    {{/categories}}
+<!-- 카테고리 선택 카드 -->
+<div class="card mb-3">
+    <div class="card-header">
+        카테고리 선택
+    </div>
+    <div class="card-body">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1-all" autocomplete="off" checked>
+            <label class="btn btn-outline-primary btn-custom" for="btnradio1-all">전체</label>
+            {{#categories}}
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio-{{.}}" autocomplete="off">
+                <label class="btn btn-outline-primary btn-custom" for="btnradio-{{.}}">{{.}}</label>
+            {{/categories}}
+        </div>
+    </div>
 </div>
 
+<!-- 컬렙스를 사용하여 접기기능 구현 -->
+<!-- 준비 섹션 -->
 <section class="status-sec">
-    <h2>준비</h2>
-    <table class="table fixed-table">
-        <thead>
+    <h2>
+        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseReady" role="button" aria-expanded="true" aria-controls="collapseReady">
+            준비
+        </a>
+    </h2>
+    <div class="collapse show" id="collapseReady">
+        <table class="table fixed-table">
+            <thead>
             <tr>
-                <th>번호</th>
+                <th>관리</th>
                 <th>카테고리</th>
                 <th>작업</th>
                 <th>상태변경</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {{#readyList}}
                 <tr>
-                    <td>{{id}}</td>
-                    <td>{{category}}</td>
                     <td>
-                        {{title}}
                         <button type="button" class="btn btn-sm btn-outline-primary"
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
@@ -73,11 +77,12 @@
                                 data-bs-status="{{status}}">
                             수정
                         </button>
-
                         <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
                                 data-task-id="{{id}}">삭제</button>
                     </td>
-                    <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
+                    <td>{{category}}</td>
+                    <td>{{title}}</td>
+                    <td class="status-text" data-status="{{status}}">{{status}}</td>
                     <td>
                         <div class="btn-group" role="group">
                             <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
@@ -88,146 +93,162 @@
                     </td>
                 </tr>
             {{/readyList}}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </section>
 
+<!-- 진행중 섹션 -->
 <section class="status-sec">
-    <h2>진행중</h2>
-    <table class="table fixed-table">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>카테고리</th>
-            <th>작업</th>
-            <th>상태변경</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#inProgressList}}
+    <h2>
+        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseInProgress" role="button" aria-expanded="true" aria-controls="collapseInProgress">
+            진행중
+        </a>
+    </h2>
+    <div class="collapse show" id="collapseInProgress">
+        <table class="table fixed-table">
+            <thead>
             <tr>
-                <td>{{id}}</td>
-                <td>{{category}}</td>
-                <td>
-                    {{title}}
-                    <button type="button" class="btn btn-sm btn-outline-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#task-edit-modal"
-                            data-bs-id="{{id}}"
-                            data-bs-category="{{category}}"
-                            data-bs-title="{{title}}"
-                            data-bs-status="{{status}}">
-                        수정
-                    </button>
-
-                    <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                            data-task-id="{{id}}">삭제</button>
-                </td>
-                <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
-                <td>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                        <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                        <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                        <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                    </div>
-                </td>
+                <th>관리</th>
+                <th>카테고리</th>
+                <th>작업</th>
+                <th>상태변경</th>
             </tr>
-        {{/inProgressList}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {{#inProgressList}}
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#task-edit-modal"
+                                data-bs-id="{{id}}"
+                                data-bs-category="{{category}}"
+                                data-bs-title="{{title}}"
+                                data-bs-status="{{status}}">
+                        수정
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
+                                data-task-id="{{id}}">삭제</button>
+                    </td>
+                    <td>{{category}}</td>
+                    <td>{{title}}</td>
+                    <td class="status-text" data-status="{{status}}">{{status}}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                        </div>
+                    </td>
+                </tr>
+            {{/inProgressList}}
+            </tbody>
+        </table>
+    </div>
 </section>
 
+<!-- 중단됨 섹션 -->
 <section class="status-sec">
-    <h2>중단됨</h2>
-    <table class="table fixed-table">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>카테고리</th>
-            <th>작업</th>
-            <th>상태변경</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#stoppedList}}
+    <h2>
+        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseStopped" role="button" aria-expanded="true" aria-controls="collapseStopped">
+            중단됨
+        </a>
+    </h2>
+    <div class="collapse show" id="collapseStopped">
+        <table class="table fixed-table">
+            <thead>
             <tr>
-                <td>{{id}}</td>
-                <td>{{category}}</td>
-                <td>
-                    {{title}}
-                    <button type="button" class="btn btn-sm btn-outline-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#task-edit-modal"
-                            data-bs-id="{{id}}"
-                            data-bs-category="{{category}}"
-                            data-bs-title="{{title}}"
-                            data-bs-status="{{status}}">
-                        수정
-                    </button>
-
-                    <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                            data-task-id="{{id}}">삭제</button>
-                </td>
-                <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
-                <td>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                        <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                        <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                        <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                    </div>
-                </td>
+                <th>관리</th>
+                <th>카테고리</th>
+                <th>작업</th>
+                <th>상태변경</th>
             </tr>
-        {{/stoppedList}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {{#stoppedList}}
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#task-edit-modal"
+                                data-bs-id="{{id}}"
+                                data-bs-category="{{category}}"
+                                data-bs-title="{{title}}"
+                                data-bs-status="{{status}}">
+                        수정
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
+                                data-task-id="{{id}}">삭제</button>
+                    </td>
+                    <td>{{category}}</td>
+                    <td>{{title}}</td>
+                    <td class="status-text" data-status="{{status}}">{{status}}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                        </div>
+                    </td>
+                </tr>
+            {{/stoppedList}}
+            </tbody>
+        </table>
+    </div>
 </section>
 
+<!-- 완료 섹션 -->
 <section class="status-sec">
-    <h2>완료</h2>
-    <table class="table fixed-table">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>카테고리</th>
-            <th>작업</th>
-            <th>상태변경</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#completedList}}
+    <h2>
+        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseCompleted" role="button" aria-expanded="true" aria-controls="collapseCompleted">
+            완료
+        </a>
+    </h2>
+    <div class="collapse show" id="collapseCompleted">
+        <table class="table fixed-table">
+            <thead>
             <tr>
-                <td>{{id}}</td>
-                <td>{{category}}</td>
-                <td>
-                    {{title}}
-                    <button type="button" class="btn btn-sm btn-outline-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#task-edit-modal"
-                            data-bs-id="{{id}}"
-                            data-bs-category="{{category}}"
-                            data-bs-title="{{title}}"
-                            data-bs-status="{{status}}">
-                        수정
-                    </button>
-
-                    <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                            data-task-id="{{id}}">삭제</button>
-                </td>
-                <td class="status-text" data-status="{{status}}">{{status}}</td>  <!-- Mustache 값 활용, css에서 숨김처리함 -->
-                <td>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                        <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                        <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                        <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                    </div>
-                </td>
+                <th>관리</th>
+                <th>카테고리</th>
+                <th>작업</th>
+                <th>상태변경</th>
             </tr>
-        {{/completedList}}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {{#completedList}}
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#task-edit-modal"
+                                data-bs-id="{{id}}"
+                                data-bs-category="{{category}}"
+                                data-bs-title="{{title}}"
+                                data-bs-status="{{status}}">
+                            수정
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
+                                data-task-id="{{id}}">삭제</button>
+                    </td>
+                    <td>{{category}}</td>
+                    <td>{{title}}</td>
+                    <td class="status-text" data-status="{{status}}">{{status}}</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
+                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
+                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
+                        </div>
+                    </td>
+                </tr>
+            {{/completedList}}
+            </tbody>
+        </table>
+    </div>
 </section>
 
 <div class="card m-2" id="todo-new">
@@ -238,18 +259,14 @@
                 <label for="new-task-category" class="form-label">카테고리</label>
                 <input type="text" class="form-control" id="new-task-category" name="category">
             </div>
-
             <div class="mb-3">
                 <label for="new-task-name" class="form-label">작업이름</label>
                 <input type="text" class="form-control" id="new-task-name" name="title">
             </div>
-
             <button type="submit" class="btn btn-primary" id="task-add-btn">작업 추가</button>
         </form>
     </div>
 </div>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="task-edit-modal" tabindex="-1">
@@ -265,14 +282,12 @@
                         <label for="edit-task-category" class="form-label">카테고리</label>
                         <input type="text" class="form-control" id="edit-task-category">
                     </div>
-
                     <div class="mb-3">
                         <label for="edit-task-title" class="form-label">작업이름</label>
                         <input type="text" class="form-control" id="edit-task-title">
                     </div>
                     <input type="hidden" id="edit-task-id">
                     <input type="hidden" id="edit-task-status">
-
                     <button type="button" class="btn btn-primary" id="task-edit-btn">수정하기</button>
                 </form>
             </div>

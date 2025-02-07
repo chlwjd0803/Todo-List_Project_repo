@@ -1,0 +1,53 @@
+.status-text {
+    display: none;
+}
+/* 여백을 줄여서 전체 공간을 콤팩트하게 */
+.status-sec {
+    margin: 20px;
+}
+/* 테이블 너비 축소 */
+.fixed-table {
+    table-layout: fixed;
+    width: 100%;
+}
+.fixed-table th, .fixed-table td {
+    padding: 0.4rem;
+    word-wrap: break-word;  /* 내용이 넘치지 않도록 줄바꿈 */
+}
+.task-delete-btn, .task-edit-btn{
+    margin-top: 2%;
+}
+.btn-custom {
+    border-radius: 20px !important;
+    padding: 8px 16px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    margin-left: 5px;
+}
+.btn-custom:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+/* 첫 번째 열(관리열): 좁게 설정 */
+.fixed-table th:nth-child(1),
+.fixed-table td:nth-child(1) {
+    width: 8% !important;  /* 관리 버튼만 들어가므로 좁게 */
+    padding: 0.2rem 0.3rem !important; /* 패딩도 최소화 */
+}
+
+/* 두 번째 열(카테고리): 조금 더 줄임 */
+.fixed-table th:nth-child(2),
+.fixed-table td:nth-child(2) {
+    width: 12% !important;
+}
+
+/* 세 번째 열(작업): 기존의 20%에서 반 정도로 줄여 10%로 설정 */
+.fixed-table th:nth-child(3),
+.fixed-table td:nth-child(3) {
+    width: 16% !important;
+}
+
+/* 네 번째 열(상태변경): 그대로 유지 */
+.fixed-table th:nth-child(4),
+.fixed-table td:nth-child(4) {
+    width: 25% !important;
+}

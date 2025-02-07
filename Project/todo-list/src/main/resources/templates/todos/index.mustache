@@ -1,33 +1,8 @@
 {{>layouts/header}}
 
-<style>
-    .status-text {
-        display: none;
-    }
-    /* 여백을 줄여서 전체 공간을 콤팩트하게 */
-    .status-sec {
-        margin: 20px;
-    }
-    /* 테이블 너비 축소 */
-    .fixed-table {
-        table-layout: fixed;
-        width: 60%;
-    }
-    .fixed-table th, .fixed-table td {
-        width: 100%;
-        word-wrap: break-word;  /* 내용이 넘치지 않도록 줄바꿈 */
-    }
-    .btn-custom {
-        border-radius: 20px !important;
-        padding: 8px 16px;
-        font-size: 14px;
-        transition: all 0.2s ease;
-        margin-left: 5px;
-    }
-    .btn-custom:hover {
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    }
-</style>
+<!-- css파일 분리 -->
+<link rel="stylesheet" type="text/css" href="/css/todos/index.css">
+
 
 <!-- 카테고리 선택 카드 -->
 <div class="card mb-3">
@@ -68,7 +43,7 @@
             {{#readyList}}
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary"
+                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
@@ -119,7 +94,7 @@
             {{#inProgressList}}
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary"
+                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
@@ -170,7 +145,7 @@
             {{#stoppedList}}
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary"
+                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
@@ -221,7 +196,7 @@
             {{#completedList}}
                 <tr>
                     <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary"
+                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
@@ -295,6 +270,7 @@
     </div>
 </div>
 
+<!-- js파일 분리 -->
 <script src="/js/todos/index.js"></script>
 
 {{>layouts/footer}}

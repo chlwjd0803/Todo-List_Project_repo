@@ -13,6 +13,7 @@ public class TodoDto {
     private String title;
     private String status;
     private String category;
+//    private Long category_id; // 외래키를 사용할 것
 
     public static TodoDto createTodoDto(Todo todo) {
         return new TodoDto(

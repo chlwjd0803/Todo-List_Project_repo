@@ -98,6 +98,7 @@
         });
     });
 }
+
 // 모달 이벤트 관련
 // 수정 모달 띄우기
 {
@@ -117,6 +118,7 @@
 
     });
 }
+
 // 수정 반영
 {
     const taskEditBtn = document.querySelector("#task-edit-btn");
@@ -144,6 +146,13 @@
         })
     });
 }
+// 카테고리 수정 모달 띄우기
+{
+
+}
+
+
+
 // 작업 삭제
 {
     const taskDltBtn = document.querySelectorAll(".task-delete-btn");

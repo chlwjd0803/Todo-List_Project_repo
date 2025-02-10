@@ -1,0 +1,74 @@
+{{>layouts/header}}
+
+<!-- CSS 파일 연결 (필요시 별도 파일에서 스타일 정의) -->
+<link rel="stylesheet" type="text/css" href="/css/todos/statistic.css">
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">작업 통계</h2>
+    <!-- 그래프를 표시할 캔버스 -->
+    <canvas id="statusChart" width="400" height="400"></canvas>
+</div>
+
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 백엔드에서 전달받은 상태별 작업 개수(숫자)를 사용합니다.
+        // 예를 들어, readyCount, inProgressCount, stoppedCount, completedCount
+        const data = {
+            labels: ['준비', '진행중', '중단됨', '완료'],
+            datasets: [{
+                label: '작업 개수',
+                data: [{{readyCount}}, {{inProgressCount}}, {{stoppedCount}}, {{completedCount}}],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',   // 준비: 파란색 계열
+                    'rgba(255, 206, 86, 0.6)',   // 진행중: 노란색 계열
+                    'rgba(255, 99, 132, 0.6)',   // 중단됨: 빨간색 계열
+                    'rgba(75, 192, 192, 0.6)'    // 완료: 녹색 계열
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // 그래프 유형을 'bar'로 설정 (원형 그래프는 type: 'pie'로 변경 가능)
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '작업 상태별 통계'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1  // 작업 개수가 정수라면 1씩 증가하도록 설정
+                        }
+                    }
+                }
+            }
+        };
+
+        // 캔버스 요소를 가져와 Chart.js 인스턴스 생성
+        const statusChart = new Chart(
+                document.getElementById('statusChart'),
+                config
+        );
+    });
+</script>
+
+{{>layouts/footer}}

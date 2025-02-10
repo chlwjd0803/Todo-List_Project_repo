@@ -21,6 +21,8 @@ public class Todo {
     private String status; //작업 상태(준비, 진행, 중단, 완료 등 4단계로 구성 예정)
     @Column
     private String category; // 작업의 카테고리
+//    @Column
+//    private Long category_id; // 카테고리의 고유id
 
     public void patch(TodoDto dto) {
         if(this.id != dto.getId()) throw new IllegalArgumentException("잘못된 id가 입력되었습니다.");
@@ -28,4 +30,5 @@ public class Todo {
         //if(dto.getStatus() != null) this.status = dto.getStatus();
         if(dto.getCategory() != null) this.category = dto.getCategory();
     }
+
 }

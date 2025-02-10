@@ -27,7 +27,15 @@ public class TodoController {
         return "/todos/start";
     }
 
+    @GetMapping("/todos/calendar")
+    public String calendar(){
+        return "/todos/calendar";
+    }
 
+    @GetMapping("/todos/statistic")
+    public String statistic(){
+        return "/todos/statistic";
+    }
 
     // 전체 목록 보기, 서비스 사용
     @GetMapping("/todos/index")

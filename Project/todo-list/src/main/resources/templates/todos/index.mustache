@@ -11,12 +11,13 @@
     </div>
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1-all" autocomplete="off" checked>
-            <label class="btn btn-outline-primary btn-custom" for="btnradio1-all">전체</label>
+            <input type="radio" class="btn-check" name="categoryradio" id="categoryradio-all" autocomplete="off" checked>
+            <label class="btn btn-outline-primary btn-custom" for="categoryradio-all">전체</label>
             {{#categories}}
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio-{{.}}" autocomplete="off">
-                <label class="btn btn-outline-primary btn-custom" for="btnradio-{{.}}">{{.}}</label>
+                <input type="radio" class="btn-check" name="categoryradio" id="categoryradio-{{.}}" autocomplete="off">
+                <label class="btn btn-outline-primary btn-custom" for="categoryradio-{{.}}">{{.}}</label>
             {{/categories}}
+            <!-- categories에 반환된 문자열을 {'{.}'}로 바로 출력가능 -->
         </div>
     </div>
 </div>
@@ -232,7 +233,7 @@
 <div class="card m-2" id="todo-new">
     <div class="card-body">
         <!-- 할일 추가 폼 -->
-        <form action="/todos/add" method="post">
+        <form action="/todos/index/add" method="post">
             <div class="mb-3">
                 <label for="new-task-category" class="form-label">카테고리</label>
                 <input type="text" class="form-control" id="new-task-category" name="category">

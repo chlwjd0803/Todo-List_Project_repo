@@ -19,10 +19,10 @@ public class TodoApiController {
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/api/todos")
+    @GetMapping("/api/todos/index")
     public List<Todo> index(){ return todoService.index(); }
 
-    @PostMapping("/api/todos")
+    @PostMapping("/api/todos/index")
     public ResponseEntity<Todo> addTask(@RequestBody TodoDto dto){
         Todo added = todoService.addTask(dto);
         return (added != null) ?
@@ -30,7 +30,7 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping("/api/todos/updateStatus/{id}")
+    @PostMapping("/api/todos/index/updateStatus/{id}")
     public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
         String newStatus = request.get("status");
         String updatedStat = todoService.updateStatus(id, newStatus);
@@ -39,14 +39,14 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PatchMapping("/api/todos/editTask/{id}")
+    @PatchMapping("/api/todos/index/editTask/{id}")
     public ResponseEntity<TodoDto> taskEdit(@PathVariable Long id, @RequestBody TodoDto dto) {
         TodoDto editDto = todoService.taskEdit(id, dto);
         log.info(editDto.toString());
         return ResponseEntity.status(HttpStatus.OK).body(editDto);
     }
 
-    @DeleteMapping("/api/todos/deleteTask/{id}")
+    @DeleteMapping("/api/todos/index/deleteTask/{id}")
     public ResponseEntity<TodoDto> taskDelete(@PathVariable Long id){
         TodoDto deleteDto = todoService.taskDelete(id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);

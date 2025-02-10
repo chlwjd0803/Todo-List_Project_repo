@@ -1,6 +1,42 @@
 //처음 로딩시에 작업
 {
     document.addEventListener("DOMContentLoaded", function() {
+        // 모든 라디오 버튼 선택
+        const radioButtons = document.querySelectorAll('input[name="categoryradio"]');
+        // input 태그의 속성인 name에서 'categoryradio'를 선택하라는 css 선택자 문법
+
+        // 라디오 버튼 변경 이벤트 등록
+        radioButtons.forEach(radio => {
+            radio.addEventListener("change", function() {
+                // 선택된 카테고리 값 확인
+
+                let selectedCategory;
+                if (this.id === "categoryradio-all") {
+                    selectedCategory = "전체";
+                } else {
+                    const label = document.querySelector(`label[for="${this.id}"]`);
+                    // 해당 레이블 태그 안에 있는 문자열을 가져오는 것임 {{.}}
+                    selectedCategory = label ? label.textContent.trim() : "";
+                }
+
+                const rows = document.querySelectorAll("tbody tr");
+
+                // 표시 설정
+                rows.forEach(row => {
+                    // 두 번째 열의 텍스트를 가져오기
+                    // (열 순서가: 관리, 카테고리, 작업, 상태변경이므로 index 1이 카테고리)
+                    const rowCategory = row.children[1].textContent.trim(); // textContent.trim()은 문자열을 가져오는 중요한 문법
+                    if (selectedCategory === "전체" || rowCategory === selectedCategory) {
+                        row.style.display = "";  // 보이도록 (기본값)
+                        // 버튼마다 다 실행되므로 일치하는 경우만 뒤의 조건에 따라 표시될 것
+                    } else {
+                        row.style.display = "none";  // 숨김 처리
+                        // 아니면 다 숨김처리 될 것
+                    }
+                });
+            });
+        });
+
         // 모든 테이블 행 선택
         const rows = document.querySelectorAll('tbody tr');
 
@@ -29,7 +65,7 @@
             });
         });
 
-        // 모든 상태 버튼에 클릭 이벤트 리스너를 등록합니다.
+        // 모든 상태 버튼에 클릭 이벤트 리스너를 등록
         const statusButtons = document.querySelectorAll(".status-btn");
 
         statusButtons.forEach(button => {
@@ -44,7 +80,7 @@
                     status: newStatus
                 };
 
-                const url = `/api/todos/updateStatus/${taskId}`;
+                const url = `/api/todos/index/updateStatus/${taskId}`;
                 fetch(url, {
                     method: "POST",
                     headers: {
@@ -93,7 +129,7 @@
         }
         console.log(task);
 
-        const url = "/api/todos/editTask/" + task.id;
+        const url = "/api/todos/index/editTask/" + task.id;
 
         fetch(url, {
             method: "PATCH",
@@ -118,7 +154,7 @@
             const taskId = taskDeleteBtn.getAttribute("data-task-id");
             console.log(`${taskId}번 작업 삭제버튼 클릭하였음.`);
 
-            const url = `/api/todos/deleteTask/${taskId}`;
+            const url = `/api/todos/index/deleteTask/${taskId}`;
             fetch(url, {
                 method: "DELETE"
             }).then(response => {

@@ -1,63 +1,87 @@
 //처음 로딩시에 작업
 {
     document.addEventListener("DOMContentLoaded", function() {
-        // 모든 라디오 버튼 선택
-        const radioButtons = document.querySelectorAll('input[name="categoryradio"]');
-        // input 태그의 속성인 name에서 'categoryradio'를 선택하라는 css 선택자 문법
+        // 1. Collapse 상태 복원 및 이벤트 등록 (먼저 실행)
+        const collapseIds = ["collapseReady", "collapseInProgress", "collapseStopped", "collapseCompleted"];
+        collapseIds.forEach(id => {
+            const collapseEl = document.getElementById(id);
+            const savedState = localStorage.getItem(id);
+            if (savedState === "hidden") {
+                collapseEl.classList.remove("show");
+            } else {
+                collapseEl.classList.add("show");
+            }
+        });
+
+        // Collapse 이벤트 리스너 등록: 상태 변화 시 localStorage에 저장
+        const collapses = document.querySelectorAll('.collapse');
+        collapses.forEach(collapse => {
+            collapse.addEventListener("hide.bs.collapse", function() {
+                localStorage.setItem(collapse.id, "hidden");
+            });
+            collapse.addEventListener("show.bs.collapse", function() {
+                localStorage.setItem(collapse.id, "shown");
+            });
+        });
+
+        // 2. 카테고리 필터링 복원 및 이벤트 등록
+        // 페이지 로드 시 저장된 카테고리 필터 복원
+        const savedCategory = localStorage.getItem("selectedCategory") || "전체";
+        if (savedCategory === "전체") {
+            document.getElementById("categoryradio-all").checked = true;
+        } else {
+            const radioToSelect = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
+            if (radioToSelect) {
+                radioToSelect.checked = true;
+            }
+        }
+        // 필터링 함수: 선택된 카테고리와 각 행의 두 번째 열(카테고리)을 비교하여 display 설정
+        function filterRowsByCategory(selectedCategory) {
+            const rows = document.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+                const rowCategory = row.children[1].textContent.trim();
+                if (selectedCategory === "전체" || rowCategory === selectedCategory) {
+                    row.style.display = "";  // 기본값
+                } else {
+                    row.style.display = "none";  // 숨김 처리
+                }
+            });
+        }
+        // 초기 필터링 적용
+        filterRowsByCategory(savedCategory);
 
         // 라디오 버튼 변경 이벤트 등록
+        const radioButtons = document.querySelectorAll('input[name="categoryradio"]');
         radioButtons.forEach(radio => {
             radio.addEventListener("change", function() {
-                // 선택된 카테고리 값 확인
-
                 let selectedCategory;
                 if (this.id === "categoryradio-all") {
                     selectedCategory = "전체";
                 } else {
                     const label = document.querySelector(`label[for="${this.id}"]`);
-                    // 해당 레이블 태그 안에 있는 문자열을 가져오는 것임 {{.}}
                     selectedCategory = label ? label.textContent.trim() : "";
                 }
-
-                const rows = document.querySelectorAll("tbody tr");
-
-                // 표시 설정
-                rows.forEach(row => {
-                    // 두 번째 열의 텍스트를 가져오기
-                    // (열 순서가: 관리, 카테고리, 작업, 상태변경이므로 index 1이 카테고리)
-                    const rowCategory = row.children[1].textContent.trim(); // textContent.trim()은 문자열을 가져오는 중요한 문법
-                    if (selectedCategory === "전체" || rowCategory === selectedCategory) {
-                        row.style.display = "";  // 보이도록 (기본값)
-                        // 버튼마다 다 실행되므로 일치하는 경우만 뒤의 조건에 따라 표시될 것
-                    } else {
-                        row.style.display = "none";  // 숨김 처리
-                        // 아니면 다 숨김처리 될 것
-                    }
-                });
+                localStorage.setItem("selectedCategory", selectedCategory);
+                filterRowsByCategory(selectedCategory);
             });
         });
 
-        // 모든 테이블 행 선택
+        // 3. 상태 버튼 스타일 초기화 및 클릭 이벤트 등록
+        // (이 코드는 필터링 이후에 실행하여 필터링 display 상태를 덮어쓰지 않도록 합니다.)
         const rows = document.querySelectorAll('tbody tr');
-
-        // 각 행마다 버튼 스타일을 설정합니다.
         rows.forEach(row => {
-            // 실제 데이터베이스에 있는 작업의 상태
+            // 기존에는 .status-text 요소에서 데이터를 가져왔지만,
+            // 만약 현재 구조가 그대로라면 그대로 사용
             const dbStatus = row.querySelector('.status-text').getAttribute('data-status');
-            // 버튼의 작업 상태를 불러옴
             const buttons = row.querySelectorAll(".status-btn");
 
-            // 버튼은 4개 이므로 각각을 모두 비교할 수 있어야함
             buttons.forEach(button => {
                 const btnStatus = button.getAttribute("data-status");
-
                 if (btnStatus === dbStatus) {
-                    // 데이터베이스에 저장된 상태와 일치하는 버튼의 디자인 변경
                     button.style.backgroundColor = "#6c757d";
                     button.style.color = "#fff";
                     button.disabled = true;
                 } else {
-                    // 나머지 버튼은 기본 스타일로 초기화
                     button.style.backgroundColor = "";
                     button.style.color = "";
                     button.disabled = false;
@@ -65,27 +89,17 @@
             });
         });
 
-        // 모든 상태 버튼에 클릭 이벤트 리스너를 등록
+        // 상태 버튼 클릭 이벤트 (업데이트 API 호출)
         const statusButtons = document.querySelectorAll(".status-btn");
-
         statusButtons.forEach(button => {
             button.addEventListener("click", function() {
                 const taskId = this.getAttribute("data-id");
                 const newStatus = this.getAttribute("data-status");
-
-                //console.log(`ID ${taskId}의 작업 상태가 ${newStatus}로 변경됩니다.`);
-
-                const task = {
-                    id: taskId,
-                    status: newStatus
-                };
-
+                const task = { id: taskId, status: newStatus };
                 const url = `/api/todos/index/updateStatus/${taskId}`;
                 fetch(url, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(task)
                 }).then(response => {
                     if (response.ok) {
@@ -97,6 +111,7 @@
             });
         });
     });
+
 }
 
 // 모달 이벤트 관련

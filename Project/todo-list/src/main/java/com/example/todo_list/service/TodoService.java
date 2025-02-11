@@ -1,7 +1,9 @@
 package com.example.todo_list.service;
 
 import com.example.todo_list.dto.TodoDto;
+import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.repository.CategoryRepository;
 import com.example.todo_list.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +20,15 @@ import java.util.stream.Collectors;
 public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     // 기존 아이디 정렬
     public List<Todo> index() { return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id")); }
     // 상태별로 나누어 정렬하기 위한 오버로딩 메소드
     public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
 
-    public List<String> getCategories() {
-        List<Todo> todos = todoRepository.findAll();
-        return todos.stream().map(Todo::getCategory).filter(Objects::nonNull).distinct().collect(Collectors.toList());
-        // 1. stream : Stream API를 사용하여 함수형 프로그래밍 스타일로 처리함
-        // 2. map(Todo:getCategory) : 각 객체를 해당 카테고리 문자열로 변환함, 메소드 참조 문법임, Stream<String>
-        // 3. filter(Object::nonNull : null이 아닌 문자만 확인
-        // (중요)4. distinct() : 중복값 제거
-        // 5. collect(Collectors.toList()) : 처리한 카테고리 문자열들을 List형으로 반환하는 것
+    public List<Category> getCategories() {
+        return categoryRepository.findAll();
     }
 
 

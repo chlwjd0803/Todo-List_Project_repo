@@ -23,15 +23,17 @@ public class Todo {
     private String title; //작업 제목
     @Column
     private String status; //작업 상태(준비, 진행, 중단, 완료 등 4단계로 구성 예정)
-//    @Column
-//    private String category; // 작업의 카테고리
 
+    // DTO에서 카테고리 이름을 문자열로 반환받기 위함
+    public String getCategoryName() {
+        return category.getName();
+    }
 
     public void patch(TodoDto dto) {
         if(this.id != dto.getId()) throw new IllegalArgumentException("잘못된 id가 입력되었습니다.");
         if(dto.getTitle() != null) this.title = dto.getTitle();
         //if(dto.getStatus() != null) this.status = dto.getStatus();
-        if(dto.getCategory().getName() != null) this.category.setName(dto.getCategory().getName());
+        if(dto.getCategory_name() != null) this.category.setName(dto.getCategory_name());
         // 카테고리 엔티티가 추가되었으므로 수정할 필요 있음
     }
 

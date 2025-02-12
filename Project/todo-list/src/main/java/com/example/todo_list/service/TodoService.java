@@ -33,9 +33,18 @@ public class TodoService {
 
 
     public Todo addTask(TodoDto dto) {
-        Todo todoEntity = dto.toEntity();
-        if(todoEntity.getId() != null) return null;
-        return todoRepository.save(todoEntity);
+        Todo todo = dto.toEntity();
+        Category category = categoryRepository.findByName(todo.getCategoryName());
+        if(category == null) {
+            // 카테고리 새로 만들기
+            category = new Category();
+            category.setName(todo.getCategoryName());
+            categoryRepository.save(category);
+        }
+        todo.setCategory(category);
+
+
+        return todoRepository.save(todo);
     }
 
     @Transactional

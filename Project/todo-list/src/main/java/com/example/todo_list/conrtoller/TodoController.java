@@ -3,6 +3,7 @@ package com.example.todo_list.conrtoller;
 import com.example.todo_list.dto.TodoDto;
 import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.repository.CategoryRepository;
 import com.example.todo_list.repository.TodoRepository;
 import com.example.todo_list.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ public class TodoController {
     private TodoRepository todoRepository;
     @Autowired
     private TodoService todoService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     // 시작화면 테스트중
     @GetMapping("/todos/start")
@@ -38,7 +41,7 @@ public class TodoController {
 //        return "/todos/statistic";
 //    }
 
-    // 전체 목록 보기, 서비스 사용
+    // 전체 목록 보기
     @GetMapping("/todos/index")
     public String index(Model md){
         List<Category> categories = todoService.getCategories();
@@ -55,11 +58,10 @@ public class TodoController {
         return "todos/index";
     }
 
-    // 서비스 미사용(컨트롤러에서 모두 처리)
+    // 작업 추가
     @PostMapping("/todos/index/add")
     public String addTask(TodoDto dto){
-        Todo todo = dto.toEntity();
-        Todo added = todoRepository.save(todo);
+        todoService.addTask(dto);
         return "redirect:/todos/index";
     }
 

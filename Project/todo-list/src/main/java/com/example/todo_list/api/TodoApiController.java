@@ -52,6 +52,7 @@ public class TodoApiController {
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);
     }
 
+    // 추후 개발
 //    @PatchMapping("/api/todos/index/editCategory")
 //    public ResponseEntity<TodoDto> editCategory(@RequestBody TodoDto dto){
 //

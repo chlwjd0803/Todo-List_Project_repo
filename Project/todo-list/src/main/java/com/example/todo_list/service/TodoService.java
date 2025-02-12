@@ -1,7 +1,9 @@
 package com.example.todo_list.service;
 
 import com.example.todo_list.dto.TodoDto;
+import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.repository.CategoryRepository;
 import com.example.todo_list.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,26 +20,31 @@ import java.util.stream.Collectors;
 public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     // 기존 아이디 정렬
     public List<Todo> index() { return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id")); }
     // 상태별로 나누어 정렬하기 위한 오버로딩 메소드
     public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
 
-    public List<String> getCategories() {
-        List<Todo> todos = todoRepository.findAll();
-        return todos.stream().map(Todo::getCategory).filter(Objects::nonNull).distinct().collect(Collectors.toList());
-        // 1. stream : Stream API를 사용하여 함수형 프로그래밍 스타일로 처리함
-        // 2. map(Todo:getCategory) : 각 객체를 해당 카테고리 문자열로 변환함, 메소드 참조 문법임, Stream<String>
-        // 3. filter(Object::nonNull : null이 아닌 문자만 확인
-        // (중요)4. distinct() : 중복값 제거
-        // 5. collect(Collectors.toList()) : 처리한 카테고리 문자열들을 List형으로 반환하는 것
+    public List<Category> getCategories() {
+        return categoryRepository.findAll();
     }
 
 
     public Todo addTask(TodoDto dto) {
-        Todo todoEntity = dto.toEntity();
-        if(todoEntity.getId() != null) return null;
-        return todoRepository.save(todoEntity);
+        Todo todo = dto.toEntity();
+        Category category = categoryRepository.findByName(todo.getCategoryName());
+        if(category == null) {
+            // 카테고리 새로 만들기
+            category = new Category();
+            category.setName(todo.getCategoryName());
+            categoryRepository.save(category);
+        }
+        todo.setCategory(category);
+
+
+        return todoRepository.save(todo);
     }
 
     @Transactional
@@ -60,7 +67,14 @@ public class TodoService {
     public TodoDto taskEdit(Long id, TodoDto dto) {
         Todo target = todoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("수정 실패, 대상 작업이 존재하지 않습니다."));
-        target.patch(dto);
+        log.info("데이터베이스에 있는 카테고리 이름 : " + target.getCategoryName());
+        log.info("받아온 정보의 카테고리 이름 : " + dto.getCategory_name());
+
+        Category editCate = categoryRepository.findByName(dto.getCategory_name());
+        if(editCate == null)
+            throw new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다.");
+
+        target.patch(dto, editCate);
         Todo edited = todoRepository.save(target);
         return TodoDto.createTodoDto(edited);
     }

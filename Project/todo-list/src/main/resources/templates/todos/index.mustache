@@ -14,10 +14,11 @@
             <input type="radio" class="btn-check" name="categoryradio" id="categoryradio-all" autocomplete="off" checked>
             <label class="btn btn-outline-primary btn-custom" for="categoryradio-all">전체</label>
             {{#categories}}
-                <input type="radio" class="btn-check" name="categoryradio" id="categoryradio-{{.}}" autocomplete="off">
-                <label class="btn btn-outline-primary btn-custom" for="categoryradio-{{.}}">{{.}}</label>
+                <input type="radio" class="btn-check" name="categoryradio" id="categoryradio-{{name}}" autocomplete="off">
+                <label class="btn btn-outline-primary btn-custom" for="categoryradio-{{name}}">{{name}}</label>
             {{/categories}}
             <!-- categories에 반환된 문자열을 {'{.}'}로 바로 출력가능 -->
+            <!-- 카테고리를 엔티티화 시키며 {'{name}'}으로 표현(확인 꼭 하기) -->
         </div>
     </div>
 </div>
@@ -51,7 +52,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
-                                data-bs-category="{{category}}"
+                                data-bs-category-name="{{category.name}}"
                                 data-bs-title="{{title}}"
                                 data-bs-status="{{status}}">
                             수정
@@ -59,7 +60,7 @@
                         <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
                                 data-task-id="{{id}}">삭제</button>
                     </td>
-                    <td>{{category}}</td>
+                    <td>{{category.name}}</td>
                     <td>{{title}}</td>
                     <td class="status-text" data-status="{{status}}">{{status}}</td>
                     <td>
@@ -102,7 +103,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
-                                data-bs-category="{{category}}"
+                                data-bs-category-name="{{category.name}}"
                                 data-bs-title="{{title}}"
                                 data-bs-status="{{status}}">
                         수정
@@ -110,7 +111,7 @@
                         <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
                                 data-task-id="{{id}}">삭제</button>
                     </td>
-                    <td>{{category}}</td>
+                    <td>{{category.name}}</td>
                     <td>{{title}}</td>
                     <td class="status-text" data-status="{{status}}">{{status}}</td>
                     <td>
@@ -153,7 +154,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
-                                data-bs-category="{{category}}"
+                                data-bs-category-name="{{category.name}}"
                                 data-bs-title="{{title}}"
                                 data-bs-status="{{status}}">
                         수정
@@ -161,7 +162,7 @@
                         <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
                                 data-task-id="{{id}}">삭제</button>
                     </td>
-                    <td>{{category}}</td>
+                    <td>{{category.name}}</td>
                     <td>{{title}}</td>
                     <td class="status-text" data-status="{{status}}">{{status}}</td>
                     <td>
@@ -204,7 +205,7 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#task-edit-modal"
                                 data-bs-id="{{id}}"
-                                data-bs-category="{{category}}"
+                                data-bs-category-name="{{category.name}}"
                                 data-bs-title="{{title}}"
                                 data-bs-status="{{status}}">
                             수정
@@ -212,7 +213,7 @@
                         <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
                                 data-task-id="{{id}}">삭제</button>
                     </td>
-                    <td>{{category}}</td>
+                    <td>{{category.name}}</td>
                     <td>{{title}}</td>
                     <td class="status-text" data-status="{{status}}">{{status}}</td>
                     <td>
@@ -235,12 +236,12 @@
         <!-- 할일 추가 폼 -->
         <form action="/todos/index/add" method="post">
             <div class="mb-3">
-                <label for="new-task-category" class="form-label">카테고리</label>
-                <input type="text" class="form-control" id="new-task-category" name="category">
+                <label for="new-category" class="form-label">카테고리</label>
+                <input type="text" class="form-control" id="new-category" name="category_name">
             </div>
             <div class="mb-3">
-                <label for="new-task-name" class="form-label">작업이름</label>
-                <input type="text" class="form-control" id="new-task-name" name="title">
+                <label for="new-task" class="form-label">작업이름</label>
+                <input type="text" class="form-control" id="new-task" name="title">
             </div>
             <button type="submit" class="btn btn-primary" id="task-add-btn">작업 추가</button>
         </form>
@@ -259,8 +260,8 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="edit-category" class="form-label">카테고리</label>
-                        <input type="text" class="form-control" id="edit-category">
+                        <label for="edit-category-name" class="form-label">카테고리</label>
+                        <input type="text" class="form-control" id="edit-category-name">
                     </div>
                     <button type="button" class="btn btn-primary" id="category-edit-btn">수정하기</button>
                 </form>
@@ -282,8 +283,8 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="edit-task-category" class="form-label">카테고리</label>
-                        <input type="text" class="form-control" id="edit-task-category">
+                        <label for="edit-task-category-name" class="form-label">카테고리(존재하는 카테고리만 입력)</label>
+                        <input type="text" class="form-control" id="edit-task-category-name">
                     </div>
                     <div class="mb-3">
                         <label for="edit-task-title" class="form-label">작업이름</label>

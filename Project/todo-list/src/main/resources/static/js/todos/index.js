@@ -4,8 +4,11 @@
         // 1. Collapse 상태 복원 및 이벤트 등록 (먼저 실행)
         const collapseIds = ["collapseReady", "collapseInProgress", "collapseStopped", "collapseCompleted"];
         collapseIds.forEach(id => {
+            // 해당 상태(id)에 따라 요소를 가져오는것 -> 저 id속성이 붙어있는 태그를 참조함
             const collapseEl = document.getElementById(id);
+            // 저장되어있던 상태를 가져옴
             const savedState = localStorage.getItem(id);
+            // 클래스 추가와 제거 과정
             if (savedState === "hidden") {
                 collapseEl.classList.remove("show");
             } else {
@@ -39,6 +42,7 @@
         function filterRowsByCategory(selectedCategory) {
             const rows = document.querySelectorAll("tbody tr");
             rows.forEach(row => {
+                // 카테고리는 1번째 열에 있으므로
                 const rowCategory = row.children[1].textContent.trim();
                 if (selectedCategory === "전체" || rowCategory === selectedCategory) {
                     row.style.display = "";  // 기본값
@@ -124,12 +128,12 @@
         const id = triggerBtn.getAttribute("data-bs-id"); // 속성 위에가서 추가해주기
         const title = triggerBtn.getAttribute("data-bs-title");
         const status = triggerBtn.getAttribute("data-bs-status");
-        const category = triggerBtn.getAttribute("data-bs-category");
+        const category_name = triggerBtn.getAttribute("data-bs-category-name");
 
         document.querySelector("#edit-task-id").value = id;
         document.querySelector("#edit-task-title").value = title;
         document.querySelector("#edit-task-status").value = status;
-        document.querySelector("#edit-task-category").value = category;
+        document.querySelector("#edit-task-category-name").value = category_name;
 
     });
 }
@@ -142,7 +146,7 @@
             id : document.querySelector("#edit-task-id").value,
             title : document.querySelector("#edit-task-title").value,
             status : document.querySelector("#edit-task-status").value,
-            category : document.querySelector("#edit-task-category").value
+            category_name : document.querySelector("#edit-task-category-name").value
         }
         console.log(task);
 

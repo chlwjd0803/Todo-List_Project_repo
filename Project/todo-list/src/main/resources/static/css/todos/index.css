@@ -51,3 +51,25 @@
 .fixed-table td:nth-child(4) {
     width: 25% !important;
 }
+
+/*스크롤*/
+.status-sec > .collapse {
+    max-height: 300px; /* 필요에 따라 높이값 조정 가능 */
+    overflow-y: auto;
+}
+
+/*작업추가 컨테이너 고정*/
+#todo-new {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -200px;
+    transition: bottom 0.3s ease;
+    z-index: 1000;
+}
+
+#todo-new:hover {
+    bottom: 0;
+}
+
+

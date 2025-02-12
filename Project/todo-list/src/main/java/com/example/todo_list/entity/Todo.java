@@ -29,12 +29,14 @@ public class Todo {
         return category.getName();
     }
 
-    public void patch(TodoDto dto) {
+    public void patch(TodoDto dto, Category editCate) {
         if(this.id != dto.getId()) throw new IllegalArgumentException("잘못된 id가 입력되었습니다.");
         if(dto.getTitle() != null) this.title = dto.getTitle();
-        //if(dto.getStatus() != null) this.status = dto.getStatus();
-        if(dto.getCategory_name() != null) this.category.setName(dto.getCategory_name());
-        // 카테고리 엔티티가 추가되었으므로 수정할 필요 있음
+
+//        if(dto.getCategory_name() != null) this.category.setName(dto.getCategory_name());
+        if(dto.getCategory_name() != null){
+            this.category = editCate;
+        }
     }
 
 }

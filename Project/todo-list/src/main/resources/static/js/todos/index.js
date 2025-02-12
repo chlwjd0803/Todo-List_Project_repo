@@ -128,12 +128,12 @@
         const id = triggerBtn.getAttribute("data-bs-id"); // 속성 위에가서 추가해주기
         const title = triggerBtn.getAttribute("data-bs-title");
         const status = triggerBtn.getAttribute("data-bs-status");
-        const category = triggerBtn.getAttribute("data-bs-category");
+        const category_name = triggerBtn.getAttribute("data-bs-category-name");
 
         document.querySelector("#edit-task-id").value = id;
         document.querySelector("#edit-task-title").value = title;
         document.querySelector("#edit-task-status").value = status;
-        document.querySelector("#edit-task-category").value = category;
+        document.querySelector("#edit-task-category-name").value = category_name;
 
     });
 }
@@ -146,7 +146,7 @@
             id : document.querySelector("#edit-task-id").value,
             title : document.querySelector("#edit-task-title").value,
             status : document.querySelector("#edit-task-status").value,
-            category : document.querySelector("#edit-task-category").value
+            category_name : document.querySelector("#edit-task-category-name").value
         }
         console.log(task);
 

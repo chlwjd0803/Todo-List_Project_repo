@@ -67,7 +67,14 @@ public class TodoService {
     public TodoDto taskEdit(Long id, TodoDto dto) {
         Todo target = todoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("수정 실패, 대상 작업이 존재하지 않습니다."));
-        target.patch(dto);
+        log.info("데이터베이스에 있는 카테고리 이름 : " + target.getCategoryName());
+        log.info("받아온 정보의 카테고리 이름 : " + dto.getCategory_name());
+
+        Category editCate = categoryRepository.findByName(dto.getCategory_name());
+        if(editCate == null)
+            throw new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다.");
+
+        target.patch(dto, editCate);
         Todo edited = todoRepository.save(target);
         return TodoDto.createTodoDto(edited);
     }

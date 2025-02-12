@@ -27,13 +27,11 @@ public class Todo {
 //    private String category; // 작업의 카테고리
 
 
-
-
     public void patch(TodoDto dto) {
         if(this.id != dto.getId()) throw new IllegalArgumentException("잘못된 id가 입력되었습니다.");
         if(dto.getTitle() != null) this.title = dto.getTitle();
         //if(dto.getStatus() != null) this.status = dto.getStatus();
-        if(dto.getCategory() != null) this.category = dto.getCategory();
+        if(dto.getCategory().getName() != null) this.category.setName(dto.getCategory().getName());
         // 카테고리 엔티티가 추가되었으므로 수정할 필요 있음
     }
 

@@ -119,7 +119,37 @@
 }
 
 // 모달 이벤트 관련
-// 수정 모달 띄우기
+
+// 카테고리 수정 모달 띄우기
+{
+    document.getElementById('category-edit-btn').addEventListener('click', function() {
+        // 메인 페이지에서 선택된 카테고리 라디오 버튼 찾기
+        const selectedRadio = document.querySelector('input[name="categoryradio"]:checked');
+        const allRadio = document.querySelectorAll('input[name="categoryradio"]');
+        if (selectedRadio.id === "categoryradio-all") {
+            alert('수정할 카테고리를 선택하세요. 전체는 선택할 수 없습니다.');
+            return;
+        }
+
+        // 모달의 입력 필드에서 새 이름 가져오기
+        const newName = document.getElementById('edit-category-name').value.trim();
+        if (!newName || newName === '') {
+            alert('변경할 이름을 입력하세요.');
+            return;
+        }
+        for(let i=0; i < allRadio.length; i++) if(allRadio[i].id === `categoryradio-${newName}`){
+                alert(`${newName}이라는 카테고리는 이미 존재합니다.`);
+                return;
+        }
+
+    });
+}
+// 카테고리 수정 반영
+{
+
+}
+
+// 단일 작업 수정 모달 띄우기
 {
     const taskEditModal = document.querySelector("#task-edit-modal");
     taskEditModal.addEventListener("show.bs.modal", function(event){
@@ -165,12 +195,6 @@
         })
     });
 }
-// 카테고리 수정 모달 띄우기
-{
-
-}
-
-
 
 // 작업 삭제
 {

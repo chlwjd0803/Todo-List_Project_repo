@@ -8,6 +8,14 @@
 <div class="card mb-3">
     <div class="card-header">
         카테고리 선택
+        <button type="button" class="btn btn-sm btn-outline-primary category-edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#category-edit-modal">
+            수정
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-danger category-delete-btn">
+            삭제
+        </button>
     </div>
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -249,7 +257,7 @@
 </div>
 
 <!-- Modal -->
-
+<!-- 카테고리 수정 모달 -->
 <div class="modal fade" id="category-edit-modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -260,7 +268,7 @@
             <div class="modal-body">
                 <form>
                     <div class="mb-3">
-                        <label for="edit-category-name" class="form-label">카테고리</label>
+                        <label for="edit-category-name" class="form-label">변경할 이름</label>
                         <input type="text" class="form-control" id="edit-category-name">
                     </div>
                     <button type="button" class="btn btn-primary" id="category-edit-btn">수정하기</button>
@@ -270,9 +278,7 @@
     </div>
 </div>
 
-
-
-
+<!-- 작업수정 모달 -->
 <div class="modal fade" id="task-edit-modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

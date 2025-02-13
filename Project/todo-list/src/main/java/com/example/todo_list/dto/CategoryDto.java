@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,5 +21,13 @@ public class CategoryDto {
                 category.getId(),
                 category.getName()
         );
+    }
+
+    public static List<CategoryDto> createCategoryDtoList(List<Category> categories){
+        List<CategoryDto> dtos = new ArrayList<>();
+        for (Category category : categories) {
+            dtos.add(createCategoryDto(category));
+        }
+        return dtos;
     }
 }

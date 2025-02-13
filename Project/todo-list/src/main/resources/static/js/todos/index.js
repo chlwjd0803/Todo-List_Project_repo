@@ -194,19 +194,32 @@
         //문자열에서 정수형으로 바꿔주어야한다.
         const cateId = parseInt(selectedRadio.getAttribute("data-id"));
         console.log(cateId);
-        if (isNaN(cateId)) {
-            alert("유효하지 않은 카테고리 ID입니다: " + cateId);
-            return;
-        }
-        const url = `/api/todos/categoryDelete/${cateId}`;
 
-        fetch(url, {
-            method: "DELETE"
-        }).then(response => {
-            const msg = (response.ok) ? "삭제되었습니다." : "삭제 오류";
-            alert(msg);
-            window.location.reload();
-        })
+        // 전체 라디오버튼이 눌린 상태에서는 모두 삭제
+        if(cateId === 0){
+            const url = `/api/todos/categoryDelete/all`
+
+            fetch(url, {
+                method: "DELETE"
+            }).then(response => {
+                const msg = (response.ok) ? "모두 삭제되었습니다" : "삭제 오류";
+                alert(msg);
+                window.location.reload();
+            })
+        }
+        // 아니면 해당 카테고리만 삭제
+        else{
+            const url = `/api/todos/categoryDelete/${cateId}`;
+
+            fetch(url, {
+                method: "DELETE"
+            }).then(response => {
+                const msg = (response.ok) ? "삭제되었습니다." : "삭제 오류";
+                alert(msg);
+                window.location.reload();
+            })
+        }
+
     });
 }
 

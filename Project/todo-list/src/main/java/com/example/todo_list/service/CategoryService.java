@@ -42,4 +42,13 @@ public class CategoryService {
         categoryRepository.delete(target);
         return CategoryDto.createCategoryDto(target);
     }
+
+    @Transactional
+    public List<CategoryDto> categoryDeleteAll() {
+        List<Category> cateAll = categoryRepository.findAll();
+        List<Todo> todoAll = todoRepository.findAll();
+        todoRepository.deleteAll(todoAll);
+        categoryRepository.deleteAll(cateAll);
+        return CategoryDto.createCategoryDtoList(cateAll);
+    }
 }

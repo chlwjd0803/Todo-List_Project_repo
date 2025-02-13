@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 public class CategoryApiController {
@@ -30,6 +32,12 @@ public class CategoryApiController {
     public ResponseEntity<CategoryDto> categoryDelete(@PathVariable Long id){
         CategoryDto deleteDto = categoryService.categoryDelete(id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);
+    }
+
+    @DeleteMapping("/api/todos/categoryDelete/all")
+    public ResponseEntity<List<CategoryDto>> categoryDeleteAll(){
+        List<CategoryDto> deleteDtos = categoryService.categoryDeleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body(deleteDtos);
     }
 
 }

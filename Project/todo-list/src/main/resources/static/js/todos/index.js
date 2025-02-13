@@ -1,7 +1,7 @@
 //처음 로딩시에 작업
 {
     document.addEventListener("DOMContentLoaded", function() {
-        // 1. Collapse 상태 복원 및 이벤트 등록 (먼저 실행)
+        // Collapse 상태 복원 및 이벤트 등록 (먼저 실행)
         const collapseIds = ["collapseReady", "collapseInProgress", "collapseStopped", "collapseCompleted"];
         collapseIds.forEach(id => {
             // 해당 상태(id)에 따라 요소를 가져오는것 -> 저 id속성이 붙어있는 태그를 참조함
@@ -28,16 +28,6 @@
         });
 
         // 2. 카테고리 필터링 복원 및 이벤트 등록
-        // 페이지 로드 시 저장된 카테고리 필터 복원
-        const savedCategory = localStorage.getItem("selectedCategory") || "전체";
-        if (savedCategory === "전체") {
-            document.getElementById("categoryradio-all").checked = true;
-        } else {
-            const radioToSelect = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
-            if (radioToSelect) {
-                radioToSelect.checked = true;
-            }
-        }
         // 필터링 함수: 선택된 카테고리와 각 행의 두 번째 열(카테고리)을 비교하여 display 설정
         function filterRowsByCategory(selectedCategory) {
             const rows = document.querySelectorAll("tbody tr");
@@ -51,24 +41,42 @@
                 }
             });
         }
-        // 초기 필터링 적용
-        filterRowsByCategory(savedCategory);
 
         // 라디오 버튼 변경 이벤트 등록
         const radioButtons = document.querySelectorAll('input[name="categoryradio"]');
+        // 수정 버튼 활성화 및 비활성화
+        const cateEditBtn = document.querySelector(`.category-edit-btn`);
+
         radioButtons.forEach(radio => {
             radio.addEventListener("change", function() {
                 let selectedCategory;
                 if (this.id === "categoryradio-all") {
                     selectedCategory = "전체";
+                    cateEditBtn.setAttribute(`disabled`, true);
                 } else {
                     const label = document.querySelector(`label[for="${this.id}"]`);
                     selectedCategory = label ? label.textContent.trim() : "";
+                    cateEditBtn.removeAttribute(`disabled`);
                 }
                 localStorage.setItem("selectedCategory", selectedCategory);
                 filterRowsByCategory(selectedCategory);
             });
         });
+
+        // 페이지 로드 시 저장된 카테고리 필터 복원
+        const savedCategory = localStorage.getItem("selectedCategory") || "전체";
+        if (savedCategory === "전체") {
+            document.getElementById("categoryradio-all").checked = true;
+        } else {
+            const radioToSelect = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
+            if (radioToSelect) {
+                radioToSelect.checked = true;
+            }
+        }
+        // 초기 필터링 적용
+        filterRowsByCategory(savedCategory);
+
+
 
         // 3. 상태 버튼 스타일 초기화 및 클릭 이벤트 등록
         // (이 코드는 필터링 이후에 실행하여 필터링 display 상태를 덮어쓰지 않도록 합니다.)
@@ -126,15 +134,18 @@
         // 메인 페이지에서 선택된 카테고리 라디오 버튼 찾기
         const selectedRadio = document.querySelector('input[name="categoryradio"]:checked');
         const allRadio = document.querySelectorAll('input[name="categoryradio"]');
-        if (selectedRadio.id === "categoryradio-all") {
-            alert('수정할 카테고리를 선택하세요. 전체는 선택할 수 없습니다.');
-            return;
-        }
-
+        // if (selectedRadio.id === "categoryradio-all") {
+        //     alert('수정할 카테고리를 선택하세요. 전체는 선택할 수 없습니다.');
+        //     return;
+        // }
         // 모달의 입력 필드에서 새 이름 가져오기
         const newName = document.getElementById('edit-category-name').value.trim();
         if (!newName || newName === '') {
             alert('변경할 이름을 입력하세요.');
+            return;
+        }
+        if(newName === `전체`){
+            alert(`"전체"라는 이름으로 카테고리를 설정할 수 없습니다.`);
             return;
         }
         for(let i=0; i < allRadio.length; i++) if(allRadio[i].id === `categoryradio-${newName}`){

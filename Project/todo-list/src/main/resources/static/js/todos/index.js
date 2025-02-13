@@ -47,6 +47,9 @@
         // 수정 버튼 활성화 및 비활성화
         const cateEditBtn = document.querySelector(`.category-edit-btn`);
 
+        // 전체버튼 하나만 남았을때 비활성화
+        if(radioButtons.length === 1) cateEditBtn.setAttribute(`disabled`, true);
+
         radioButtons.forEach(radio => {
             radio.addEventListener("change", function() {
                 let selectedCategory;
@@ -65,14 +68,21 @@
 
         // 페이지 로드 시 저장된 카테고리 필터 복원
         const savedCategory = localStorage.getItem("selectedCategory") || "전체";
+        let selectRadio;
+
         if (savedCategory === "전체") {
-            document.getElementById("categoryradio-all").checked = true;
+            selectRadio = document.getElementById("categoryradio-all");
+            selectRadio.checked = true;
         } else {
-            const radioToSelect = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
-            if (radioToSelect) {
-                radioToSelect.checked = true;
+            const selectRadio = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
+            if (selectRadio) {
+                selectRadio.checked = true;
             }
         }
+        // 이벤트를 강제로 발생시켜 라디오 버튼에 따라 효과가 바로 나타나게함 (전체버튼에 대한 버그 수정)
+        if(selectRadio) selectRadio.dispatchEvent(new Event("change"));
+
+
         // 초기 필터링 적용
         filterRowsByCategory(savedCategory);
 

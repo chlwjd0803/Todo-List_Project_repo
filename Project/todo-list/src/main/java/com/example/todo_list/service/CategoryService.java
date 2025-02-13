@@ -19,6 +19,7 @@ public class CategoryService {
 
         if(dto.getName() == null || dto.getName().isEmpty())
             throw new IllegalArgumentException("수정 실패, 카테고리 입력이 비었습니다.");
+
         target.setName(dto.getName());
         categoryRepository.save(target);
 

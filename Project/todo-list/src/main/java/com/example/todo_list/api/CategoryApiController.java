@@ -23,11 +23,11 @@ public class CategoryApiController {
     @Autowired
     CategoryService categoryService;
 
-
+    // 카테고리 아이디가 넘어감, Dto는 넘어온 JSON
     @PatchMapping("/api/todos/categoryEdit/{id}")
     public ResponseEntity<CategoryDto> categoryEdit(@PathVariable Long id, @RequestBody Category dto){
         CategoryDto editDto = categoryService.categoryEdit(id, dto);
-        log.info(editDto.toString());
+//        log.info(editDto.toString());
         return ResponseEntity.status(HttpStatus.OK).body(editDto);
     }
 

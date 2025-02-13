@@ -138,20 +138,31 @@
             return;
         }
         for(let i=0; i < allRadio.length; i++) if(allRadio[i].id === `categoryradio-${newName}`){
-                alert(`${newName}이라는 카테고리는 이미 존재합니다.`);
+                alert(`${newName} (이)라는 카테고리는 이미 존재합니다.`);
                 return;
         }
 
         const category = {
-            
+            id : selectedRadio.getAttribute(`data-id`),
+            name : newName
         }
 
+        const url = "/api/todos/categoryEdit/" + category.id;
+
+        fetch(url, {
+            method: "PATCH",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(category)
+        }).then(response => {
+            const msg = (response.ok) ? "수정이 반영되었습니다." : "수정 오류";
+            alert(msg);
+            window.location.reload();
+        })
     });
 }
-// 카테고리 수정 반영
-{
 
-}
 
 // 단일 작업 수정 모달 띄우기
 {

@@ -134,10 +134,7 @@
         // 메인 페이지에서 선택된 카테고리 라디오 버튼 찾기
         const selectedRadio = document.querySelector('input[name="categoryradio"]:checked');
         const allRadio = document.querySelectorAll('input[name="categoryradio"]');
-        // if (selectedRadio.id === "categoryradio-all") {
-        //     alert('수정할 카테고리를 선택하세요. 전체는 선택할 수 없습니다.');
-        //     return;
-        // }
+
         // 모달의 입력 필드에서 새 이름 가져오기
         const newName = document.getElementById('edit-category-name').value.trim();
         if (!newName || newName === '') {
@@ -168,6 +165,35 @@
             body: JSON.stringify(category)
         }).then(response => {
             const msg = (response.ok) ? "수정이 반영되었습니다." : "수정 오류";
+            alert(msg);
+            window.location.reload();
+        })
+    });
+}
+// 카테고리 삭제
+{
+    const cateDltBtn = document.querySelector(`.category-delete-btn`);
+
+    cateDltBtn.addEventListener("click", function(){
+        // 현재 체크되어있는 라디오를 가져오는 것, 이벤트 메소드 안에 넣어야함
+        const selectedRadio = document.querySelector('input[name="categoryradio"]:checked');
+        if (!selectedRadio) {
+            alert("삭제할 카테고리를 선택해주세요.");
+            return;
+        }
+        //문자열에서 정수형으로 바꿔주어야한다.
+        const cateId = parseInt(selectedRadio.getAttribute("data-id"));
+        console.log(cateId);
+        if (isNaN(cateId)) {
+            alert("유효하지 않은 카테고리 ID입니다: " + cateId);
+            return;
+        }
+        const url = `/api/todos/categoryDelete/${cateId}`;
+
+        fetch(url, {
+            method: "DELETE"
+        }).then(response => {
+            const msg = (response.ok) ? "삭제되었습니다." : "삭제 오류";
             alert(msg);
             window.location.reload();
         })

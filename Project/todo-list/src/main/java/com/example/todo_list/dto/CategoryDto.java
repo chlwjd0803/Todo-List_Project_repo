@@ -13,13 +13,12 @@ import java.util.List;
 public class CategoryDto {
     private Long id;
     private String name;
-    private List<TodoDto> todos;
+//    private List<TodoDto> todos;
 
     public static CategoryDto createCategoryDto(Category category) {
         return new CategoryDto(
                 category.getId(),
-                category.getName(),
-                category.getTodos()
+                category.getName()
         );
     }
 }

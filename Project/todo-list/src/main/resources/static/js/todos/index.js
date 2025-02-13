@@ -142,6 +142,10 @@
                 return;
         }
 
+        const category = {
+            
+        }
+
     });
 }
 // 카테고리 수정 반영

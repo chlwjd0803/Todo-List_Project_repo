@@ -18,6 +18,19 @@ public class CategoryService {
     @Autowired
     private TodoRepository todoRepository;
 
+    public Category categoryAdd(CategoryDto dto) {
+        // 카테고리 이름이 겹치는지 확인할까?
+        // 카테고리 이름이 비거나 null인지 확인할까?
+        if(dto.getName() == null || dto.getName().equals(""))
+            throw new IllegalArgumentException("카테고리 이름이 입력되지 않았거나 공백입니다.");
+        if(categoryRepository.findByName(dto.getName()) != null)
+            throw new IllegalArgumentException("카테고리 이름이 이미 존재합니다.");
+
+        Category category = dto.toEntity();
+
+        return categoryRepository.save(category);
+    }
+
     @Transactional
     public CategoryDto categoryEdit(Long id, Category dto) {
         Category target = categoryRepository.findById(id).orElseThrow(
@@ -51,4 +64,6 @@ public class CategoryService {
         categoryRepository.deleteAll(cateAll);
         return CategoryDto.createCategoryDtoList(cateAll);
     }
+
+
 }

@@ -30,4 +30,8 @@ public class CategoryDto {
         }
         return dtos;
     }
+
+    public Category toEntity() {
+        return new Category(id, this.name, null);
+    }
 }

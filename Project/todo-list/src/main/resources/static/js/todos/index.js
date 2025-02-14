@@ -138,6 +138,31 @@
 
 // 모달 이벤트 관련
 
+// 카테고리 추가
+{
+    const cateAddBtn = document.querySelector("#category-add-btn");
+    cateAddBtn.addEventListener("click", function() {
+        console.log("눌리고있나");
+        const category = {
+            name : document.querySelector("#add-category-name").value
+        }
+        const url = "/api/todos/index/categoryAdd"
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(category)
+        }).then(response => {
+            const msg = (response.ok) ? "카테고리가 추가되었습니다." : "추가 오류";
+            alert(msg);
+            window.location.reload();
+        })
+    });
+}
+
+
 // 카테고리 수정 모달 띄우기
 {
     document.getElementById('category-edit-btn').addEventListener('click', function() {
@@ -165,7 +190,7 @@
             name : newName
         }
 
-        const url = "/api/todos/categoryEdit/" + category.id;
+        const url = "/api/todos/index/categoryEdit/" + category.id;
 
         fetch(url, {
             method: "PATCH",
@@ -197,7 +222,7 @@
 
         // 전체 라디오버튼이 눌린 상태에서는 모두 삭제
         if(cateId === 0){
-            const url = `/api/todos/categoryDelete/all`
+            const url = `/api/todos/index/categoryDelete/all`
 
             fetch(url, {
                 method: "DELETE"
@@ -209,7 +234,7 @@
         }
         // 아니면 해당 카테고리만 삭제
         else{
-            const url = `/api/todos/categoryDelete/${cateId}`;
+            const url = `/api/todos/index/categoryDelete/${cateId}`;
 
             fetch(url, {
                 method: "DELETE"
@@ -222,6 +247,7 @@
 
     });
 }
+
 
 
 // 단일 작업 수정 모달 띄우기

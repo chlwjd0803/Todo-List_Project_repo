@@ -34,212 +34,58 @@
 </div>
 
 <!-- 각 상태 섹션을 부분 템플릿으로 포함(구현못함) -->
-
-
-<!-- 컬렙스를 사용하여 접기기능 구현 -->
-<!-- 준비 섹션 -->
-<section class="status-sec">
-    <h2>
-        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseReady" role="button" aria-expanded="true" aria-controls="collapseReady">
-            준비
-        </a>
-    </h2>
-    <div class="collapse show" id="collapseReady">
-        <table class="table fixed-table">
-            <thead>
-            <tr>
-                <th>관리</th>
-                <th>카테고리</th>
-                <th>작업</th>
-                <th>상태변경</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#readyList}}
+{{#statuses}}
+    <section class="status-sec">
+        <h2>
+            <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"
+               role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">
+                {{status_name}}
+            </a>
+        </h2>
+        <div class="collapse show" id="collapse-{{status_name}}">
+            <table class="table fixed-table">
+                <thead>
                 <tr>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#task-edit-modal"
-                                data-bs-id="{{id}}"
-                                data-bs-category-name="{{category.name}}"
-                                data-bs-title="{{title}}"
-                                data-bs-status="{{status}}">
-                            수정
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                data-task-id="{{id}}">삭제</button>
-                    </td>
-                    <td>{{category.name}}</td>
-                    <td>{{title}}</td>
-                    <td class="status-text" data-status="{{status}}">{{status}}</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                        </div>
-                    </td>
+                    <th>관리</th>
+                    <th>카테고리</th>
+                    <th>작업</th>
+                    <th>상태변경</th>
                 </tr>
-            {{/readyList}}
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<!-- 진행중 섹션 -->
-<section class="status-sec">
-    <h2>
-        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseInProgress" role="button" aria-expanded="true" aria-controls="collapseInProgress">
-            진행중
-        </a>
-    </h2>
-    <div class="collapse show" id="collapseInProgress">
-        <table class="table fixed-table">
-            <thead>
-            <tr>
-                <th>관리</th>
-                <th>카테고리</th>
-                <th>작업</th>
-                <th>상태변경</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#inProgressList}}
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#task-edit-modal"
-                                data-bs-id="{{id}}"
-                                data-bs-category-name="{{category.name}}"
-                                data-bs-title="{{title}}"
-                                data-bs-status="{{status}}">
-                        수정
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                data-task-id="{{id}}">삭제</button>
-                    </td>
-                    <td>{{category.name}}</td>
-                    <td>{{title}}</td>
-                    <td class="status-text" data-status="{{status}}">{{status}}</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                        </div>
-                    </td>
-                </tr>
-            {{/inProgressList}}
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<!-- 중단됨 섹션 -->
-<section class="status-sec">
-    <h2>
-        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseStopped" role="button" aria-expanded="true" aria-controls="collapseStopped">
-            중단됨
-        </a>
-    </h2>
-    <div class="collapse show" id="collapseStopped">
-        <table class="table fixed-table">
-            <thead>
-            <tr>
-                <th>관리</th>
-                <th>카테고리</th>
-                <th>작업</th>
-                <th>상태변경</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#stoppedList}}
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#task-edit-modal"
-                                data-bs-id="{{id}}"
-                                data-bs-category-name="{{category.name}}"
-                                data-bs-title="{{title}}"
-                                data-bs-status="{{status}}">
-                        수정
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                data-task-id="{{id}}">삭제</button>
-                    </td>
-                    <td>{{category.name}}</td>
-                    <td>{{title}}</td>
-                    <td class="status-text" data-status="{{status}}">{{status}}</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                        </div>
-                    </td>
-                </tr>
-            {{/stoppedList}}
-            </tbody>
-        </table>
-    </div>
-</section>
-
-<!-- 완료 섹션 -->
-<section class="status-sec">
-    <h2>
-        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapseCompleted" role="button" aria-expanded="true" aria-controls="collapseCompleted">
-            완료
-        </a>
-    </h2>
-    <div class="collapse show" id="collapseCompleted">
-        <table class="table fixed-table">
-            <thead>
-            <tr>
-                <th>관리</th>
-                <th>카테고리</th>
-                <th>작업</th>
-                <th>상태변경</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#completedList}}
-                <tr>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#task-edit-modal"
-                                data-bs-id="{{id}}"
-                                data-bs-category-name="{{category.name}}"
-                                data-bs-title="{{title}}"
-                                data-bs-status="{{status}}">
-                            수정
-                        </button>
-                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                data-task-id="{{id}}">삭제</button>
-                    </td>
-                    <td>{{category.name}}</td>
-                    <td>{{title}}</td>
-                    <td class="status-text" data-status="{{status}}">{{status}}</td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-outline-primary status-btn btn-custom {{#isReady}}active{{/isReady}}" data-id="{{id}}" data-status="준비">준비</button>
-                            <button class="btn btn-outline-warning status-btn btn-custom {{#isProceed}}active{{/isProceed}}" data-id="{{id}}" data-status="진행중">진행중</button>
-                            <button class="btn btn-outline-danger status-btn btn-custom {{#isStop}}active{{/isStop}}" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                            <button class="btn btn-outline-success status-btn btn-custom {{#isCompleted}}active{{/isCompleted}}" data-id="{{id}}" data-status="완료">완료</button>
-                        </div>
-                    </td>
-                </tr>
-            {{/completedList}}
-            </tbody>
-        </table>
-    </div>
-</section>
+                </thead>
+                <tbody>
+                {{#list}}
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#task-edit-modal"
+                                    data-bs-id="{{id}}"
+                                    data-bs-category-name="{{category.name}}"
+                                    data-bs-title="{{title}}"
+                                    data-bs-status="{{status}}">
+                                수정
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
+                                    data-task-id="{{id}}">삭제</button>
+                        </td>
+                        <td>{{category.name}}</td>
+                        <td>{{title}}</td>
+                        <td class="status-text" data-status="{{status}}">{{status}}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
+                                <button class="btn btn-outline-warning status-btn btn-custom" data-id="{{id}}" data-status="진행중">진행중</button>
+                                <button class="btn btn-outline-danger status-btn btn-custom" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                                <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
+                            </div>
+                        </td>
+                    </tr>
+                {{/list}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{{/statuses}}
 
 <div class="card m-2" id="todo-new">
     <div class="card-body">

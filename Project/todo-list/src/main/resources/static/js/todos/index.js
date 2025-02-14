@@ -2,7 +2,7 @@
 {
     document.addEventListener("DOMContentLoaded", function() {
         // Collapse 상태 복원 및 이벤트 등록 (먼저 실행)
-        const collapseIds = ["collapseReady", "collapseInProgress", "collapseStopped", "collapseCompleted"];
+        const collapseIds = ["collapse-준비", "collapse-진행중", "collapse-중단됨", "collapse-완료"];
         collapseIds.forEach(id => {
             // 해당 상태(id)에 따라 요소를 가져오는것 -> 저 id속성이 붙어있는 태그를 참조함
             const collapseEl = document.getElementById(id);

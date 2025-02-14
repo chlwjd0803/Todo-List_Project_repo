@@ -29,12 +29,13 @@
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <input type="radio" class="btn-check" name="categoryradio"
-                   id="categoryradio-all" data-id="0" autocomplete="off" checked>
+                   id="categoryradio-all" data-id="0" data-name="전체" autocomplete="off" checked>
             <label class="btn btn-outline-primary btn-custom" for="categoryradio-all">전체</label>
             {{#categories}}
                 <input type="radio" class="btn-check" name="categoryradio"
-                       id="categoryradio-{{name}}" data-id="{{id}}" autocomplete="off">
-                <label class="btn btn-outline-primary btn-custom" for="categoryradio-{{name}}">{{name}}</label>
+                       id="categoryradio-{{name}}" data-id="{{id}}" data-name="{{name}}" autocomplete="off">
+                <label class="btn btn-outline-primary btn-custom"
+                       for="categoryradio-{{name}}">{{name}}</label>
             {{/categories}}
             <!-- categories에 반환된 문자열을 {'{.}'}로 바로 출력가능 -->
             <!-- 카테고리를 엔티티화 시키며 {'{name}'}으로 표현(확인 꼭 하기) -->
@@ -99,16 +100,12 @@
 <div class="card m-2" id="todo-new">
     <div class="card-body">
         <!-- 할일 추가 폼 -->
-        <form action="/todos/index/add" method="post">
+        <form>
             <div class="mb-3">
-                <label for="new-category" class="form-label">카테고리</label>
-                <input type="text" class="form-control" id="new-category" name="category_name">
-            </div>
-            <div class="mb-3">
-                <label for="new-task" class="form-label">작업이름</label>
+                <label for="new-task" class="form-label">작업추가</label>
                 <input type="text" class="form-control" id="new-task" name="title">
             </div>
-            <button type="submit" class="btn btn-primary" id="task-add-btn">작업 추가</button>
+            <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
         </form>
     </div>
 </div>

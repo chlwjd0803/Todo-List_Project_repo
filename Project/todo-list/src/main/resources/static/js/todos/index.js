@@ -136,13 +136,11 @@
 
 }
 
-// 모달 이벤트 관련
 
 // 카테고리 추가
 {
     const cateAddBtn = document.querySelector("#category-add-btn");
     cateAddBtn.addEventListener("click", function() {
-        console.log("눌리고있나");
         const category = {
             name : document.querySelector("#add-category-name").value
         }
@@ -248,6 +246,39 @@
     });
 }
 
+// 작업 추가
+{
+    const taskAddBtn = document.querySelector("#task-add-btn");
+    taskAddBtn.addEventListener("click", function(){
+       const selectedCategory = document.querySelector(`input[name="categoryradio"]:checked`);
+       if(!selectedCategory){
+           alert("카테고리를 선택하여 주세요");
+           return;
+       }
+
+       const task = {
+           category_name : selectedCategory.getAttribute("data-name"),
+           title : document.querySelector("#new-task").value,
+           status : "준비"
+       }
+       console.log(task);
+
+       const url = `/api/todos/index/addTask`;
+
+       fetch(url, {
+           method: "POST",
+           headers: {
+               "Content-Type" : "application/json"
+           },
+           body: JSON.stringify(task)
+       }).then(response => {
+           const msg = (response.ok) ? "작업이 추가되었습니다." : "추가 실패";
+           alert(msg);
+           window.location.reload();
+       });
+
+    });
+}
 
 
 // 단일 작업 수정 모달 띄우기

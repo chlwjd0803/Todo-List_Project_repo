@@ -22,7 +22,8 @@ public class TodoApiController {
     @GetMapping("/api/todos/index")
     public List<Todo> index(){ return todoService.index(); }
 
-    @PostMapping("/api/todos/index")
+
+    @PostMapping("/api/todos/index/addTask")
     public ResponseEntity<Todo> addTask(@RequestBody TodoDto dto){
         Todo added = todoService.addTask(dto);
         return (added != null) ?

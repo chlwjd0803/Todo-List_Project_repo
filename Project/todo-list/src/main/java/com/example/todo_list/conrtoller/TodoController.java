@@ -67,12 +67,4 @@ public class TodoController {
 //        md.addAttribute("completedList", completedTodos);
         return "todos/index";
     }
-
-//    // 작업 추가
-//    @PostMapping("/todos/index/add")
-//    public String addTask(TodoDto dto){
-//        todoService.addTask(dto);
-//        return "redirect:/todos/index";
-//    }
-
 }

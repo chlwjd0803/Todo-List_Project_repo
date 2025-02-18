@@ -209,6 +209,8 @@
 
     cateDltBtn.addEventListener("click", function(){
         // 현재 체크되어있는 라디오를 가져오는 것, 이벤트 메소드 안에 넣어야함
+        if(!confirm("선택한 카테고리를 삭제하겠습니까?")) return;
+
         const selectedRadio = document.querySelector('input[name="categoryradio"]:checked');
         if (!selectedRadio) {
             alert("삭제할 카테고리를 선택해주세요.");
@@ -334,6 +336,7 @@
     // 삭제 버튼은 작업마다 존재하므로
     taskDltBtn.forEach(btn => {
         btn.addEventListener("click", (event) => {
+            if(!confirm("선택한 작업을 삭제하겠습니까?")) return;
             const taskDeleteBtn = event.target;
             const taskId = taskDeleteBtn.getAttribute("data-task-id");
             console.log(`${taskId}번 작업 삭제버튼 클릭하였음.`);

@@ -158,8 +158,17 @@
     });
 }
 
-
 // 카테고리 수정 모달 띄우기
+{
+    const cateEditModal = document.querySelector("#category-edit-modal");
+    cateEditModal.addEventListener("show.bs.modal", function(event){
+        const selectedRadio = document.querySelector('input[name="categoryradio"]:checked');
+        document.querySelector("#edit-category-name").value = selectedRadio.getAttribute("data-name");
+    });
+}
+
+
+// 카테고리 수정 반영
 {
     document.getElementById('category-edit-btn').addEventListener('click', function() {
         // 메인 페이지에서 선택된 카테고리 라디오 버튼 찾기

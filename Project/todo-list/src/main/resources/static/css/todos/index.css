@@ -108,5 +108,11 @@
     color: #e0e0e0;
 }
 
+.dark-mode .modal-header,
+.dark-mode .modal-body{
+    background-color: rgb(55, 55, 55);
+    color: #e0e0e0;
+}
+
 
 

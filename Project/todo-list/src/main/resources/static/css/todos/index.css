@@ -79,7 +79,34 @@
     top: 55px;
     z-index: 1000;
     background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px) !important;
 }
+
+/*다크모드*/
+.dark-mode .status-sec {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+}
+.dark-mode .status-sec table {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+}
+.dark-mode .status-sec th,
+.dark-mode .status-sec td {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+    border-color: #444; /* 테이블 경계선 색상도 조정 */
+}
+
+.dark-mode #todo-new{
+    background-color: rgba(0, 0, 0, 0.30);
+    color: #e0e0e0;
+}
+
+.dark-mode #category-menu{
+    background-color: rgba(21, 21, 21, 0.30);
+    color: #e0e0e0;
+}
+
 
 

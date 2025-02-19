@@ -4,6 +4,9 @@ import com.example.todo_list.dto.TodoDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Getter
 @Setter
@@ -23,11 +26,22 @@ public class Todo {
     private String title; //작업 제목
     @Column
     private String status; //작업 상태(준비, 진행, 중단, 완료 등 4단계로 구성 예정)
+    @Column
+    private LocalDateTime deadline;
 
     // DTO에서 카테고리 이름을 문자열로 반환받기 위함
     public String getCategoryName() {
         return category.getName();
     }
+
+    public String getDeadline(){
+        if(this.deadline == null){
+            return null;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return this.deadline.format(formatter);
+    }
+
 
     public void patch(TodoDto dto, Category editCate) {
         if(this.id != dto.getId()) throw new IllegalArgumentException("잘못된 id가 입력되었습니다.");

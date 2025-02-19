@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @AllArgsConstructor
 @ToString
 @Getter
@@ -15,6 +18,7 @@ public class TodoDto {
     private String category_name;
     private String title;
     private String status;
+    private String deadline_str;
 
 
     public static TodoDto createTodoDto(Todo todo) {
@@ -22,7 +26,8 @@ public class TodoDto {
                 todo.getId(),
                 todo.getCategoryName(),
                 todo.getTitle(),
-                todo.getStatus()
+                todo.getStatus(),
+                todo.getDeadline()
         );
     }
 
@@ -42,6 +47,13 @@ public class TodoDto {
             newCate.setName(this.category_name);
         }
 
-        return new Todo(id, newCate, this.title, this.status);
+        // String으로 받은 날짜를 Localdatetime 자료형에 맞게 변환하여야함
+        LocalDateTime deadline;
+        if(this.deadline_str != null && !this.deadline_str.isEmpty()){
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            deadline = LocalDateTime.parse(this.deadline_str, formatter);
+        } else throw new IllegalArgumentException("날짜 입력이 잘못되었음.");
+
+        return new Todo(id, newCate, this.title, this.status, deadline);
     }
 }

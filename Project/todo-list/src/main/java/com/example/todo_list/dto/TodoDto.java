@@ -52,11 +52,10 @@ public class TodoDto {
         LocalDate deadline;
 
         // 만약에 마감기한을 정해놓지 않는다면 null 값일수도 있음.
-        // 또는 도달할 수 없는 연도인 9999년을 기본값으로 설정하게 만들 수도 있음.
-        if(this.deadline_str != null && !this.deadline_str.isEmpty()){
-            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            deadline = LocalDate.parse(this.deadline_str, formatter);
-        } else throw new IllegalArgumentException("날짜 입력이 잘못되었음.");
+//        if(this.deadline_str != null && !this.deadline_str.isEmpty()){}
+
+        DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        deadline = LocalDate.parse(this.deadline_str, formatter);
 
         return new Todo(id, newCate, this.title, this.status, deadline);
     }

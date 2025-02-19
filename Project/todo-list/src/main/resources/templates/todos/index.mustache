@@ -43,7 +43,6 @@
     </div>
 </div>
 
-<!-- 각 상태 섹션을 부분 템플릿으로 포함(구현못함) -->
 {{#statuses}}
     <section class="status-sec">
         <h2>
@@ -59,6 +58,7 @@
                     <th>관리</th>
                     <th>카테고리</th>
                     <th>작업</th>
+                    <th>마감기한</th>
                     <th>상태변경</th>
                 </tr>
                 </thead>
@@ -72,7 +72,8 @@
                                     data-bs-id="{{id}}"
                                     data-bs-category-name="{{category.name}}"
                                     data-bs-title="{{title}}"
-                                    data-bs-status="{{status}}">
+                                    data-bs-status="{{status}}"
+                                    data-bs-deadline="{{deadline}}">
                                 수정
                             </button>
                             <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
@@ -81,6 +82,7 @@
                         <td>{{category.name}}</td>
                         <td>{{title}}</td>
                         <td class="status-text" data-status="{{status}}">{{status}}</td>
+                        <td>{{deadline}}</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>

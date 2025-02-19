@@ -37,7 +37,7 @@ public class Todo {
 
     public String getDeadline(){
         if(this.deadline == null){
-            return null;
+            return "기한 없음";
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return this.deadline.format(formatter);

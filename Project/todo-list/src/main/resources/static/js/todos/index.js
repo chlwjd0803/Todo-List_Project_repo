@@ -267,17 +267,18 @@
            return;
        }
 
-       // 1. 날짜가 잘 입력되었는지 확인해야함
-       // 2. 월에 맞는 일이 존재하는지 확인하여야 함
+        // 1. 날짜가 잘 입력되었는지 확인해야함
+        // 2. 월에 맞는 일이 존재하는지 확인하여야 함
 
+       const deadlineInput = document.querySelector("#deadline-date");
 
-
+       if(!deadlineInput.value || deadlineInput.value === "") deadlineInput.value = null;
 
        const task = {
            category_name : selectedCategory.getAttribute("data-name"),
            title : document.querySelector("#new-task").value,
            status : "준비",
-           deadline_str : null
+           deadline_str : deadlineInput.value
        }
        console.log(task);
 

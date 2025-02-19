@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,10 +62,6 @@ public class TodoController {
 
         md.addAttribute("categories", categories);
         md.addAttribute("statuses", statuses);
-//        md.addAttribute("readyList", readyTodos);
-//        md.addAttribute("inProgressList", inProgressTodos);
-//        md.addAttribute("stoppedList", stoppedTodos);
-//        md.addAttribute("completedList", completedTodos);
         return "todos/index";
     }
 }

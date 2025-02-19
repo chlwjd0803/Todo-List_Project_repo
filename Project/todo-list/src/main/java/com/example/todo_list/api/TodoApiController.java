@@ -41,15 +41,15 @@ public class TodoApiController {
     }
 
     @PatchMapping("/api/todos/index/editTask/{id}")
-    public ResponseEntity<TodoDto> taskEdit(@PathVariable Long id, @RequestBody TodoDto dto) {
-        TodoDto editDto = todoService.taskEdit(id, dto);
+    public ResponseEntity<TodoDto> editTask(@PathVariable Long id, @RequestBody TodoDto dto) {
+        TodoDto editDto = todoService.editTask(id, dto);
         log.info(editDto.toString());
         return ResponseEntity.status(HttpStatus.OK).body(editDto);
     }
 
     @DeleteMapping("/api/todos/index/deleteTask/{id}")
-    public ResponseEntity<TodoDto> taskDelete(@PathVariable Long id){
-        TodoDto deleteDto = todoService.taskDelete(id);
+    public ResponseEntity<TodoDto> deleteTask(@PathVariable Long id){
+        TodoDto deleteDto = todoService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);
     }
 

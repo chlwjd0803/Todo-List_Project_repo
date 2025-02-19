@@ -307,11 +307,13 @@
         const title = triggerBtn.getAttribute("data-bs-title");
         const status = triggerBtn.getAttribute("data-bs-status");
         const category_name = triggerBtn.getAttribute("data-bs-category-name");
+        const deadline = triggerBtn.getAttribute("data-bs-deadline");
 
         document.querySelector("#edit-task-id").value = id;
         document.querySelector("#edit-task-title").value = title;
         document.querySelector("#edit-task-status").value = status;
         document.querySelector("#edit-task-category-name").value = category_name;
+        document.querySelector("#edit-deadline").value = deadline;
 
     });
 }
@@ -324,7 +326,8 @@
             id : document.querySelector("#edit-task-id").value,
             title : document.querySelector("#edit-task-title").value,
             status : document.querySelector("#edit-task-status").value,
-            category_name : document.querySelector("#edit-task-category-name").value
+            category_name : document.querySelector("#edit-task-category-name").value,
+            deadline_str : document.querySelector("#edit-deadline").value
         }
         console.log(task);
 

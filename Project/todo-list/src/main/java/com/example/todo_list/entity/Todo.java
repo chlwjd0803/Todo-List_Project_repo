@@ -52,6 +52,10 @@ public class Todo {
         if(dto.getCategory_name() != null){
             this.category = editCate;
         }
+        if(dto.getDeadline_str() != null){
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            this.deadline = LocalDate.parse(dto.getDeadline_str(), formatter);
+        }
     }
 
 }

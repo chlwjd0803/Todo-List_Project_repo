@@ -64,7 +64,7 @@ public class TodoService {
     }
 
     @Transactional
-    public TodoDto taskEdit(Long id, TodoDto dto) {
+    public TodoDto editTask(Long id, TodoDto dto) {
         Todo target = todoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("수정 실패, 대상 작업이 존재하지 않습니다."));
         log.info("데이터베이스에 있는 카테고리 이름 : " + target.getCategoryName());
@@ -80,7 +80,7 @@ public class TodoService {
     }
 
     @Transactional
-    public TodoDto taskDelete(Long id) {
+    public TodoDto deleteTask(Long id) {
         Todo target = todoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("삭제 대상 id가 없습니다."));
         todoRepository.delete(target);

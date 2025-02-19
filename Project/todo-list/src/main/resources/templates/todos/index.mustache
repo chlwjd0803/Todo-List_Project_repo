@@ -99,21 +99,7 @@
     </section>
 {{/statuses}}
 
-<!--기존-->
-<!--<div class="card m-2" id="todo-new">-->
-<!--    <div class="card-body">-->
-<!--        &lt;!&ndash; 할일 추가 폼 &ndash;&gt;-->
-<!--        <form>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="new-task" class="form-label">작업추가</label>-->
-<!--                <input type="text" class="form-control" id="new-task" name="title">-->
-<!--            </div>-->
-<!--            <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--테스트-->
+<!--작업추가 컨테이너-->
 <div class="card m-2" id="todo-new">
     <div class="card-body">
         <form>
@@ -136,10 +122,6 @@
         </form>
     </div>
 </div>
-
-
-
-
 
 
 <!-- Modal -->
@@ -202,6 +184,11 @@
                     <div class="mb-3">
                         <label for="edit-task-title" class="form-label">작업이름</label>
                         <input type="text" class="form-control" id="edit-task-title">
+                    </div>
+<!--                    col-md-4, name="deadline"   ????-->
+                    <div class="mb-3">
+                        <label for="edit-deadline" class="form-label">마감일</label>
+                        <input type="date" class="form-control form-control-sm" id="edit-deadline">
                     </div>
                     <input type="hidden" id="edit-task-id">
                     <input type="hidden" id="edit-task-status">

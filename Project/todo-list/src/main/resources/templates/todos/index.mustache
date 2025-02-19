@@ -116,78 +116,25 @@
     <div class="card-body">
         <form>
             <div class="mb-3 row align-items-end">
-                <!-- 작업 제목 입력 필드: 절반 너비 -->
-                <div class="col-md-6">
+                <!-- 작업 제목 입력 필드 (6 컬럼) -->
+                <div class="col-md-5">
                     <label for="new-task" class="form-label">작업추가</label>
                     <input type="text" class="form-control" id="new-task" name="title">
                 </div>
-                <!-- 마감 기한 드롭다운: 절반 너비 -->
-                <div class="col-md-6">
-                    <label class="form-label">마감 기한</label>
-                    <div class="d-flex">
-                        <select class="form-select me-2" id="deadline-year" name="deadlineYear" style="width: 100px;">
-                            <option value="">연도</option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                        </select>
-                        <select class="form-select me-2" id="deadline-month" name="deadlineMonth" style="width: 70px;">
-                            <option value="">월</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                        </select>
-                        <select class="form-select" id="deadline-day" name="deadlineDay" style="width: 70px;">
-                            <option value="">일</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                            <option value="24">24</option>
-                            <option value="25">25</option>
-                            <option value="26">26</option>
-                            <option value="27">27</option>
-                            <option value="28">28</option>
-                            <option value="29">29</option>
-                            <option value="30">30</option>
-                            <option value="31">31</option>
-                        </select>
-                    </div>
+                <!-- 달력 선택 칸 (3 컬럼) -->
+                <div class="col-md-4">
+                    <label for="deadline-date" class="form-label">마감일</label>
+                    <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">
+                </div>
+                <!-- 추가 버튼 (3 컬럼) -->
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
         </form>
     </div>
 </div>
+
 
 
 

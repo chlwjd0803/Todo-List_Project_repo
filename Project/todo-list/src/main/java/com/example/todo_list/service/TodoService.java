@@ -22,10 +22,14 @@ public class TodoService {
     private TodoRepository todoRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    // 기존 아이디 정렬
+    // 기존 아이디 정렬, api 전송을 위해 남겨둠
     public List<Todo> index() { return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id")); }
-    // 상태별로 나누어 정렬하기 위한 오버로딩 메소드
-    public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
+
+    // 상태별로 나누어 정렬하기 위한 오버로딩 메소드, 데이터베이스 id순서 정렬
+//    public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
+
+    // 상태별로 나누어 정렬하기 위한 오버로딩 메소드, 날짜 순서 정렬
+    public List<Todo> index(String status) { return todoRepository.findByStatusOrderByDeadline(status); }
 
     public List<Category> getCategories() {
         return categoryRepository.findAll();

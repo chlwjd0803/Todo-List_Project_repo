@@ -11,7 +11,9 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     @Override
     List<Todo> findAll();
 
-    List<Todo> findByStatusOrderById(String status);
+//    List<Todo> findByStatusOrderById(String status);
 
     List<Todo> findByCategoryId(Long categoryId);
+
+    List<Todo> findByStatusOrderByDeadline(String status);
 }

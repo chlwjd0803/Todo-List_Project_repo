@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @AllArgsConstructor
 @ToString
 @Getter
@@ -15,6 +19,7 @@ public class TodoDto {
     private String category_name;
     private String title;
     private String status;
+    private String deadline_str;
 
 
     public static TodoDto createTodoDto(Todo todo) {
@@ -22,13 +27,14 @@ public class TodoDto {
                 todo.getId(),
                 todo.getCategoryName(),
                 todo.getTitle(),
-                todo.getStatus()
+                todo.getStatus(),
+                todo.getDeadline()
         );
     }
 
     public Todo toEntity(){
         // this->DTO status는 문자열 그대로 쓰되 category는 문자열에서 객체로 변환하는 방식을 사용하여야함
-        Category newCate = new Category();; // 미할당 상태로 선언
+        Category newCate = new Category(); // 미할당 상태로 선언
 
         // 카테고리 문자열이 null 이거나 빈 문자열일 경우
         // 카테고리가 미선택 되어있는 경우
@@ -42,6 +48,16 @@ public class TodoDto {
             newCate.setName(this.category_name);
         }
 
-        return new Todo(id, newCate, this.title, this.status);
+        // String으로 받은 날짜를 Localdatetime 자료형에 맞게 변환하여야함
+        LocalDate deadline;
+
+        // 만약에 마감기한을 정해놓지 않는다면 null 값일수도 있음.
+        // 또는 도달할 수 없는 연도인 9999년을 기본값으로 설정하게 만들 수도 있음.
+        if(this.deadline_str != null && !this.deadline_str.isEmpty()){
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            deadline = LocalDate.parse(this.deadline_str, formatter);
+        } else throw new IllegalArgumentException("날짜 입력이 잘못되었음.");
+
+        return new Todo(id, newCate, this.title, this.status, deadline);
     }
 }

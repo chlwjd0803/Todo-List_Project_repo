@@ -61,9 +61,10 @@
 /*작업추가 컨테이너 고정*/
 #todo-new {
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: -120px;
+    left: 35%;
+    right: 35%;
+    bottom: -80px;
+    width: auto;
     transition: bottom 0.3s ease;
     z-index: 1000;
     background-color: rgba(255, 255, 255, 0.5);

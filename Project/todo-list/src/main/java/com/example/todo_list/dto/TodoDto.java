@@ -52,10 +52,10 @@ public class TodoDto {
         LocalDate deadline;
 
         // 만약에 마감기한을 정해놓지 않는다면 null 값일수도 있음.
-//        if(this.deadline_str != null && !this.deadline_str.isEmpty()){}
-
-        DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        deadline = LocalDate.parse(this.deadline_str, formatter);
+        if(this.deadline_str != null && !this.deadline_str.isEmpty()){
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            deadline = LocalDate.parse(this.deadline_str, formatter);
+        } else deadline = null;
 
         return new Todo(id, newCate, this.title, this.status, deadline);
     }

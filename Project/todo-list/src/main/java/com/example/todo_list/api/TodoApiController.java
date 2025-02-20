@@ -14,16 +14,18 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequestMapping("/api/todos/index")
+// 공통되는 부분들은 묶어버림
 public class TodoApiController {
 
     @Autowired
     private TodoService todoService;
 
-    @GetMapping("/api/todos/index")
+    @GetMapping("")
     public List<Todo> index(){ return todoService.index(); }
 
 
-    @PostMapping("/api/todos/index/addTask")
+    @PostMapping("/addTask")
     public ResponseEntity<Todo> addTask(@RequestBody TodoDto dto){
         Todo added = todoService.addTask(dto);
         return (added != null) ?
@@ -31,7 +33,7 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping("/api/todos/index/updateStatus/{id}")
+    @PostMapping("/updateStatus/{id}")
     public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
         String newStatus = request.get("status");
         String updatedStat = todoService.updateStatus(id, newStatus);
@@ -40,14 +42,14 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PatchMapping("/api/todos/index/editTask/{id}")
+    @PatchMapping("/editTask/{id}")
     public ResponseEntity<TodoDto> editTask(@PathVariable Long id, @RequestBody TodoDto dto) {
         TodoDto editDto = todoService.editTask(id, dto);
         log.info(editDto.toString());
         return ResponseEntity.status(HttpStatus.OK).body(editDto);
     }
 
-    @DeleteMapping("/api/todos/index/deleteTask/{id}")
+    @DeleteMapping("/deleteTask/{id}")
     public ResponseEntity<TodoDto> deleteTask(@PathVariable Long id){
         TodoDto deleteDto = todoService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequestMapping("/todos")
 public class TodoController {
     @Autowired
     private TodoRepository todoRepository;
@@ -30,12 +32,12 @@ public class TodoController {
     private CategoryRepository categoryRepository;
 
     // 시작화면 테스트중
-    @GetMapping("/todos/start")
+    @GetMapping("/start")
     public String start(){
         return "/todos/start";
     }
 
-    @GetMapping("/todos/calendar")
+    @GetMapping("/calendar")
     public String calendar(){
         return "/todos/calendar";
     }
@@ -46,7 +48,7 @@ public class TodoController {
 //    }
 
     // 전체 목록 보기
-    @GetMapping("/todos/index")
+    @GetMapping("/index")
     public String index(Model md){
         List<Category> categories = todoService.getCategories();
         List<Todo> readyTodos = todoService.index("준비");

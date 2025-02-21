@@ -42,6 +42,16 @@ public class TodoController {
         return "/todos/calendar";
     }
 
+    @GetMapping("/login")
+    public String login(){
+        return "/todos/login";
+    }
+
+    @GetMapping("/signup")
+    public String signup(){
+        return "/todos/signup";
+    }
+
 //    @GetMapping("/todos/statistic")
 //    public String statistic(){
 //        return "/todos/statistic";

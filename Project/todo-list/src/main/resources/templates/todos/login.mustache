@@ -1,0 +1,37 @@
+{{>layouts/header}}
+
+<style>
+    /* 로그인 페이지 전용 스타일 */
+    .login-container {
+        /*max-width: 400px;*/
+        /*max-height: 700px;*/
+        width: 400px;
+        height: 400px;
+        padding: 2rem;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    body {
+        background: #f8f9fa;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="login-container">
+        <h2 class="mb-4 text-center">로그인</h2>
+        <form action="/todos/login" method="post">
+            <div class="mb-3">
+                <label for="email" class="form-label">이메일 주소</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">로그인</button>
+        </form>
+    </div>
+</div>
+
+{{>layouts/footer}}

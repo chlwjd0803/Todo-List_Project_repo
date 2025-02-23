@@ -1,21 +1,38 @@
 {{>layouts/header}}
 
 <style>
-    /* 로그인 페이지 전용 스타일 */
+    /* 배경 영상 스타일 */
+    body {
+        background: none;
+        overflow: hidden; /* 배경 영상 때문에 불필요한 스크롤 방지 */
+    }
+    .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        z-index: -1;
+        object-fit: cover;
+    }
+    /* 로그인 컨테이너 스타일 */
     .login-container {
-        /*max-width: 400px;*/
-        /*max-height: 700px;*/
-        width: 400px;
-        height: 400px;
+        box-sizing: border-box;
+        width: 90%;
+        min-height: 50vh;
         padding: 2rem;
-        background: #fff;
+        background: rgba(255, 255, 255, 0.85); /* 반투명 배경 */
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    body {
-        background: #f8f9fa;
+        color: black !important;
     }
 </style>
+
+<!-- 배경 영상 -->
+<video class="video-bg" autoplay loop muted>
+    <source src="/videos/login.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="login-container">

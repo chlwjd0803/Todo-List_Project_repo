@@ -1,10 +1,8 @@
 .status-text {
     display: none;
 }
-/* 여백을 줄여서 전체 공간을 콤팩트하게 */
-.status-sec {
-    margin: 20px;
-}
+
+
 /* 테이블 너비 축소 */
 .fixed-table {
     table-layout: fixed;

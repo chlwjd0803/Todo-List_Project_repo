@@ -1,118 +1,120 @@
 {{>layouts/header}}
 
+<!-- css파일 분리 -->
 <link rel="stylesheet" type="text/css" href="/css/todos/index.css">
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- 왼쪽 사이드바: 카테고리 선택 -->
-        <div class="col-md-3" id="sidebar">
-            <div class="card mb-3" id="category-menu">
-                <div class="card-header">
-                    카테고리
-                    <button type="button" class="btn btn-sm btn-outline-success category-add-btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#category-add-modal">
-                        추가
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-primary category-edit-btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#category-edit-modal">
-                        수정
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-danger category-delete-btn">
-                        삭제
-                    </button>
-                </div>
-                <div class="card-body">
-                    <!-- 세로 정렬을 위해 btn-group 대신 btn-group-vertical 사용 -->
-                    <div class="btn-group-vertical w-100" role="group" aria-label="카테고리 선택 그룹">
-                        <input type="radio" class="btn-check" name="categoryradio"
-                               id="categoryradio-all" data-id="0" data-name="전체" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary btn-custom" for="categoryradio-all">전체</label>
-                        {{#categories}}
-                            <input type="radio" class="btn-check" name="categoryradio"
-                                   id="categoryradio-{{name}}" data-id="{{id}}" data-name="{{name}}" autocomplete="off">
-                            <label class="btn btn-outline-primary btn-custom" for="categoryradio-{{name}}">{{name}}</label>
-                        {{/categories}}
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- 오른쪽 메인 콘텐츠: 작업 리스트 및 상태 -->
-        <div class="col-md-9" id="main-content">
-            {{#statuses}}
-                <section class="status-sec">
-                    <h2>
-                        <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"
-                           role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">
-                            {{status_name}}
-                        </a>
-                    </h2>
-                    <div class="collapse show" id="collapse-{{status_name}}">
-                        <table class="table fixed-table">
-                            <thead>
-                            <tr>
-                                <th>관리</th>
-                                <th>카테고리</th>
-                                <th>작업</th>
-                                <th>마감기한</th>
-                                <th>상태변경</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#list}}
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#task-edit-modal"
-                                                data-bs-id="{{id}}"
-                                                data-bs-category-name="{{category.name}}"
-                                                data-bs-title="{{title}}"
-                                                data-bs-status="{{status}}"
-                                                data-bs-deadline="{{deadline}}">
-                                            수정
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                                data-task-id="{{id}}">삭제</button>
-                                    </td>
-                                    <td>{{category.name}}</td>
-                                    <td>{{title}}</td>
-                                    <td class="status-text" data-status="{{status}}">{{status}}</td>
-                                    <td>{{deadline}}</td>
-                                    <td>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
-                                            <button class="btn btn-outline-warning status-btn btn-custom" data-id="{{id}}" data-status="진행중">진행중</button>
-                                            <button class="btn btn-outline-danger status-btn btn-custom" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                                            <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            {{/list}}
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            {{/statuses}}
+<!-- 카테고리 선택 카드 -->
+<div class="card mb-3" id="category-menu">
+    <div class="card-header">
+        카테고리
+
+        <button type="button" class="btn btn-sm btn-outline-success category-add-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#category-add-modal">
+            추가
+        </button>
+
+        <button type="button" class="btn btn-sm btn-outline-primary category-edit-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#category-edit-modal">
+            수정
+        </button>
+
+        <button type="button" class="btn btn-sm btn-outline-danger category-delete-btn">
+            삭제
+        </button>
+
+    </div>
+    <div class="card-body">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="categoryradio"
+                   id="categoryradio-all" data-id="0" data-name="전체" autocomplete="off" checked>
+            <label class="btn btn-outline-primary btn-custom" for="categoryradio-all">전체</label>
+            {{#categories}}
+                <input type="radio" class="btn-check" name="categoryradio"
+                       id="categoryradio-{{name}}" data-id="{{id}}" data-name="{{name}}" autocomplete="off">
+                <label class="btn btn-outline-primary btn-custom"
+                       for="categoryradio-{{name}}">{{name}}</label>
+            {{/categories}}
+            <!-- categories에 반환된 문자열을 {'{.}'}로 바로 출력가능 -->
+            <!-- 카테고리를 엔티티화 시키며 {'{name}'}으로 표현(확인 꼭 하기) -->
         </div>
     </div>
 </div>
 
-<!-- 작업추가 컨테이너 -->
+{{#statuses}}
+    <section class="status-sec">
+        <h2>
+            <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"
+               role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">
+                {{status_name}}
+            </a>
+        </h2>
+        <div class="collapse show" id="collapse-{{status_name}}">
+            <table class="table fixed-table">
+                <thead>
+                <tr>
+                    <th>관리</th>
+                    <th>카테고리</th>
+                    <th>작업</th>
+                    <th>마감기한</th>
+                    <th>상태변경</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#list}}
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#task-edit-modal"
+                                    data-bs-id="{{id}}"
+                                    data-bs-category-name="{{category.name}}"
+                                    data-bs-title="{{title}}"
+                                    data-bs-status="{{status}}"
+                                    data-bs-deadline="{{deadline}}">
+                                수정
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
+                                    data-task-id="{{id}}">삭제</button>
+                        </td>
+                        <td>{{category.name}}</td>
+                        <td>{{title}}</td>
+                        <td class="status-text" data-status="{{status}}">{{status}}</td>
+                        <td>{{deadline}}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
+                                <button class="btn btn-outline-warning status-btn btn-custom" data-id="{{id}}" data-status="진행중">진행중</button>
+                                <button class="btn btn-outline-danger status-btn btn-custom" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                                <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
+                            </div>
+                        </td>
+                    </tr>
+                {{/list}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{{/statuses}}
+
+<!--작업추가 컨테이너-->
 <div class="card m-2" id="todo-new">
     <div class="card-body">
         <form>
             <div class="mb-3 row align-items-end">
+                <!-- 작업 제목 입력 필드 (6 컬럼) -->
                 <div class="col-md-5">
                     <label for="new-task" class="form-label">작업추가</label>
                     <input type="text" class="form-control" id="new-task" name="title">
                 </div>
+                <!-- 달력 선택 칸 (3 컬럼) -->
                 <div class="col-md-4">
                     <label for="deadline-date" class="form-label">마감일</label>
                     <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">
                 </div>
+                <!-- 추가 버튼 (3 컬럼) -->
                 <div class="col-md-3">
                     <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
                 </div>
@@ -121,8 +123,83 @@
     </div>
 </div>
 
-<!-- Modal들 (카테고리 추가, 수정, 작업 수정 등) -->
-<!-- [모달 관련 코드는 기존 그대로 유지] -->
 
+<!-- Modal -->
+<!-- 카테고리 추가 모달 -->
+<div class="modal fade" id="category-add-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">카테고리 추가</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="add-category-name" class="form-label">카테고리 이름</label>
+                        <input type="text" class="form-control" id="add-category-name">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="category-add-btn">추가하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 카테고리 수정 모달 -->
+<div class="modal fade" id="category-edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">카테고리 수정</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="edit-category-name" class="form-label">변경할 이름</label>
+                        <input type="text" class="form-control" id="edit-category-name">
+                    </div>
+                    <button type="button" class="btn btn-primary" id="category-edit-btn">수정하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 작업수정 모달 -->
+<div class="modal fade" id="task-edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">작업 이름 수정</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="edit-task-category-name" class="form-label">카테고리(존재하는 카테고리만 입력)</label>
+                        <input type="text" class="form-control" id="edit-task-category-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-task-title" class="form-label">작업이름</label>
+                        <input type="text" class="form-control" id="edit-task-title">
+                    </div>
+                    <!--                    col-md-4, name="deadline"   ????-->
+                    <div class="mb-3">
+                        <label for="edit-deadline" class="form-label">마감일</label>
+                        <input type="date" class="form-control form-control-sm" id="edit-deadline">
+                    </div>
+                    <input type="hidden" id="edit-task-id">
+                    <input type="hidden" id="edit-task-status">
+                    <button type="button" class="btn btn-primary" id="task-edit-btn">수정하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js파일 분리 -->
 <script src="/js/todos/index.js"></script>
+
 {{>layouts/footer}}

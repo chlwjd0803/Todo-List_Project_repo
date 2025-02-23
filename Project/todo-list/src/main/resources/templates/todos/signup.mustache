@@ -1,27 +1,43 @@
 {{>layouts/header}}
 
 <style>
-    /* 회원가입 페이지 전용 스타일 */
+    /* 배경 영상 스타일 */
+    body {
+        background: none;
+        overflow: hidden; /* 배경 영상 때문에 스크롤이 생기지 않도록 */
+    }
+    .video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100vw;
+        min-height: 100vh;
+        z-index: -1;
+        object-fit: cover;
+    }
+    /* 회원가입 컨테이너 스타일 */
     .signup-container {
-        max-width: 500px;
-        max-height: 800px;
+        box-sizing: border-box;
         width: 90%;
-        height: 50%;
+        min-height: 50vh;
         padding: 2rem;
-        background: #fff;
+        background: rgba(255, 255, 255, 0.85); /* 반투명 배경 */
         border-radius: 10px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        font-color: black !important;
-    }
-    body {
-        background: #e9ecef;
+        color: black !important;
     }
 </style>
+
+<!-- 배경 영상 -->
+<video class="video-bg" autoplay loop muted>
+    <source src="/videos/signup.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="signup-container">
         <h2 class="mb-4 text-center">회원가입</h2>
-        <form action="/todos/signup" method="post">
+        <form action="/api/todos/signup" method="post">
             <div class="mb-3">
                 <label for="username" class="form-label">사용자 이름</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="사용자 이름을 입력하세요" required>

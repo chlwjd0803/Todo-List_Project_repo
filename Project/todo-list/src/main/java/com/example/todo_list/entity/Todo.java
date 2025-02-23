@@ -23,6 +23,9 @@ public class Todo {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @ManyToOne
+    @JoinColumn(name = "user_id") // 해당 작업은 유저 하나에 속하기 때문
+    private User user;
     @Column
     private String title; //작업 제목
     @Column

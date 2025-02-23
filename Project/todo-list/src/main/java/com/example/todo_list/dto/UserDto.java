@@ -1,5 +1,6 @@
 package com.example.todo_list.dto;
 
+import com.example.todo_list.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -12,6 +13,10 @@ public class UserDto {
     private String username;
     private String password;
     private String email;
+
+    public User toEntity() {
+        return null;
+    }
 
 
     // 보안과 관련된 고려사항

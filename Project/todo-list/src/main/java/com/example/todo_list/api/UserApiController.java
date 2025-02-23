@@ -16,8 +16,8 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
-//    @PostMapping("/signup")
-//    public void signup(@RequestBody UserDto dto) {
-//        User added = userService.signup(dto);
-//    }
+    @PostMapping("/signup")
+    public void signup(@RequestBody UserDto dto) {
+        User added = userService.signup(dto);
+    }
 }

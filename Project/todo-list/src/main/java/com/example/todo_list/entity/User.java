@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +29,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    @OneToMany(mappedBy = "user") // 유저에게 속한 투두들을 들고오기위함
+    private List<Todo> todos;
 
 
     // 추후 개발 예정, 일단 모두 null값을 가질 것

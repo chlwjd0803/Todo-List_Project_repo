@@ -9,11 +9,28 @@
 .fixed-table {
     table-layout: fixed;
     width: 100%;
+    border-collapse: separate;      /* 기본 경계선 분리 */
+    border-spacing: 0 10px;           /* 행 간격 10px 추가 */
 }
 .fixed-table th, .fixed-table td {
     padding: 0.4rem;
     word-wrap: break-word;  /* 내용이 넘치지 않도록 줄바꿈 */
+    border: 1px solid #dee2e6;        /* 얇은 회색 경계선 */
 }
+/* 헤더 패딩 및 폰트 스타일 조절 */
+.fixed-table thead th {
+    padding: 1rem;                  /* 헤더 여백 증가 */
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f8f9fa;        /* 헤더 배경색 */
+}
+/* 본문 패딩 조절 */
+.fixed-table tbody td {
+    padding: 0.5rem;                /* 본문 여백 조절 */
+    font-size: 14px;
+}
+
+
 .task-delete-btn, .task-edit-btn{
     margin-top: 2%;
 }
@@ -82,6 +99,50 @@
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px) !important;
 }
+
+/* 테이블 헤더 스타일: 더 큰 글꼴과 굵은 텍스트, 구분되는 배경색 */
+.fixed-table thead th {
+    font-size: 16px;         /* 헤더 텍스트 크기 증가 */
+    font-weight: bold;       /* 굵은 글씨 */
+    background-color: #f8f9fa; /* 밝은 배경으로 헤더 강조 */
+    border-bottom: 2px solid #dee2e6; /* 하단 경계선으로 구분 */
+    padding: 0.8rem;         /* 여백 증가로 읽기 쉽게 */
+}
+
+/* 테이블 본문 스타일: 조금 작은 글꼴과 적당한 여백 */
+.fixed-table tbody td {
+    font-size: 14px;         /* 본문 텍스트 크기 */
+    padding: 0.4rem;         /* 본문 여백 */
+}
+
+/* 카테고리 셀 스타일: 필요에 따라 색상이나 폰트 스타일을 조정 */
+.category-cell {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+/* 카드 컴포넌트 (예: 카테고리 메뉴)의 여백 및 경계선 조절 */
+.card {
+    margin: 15px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+
+/* 왼쪽 사이드바 스타일 */
+#sidebar {
+    padding: 15px;
+}
+
+/* 사이드바의 카테고리 카드의 너비를 100%로 설정 */
+#sidebar #category-menu {
+    width: 100%;
+}
+
+
+
+
 
 /*다크모드*/
 .dark-mode .status-sec {

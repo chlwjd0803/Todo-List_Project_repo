@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // 필요한 경우 CSRF 보호 설정 조정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/todos/signup").permitAll()  // 회원가입은 누구나 접근 가능
+                        .requestMatchers("/api/todos/login").permitAll()
                         .requestMatchers("/todos/start").permitAll()
                         .requestMatchers("/todos/login").permitAll()
                         .requestMatchers("/todos/signup").permitAll()
@@ -33,12 +34,12 @@ public class SecurityConfig {
                         .requestMatchers("/images/**").permitAll()
 
 
-                        // 임시로 열어둠
-                        .requestMatchers("/todos/index/**").permitAll()
-                        .requestMatchers("/api/todos/index/**").permitAll()
-                        .requestMatchers("/js/**").permitAll()
-                        .requestMatchers("/css/**").permitAll()
-                        .anyRequest().authenticated()  // 그 외는 인증 필요
+//                        // 임시로 열어둠
+//                        .requestMatchers("/todos/index/**").permitAll()
+//                        .requestMatchers("/api/todos/index/**").permitAll()
+//                        .requestMatchers("/js/**").permitAll()
+//                        .requestMatchers("/css/**").permitAll()
+//                        .anyRequest().authenticated()  // 그 외는 인증 필요
                 )
                 .formLogin(form -> form
                 .loginPage("/todos/login")  // 커스텀 로그인 페이지 경로

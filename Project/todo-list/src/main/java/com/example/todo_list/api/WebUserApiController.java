@@ -25,4 +25,13 @@ public class WebUserApiController {
                 ResponseEntity.status(HttpStatus.OK).body(added)
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody WebUserDto dto) {
+        String token = webUserService.login(dto);
+
+        return (token != null) ?
+                ResponseEntity.status(HttpStatus.OK).body(token)
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 }

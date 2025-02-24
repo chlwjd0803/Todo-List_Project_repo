@@ -1,5 +1,6 @@
 package com.example.todo_list.service;
 
+import com.example.todo_list.JwtUtil;
 import com.example.todo_list.dto.WebUserDto;
 import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.repository.WebUserRepository;
@@ -15,6 +16,8 @@ public class WebUserService {
     private WebUserRepository webUserRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public WebUser signup(WebUserDto dto) {
         if(webUserRepository.existsByUsername(dto.getUsername())){
@@ -34,5 +37,18 @@ public class WebUserService {
         webUser.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         return webUserRepository.save(webUser);
+    }
+
+    public String login(WebUserDto dto) {
+        WebUser user = webUserRepository.findByUsername(dto.getUsername());
+        if(user == null){
+            log.info("사용자정보가 없습니다.");
+            return null;
+        }
+        if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())){
+            log.info("비밀번호가 틀렸습니다.");
+            return null;
+        }
+        return jwtUtil.generateToken(user);
     }
 }

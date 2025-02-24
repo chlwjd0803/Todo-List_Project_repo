@@ -68,12 +68,23 @@
                     "Content-Type" : "application/json"
                 },
                 body: JSON.stringify(user)
-            }).then(response => {
-                const msg = (response.ok) ? "로그인에 성공했습니다." : "아이디 또는 비밀번호가 일치하지 않습니다.";
-                alert(msg);
-                window.location.reload();
+            }).then(response => response.text())  // 토큰이 문자열로 반환되므로 response.text() 사용
+                    .then(token => {
+                        if(token) {
+                            // 토큰 저장 (예: localStorage 사용)
+                            localStorage.setItem("jwtToken", token);
+                            console.log("저장된 토큰:", token);
+                            alert("로그인에 성공했습니다.");
+                            window.location.href = "/todos/index";  // 로그인 후 할일 페이지로 이동
+                        } else {
+                            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+                        }
+                    }).catch(error => {
+                console.error("로그인 실패", error);
+                alert("로그인 과정에서 오류가 발생했습니다.");
             });
-        })
+        });
+
     }
 </script>
 

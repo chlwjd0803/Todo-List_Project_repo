@@ -37,7 +37,7 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="signup-container">
         <h2 class="mb-4 text-center">회원가입</h2>
-        <form action="/api/todos/signup" method="post">
+        <form id="signupForm">
             <div class="mb-3">
                 <label for="username" class="form-label">사용자 이름</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="사용자 이름을 입력하세요" required>
@@ -54,13 +54,45 @@
                 <label for="confirmPassword" class="form-label">비밀번호 확인</label>
                 <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="비밀번호를 다시 입력하세요" required>
             </div>
-            <button type="submit" class="btn btn-success w-100">회원가입</button>
+            <button id="signup-Button" type="button" class="btn btn-success w-100">회원가입</button>
         </form>
     </div>
 </div>
 
 <script>
+    {
+        const signupBtn = document.querySelector("#signup-Button");
+        signupBtn.addEventListener("click", function(){
+            const pw = document.getElementById("password").value;
+            const cpw = document.getElementById("confirmPassword").value;
+            if(pw !== cpw){
+                alert("비밀번호 확인이 일치하지 않습니다.");
+                return;
+            }
 
+            const user = {
+                username : document.querySelector("#username").value,
+                password : document.querySelector("#password").value,
+                email : document.querySelector("#email").value
+            }
+
+
+            const url = `/api/todos/signup`;
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify(user)
+            }).then(response => {
+                const msg = (response.ok) ? "회원가입에 성공했습니다." : "아이디 또는 이메일이 중복되었습니다.";
+                alert(msg);
+                window.location.reload();
+            });
+
+        });
+    }
 </script>
 
 {{>layouts/footer}}

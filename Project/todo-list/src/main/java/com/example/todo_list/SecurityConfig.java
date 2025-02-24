@@ -30,6 +30,14 @@ public class SecurityConfig {
                         .requestMatchers("/todos/login").permitAll()
                         .requestMatchers("/todos/signup").permitAll()
                         .requestMatchers("/videos/**").permitAll()  // 정적 비디오 파일에 대한 접근 허용
+                        .requestMatchers("/images/**").permitAll()
+
+
+                        // 임시로 열어둠
+                        .requestMatchers("/todos/index/**").permitAll()
+                        .requestMatchers("/api/todos/index/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
                         .anyRequest().authenticated()  // 그 외는 인증 필요
                 )
                 .formLogin(form -> form

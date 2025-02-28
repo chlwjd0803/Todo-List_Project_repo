@@ -3,7 +3,9 @@ package com.example.todo_list;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -37,13 +39,13 @@ public class SecurityConfig {
                         .requestMatchers("/todos/signup").permitAll()
                         .requestMatchers("/videos/**").permitAll()  // 정적 비디오 파일에 대한 접근 허용
                         .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
 
 
 //                        // 임시로 열어둠
 //                        .requestMatchers("/todos/index/**").permitAll()
 //                        .requestMatchers("/api/todos/index/**").permitAll()
 //                        .requestMatchers("/js/**").permitAll()
-//                        .requestMatchers("/css/**").permitAll()
 //                        .anyRequest().authenticated()  // 그 외는 인증 필요
                 )
                 .formLogin(form -> form
@@ -54,5 +56,10 @@ public class SecurityConfig {
         http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }

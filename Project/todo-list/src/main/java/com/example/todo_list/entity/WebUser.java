@@ -22,6 +22,8 @@ public class WebUser {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
+    @Column
+    private WebUserRole role;
 
 //    @Enumerated(EnumType.STRING)
 //    @Column(nullable = false)

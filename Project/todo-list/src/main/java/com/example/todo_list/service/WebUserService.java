@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Slf4j
 public class WebUserService {
@@ -40,11 +42,12 @@ public class WebUserService {
     }
 
     public String login(WebUserDto dto) {
-        WebUser user = webUserRepository.findByUsername(dto.getUsername());
-        if(user == null){
+        Optional<WebUser> op_user = webUserRepository.findByEmail(dto.getEmail());
+        if(op_user.isEmpty()){
             log.info("사용자정보가 없습니다.");
             return null;
         }
+        WebUser user = op_user.get();
         if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())){
             log.info("비밀번호가 틀렸습니다.");
             return null;

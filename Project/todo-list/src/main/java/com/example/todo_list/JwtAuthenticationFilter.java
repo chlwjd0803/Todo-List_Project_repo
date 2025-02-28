@@ -3,17 +3,21 @@ package com.example.todo_list;
 import java.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.util.Arrays;
 
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
@@ -37,7 +41,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 // 3. 토큰으로부터 사용자 이름 추출
                 String username = jwtUtil.getUsernameFromToken(token);
-                // 실제 서비스에서는 username으로 UserDetails를 로드하여 권한 정보를 포함한 Authentication 객체를 생성해야 합니다.
+
+                log.info(username);
+
+                // 실제 서비스에서는 username으로 UserDetails를 로드하여 권한 정보를 포함한 Authentication 객체를 생성해야 함.
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(username, null, Arrays.asList());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -57,6 +64,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
+        }
+
+        // 쿠키에서 토큰 가져오기
+        if (request.getCookies() != null){
+            for(Cookie cookie : request.getCookies()){
+                if("jwtToken".equals(cookie.getName())){
+                    return cookie.getValue();
+                }
+            }
         }
         return null;
     }

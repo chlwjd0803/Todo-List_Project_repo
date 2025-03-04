@@ -42,11 +42,11 @@ public class SecurityConfig {
                         .requestMatchers("/css/**").permitAll()
 
 
-//                        // 임시로 열어둠
-//                        .requestMatchers("/todos/index/**").permitAll()
-//                        .requestMatchers("/api/todos/index/**").permitAll()
-//                        .requestMatchers("/js/**").permitAll()
-//                        .anyRequest().authenticated()  // 그 외는 인증 필요
+                        // 임시로 열어둠
+                        .requestMatchers("/todos/index/**").permitAll()
+                        .requestMatchers("/api/todos/index/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
+                        .anyRequest().authenticated()  // 그 외는 인증 필요
                 )
                 .formLogin(form -> form
                 .loginPage("/todos/login")  // 커스텀 로그인 페이지 경로

@@ -42,7 +42,7 @@ public class WebUserService {
     }
 
     public String login(WebUserDto dto) {
-        Optional<WebUser> op_user = webUserRepository.findByEmail(dto.getEmail());
+        Optional<WebUser> op_user = webUserRepository.findByUsername(dto.getUsername());
         if(op_user.isEmpty()){
             log.info("사용자정보가 없습니다.");
             return null;

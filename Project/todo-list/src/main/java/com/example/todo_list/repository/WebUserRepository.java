@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WebUserRepository extends JpaRepository<WebUser, Long> {
-    WebUser findByUsername(String username);
+    Optional<WebUser> findByUsername(String username);
 
     boolean existsByUsername(String username);
 

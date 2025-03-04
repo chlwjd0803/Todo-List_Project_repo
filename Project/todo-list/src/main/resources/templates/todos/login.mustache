@@ -39,8 +39,8 @@
         <h2 class="mb-4 text-center">로그인</h2>
         <form id="loginForm">
             <div class="mb-3">
-                <label for="email" class="form-label">이메일</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
+                <label for="username" class="form-label">사용자 이름</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="사용자 이름을 입력하세요" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">비밀번호</label>
@@ -60,7 +60,7 @@
         const loginBtn = document.querySelector("#login-Button");
         loginBtn.addEventListener("click", function(){
             const user = {
-                email : document.querySelector("#email").value,
+                username : document.querySelector("#username").value,
                 password : document.querySelector("#password").value
             }
 

@@ -2,6 +2,8 @@ package com.example.todo_list.service;
 
 import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.repository.WebUserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

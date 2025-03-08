@@ -52,8 +52,8 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">준비 중</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/todos/login">로그인</a>
+                <li class="nav-item" id="login-logout">
+                    <!-- 동적으로 로그인 또는 로그아웃 표시 -->
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <div class="form-check form-switch">
@@ -69,24 +69,51 @@
 
 
 <script>
-    const toggle = document.getElementById('darkModeToggle');
-    const currentTheme = localStorage.getItem('theme');
+    {
+        const toggle = document.getElementById('darkModeToggle');
+        const currentTheme = localStorage.getItem('theme');
 
-    // 이전에 저장된 테마가 있다면 적용
-    if (currentTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-        toggle.checked = true;
+        // 이전에 저장된 테마가 있다면 적용
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            toggle.checked = true;
+        }
+
+        toggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
     }
 
-    toggle.addEventListener('change', function() {
-        if (this.checked) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
+    {
+        // 로컬 스토리지에서 JWT 토큰을 확인
+        const loginLogoutItem = document.getElementById('login-logout');
+        const token = localStorage.getItem('jwtToken');
+
+        if (token) {
+            // 로그인 상태인 경우 로그아웃 버튼 표시
+            loginLogoutItem.innerHTML = `<a class="nav-link" href="#" id="logoutBtn">로그아웃</a>`;
         } else {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light');
+            // 로그인 상태가 아닌 경우 로그인 버튼 표시
+            loginLogoutItem.innerHTML = `<a class="nav-link" href="/todos/login">로그인</a>`;
         }
-    });
+
+        // 로그아웃 버튼 이벤트 설정
+        const logoutBtn = document.getElementById('logoutBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('jwtToken'); // 토큰 삭제
+                window.location.href = '/todos/start';  // 로그인 페이지로 이동
+            });
+        }
+    }
+
 </script>
 
 

@@ -3,6 +3,7 @@ package com.example.todo_list.api;
 import com.example.todo_list.dto.WebUserDto;
 import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.service.WebUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/todos")
+@Slf4j
 
 public class WebUserApiController {
     @Autowired
@@ -44,5 +46,15 @@ public class WebUserApiController {
         // 쿠키 저장을 위하여 헤더부분 추가
         return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(token);
 
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+
+        ResponseCookie cookie = webUserService.logout();
+        log.info("로그아웃 백엔드 컨트롤러");
+
+        return (cookie != null) ? ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body("로그아웃 성공")
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("로그아웃 오류");
     }
 }

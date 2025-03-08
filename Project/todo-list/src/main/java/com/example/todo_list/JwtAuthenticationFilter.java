@@ -59,7 +59,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // 4. SecurityContext에 인증 정보 저장
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception ex) {
-                log.info("오류?");
                 logger.error("JWT 인증 실패: " + ex.getMessage());
             }
         }

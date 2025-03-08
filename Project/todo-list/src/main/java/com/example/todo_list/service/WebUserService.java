@@ -6,6 +6,7 @@ import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.repository.WebUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +54,13 @@ public class WebUserService {
             return null;
         }
         return jwtUtil.generateToken(user);
+    }
+
+    public ResponseCookie logout() {
+        return ResponseCookie.from("jwtToken", "")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(0)
+                .build();
     }
 }

@@ -108,8 +108,17 @@
         if (logoutBtn) {
             logoutBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                localStorage.removeItem('jwtToken'); // 토큰 삭제
-                window.location.href = '/todos/start';  // 로그인 페이지로 이동
+                // 로컬 토큰 삭제
+                localStorage.removeItem('jwtToken');
+
+                const url = "/api/todos/logout"
+
+                fetch(url, {
+                    method: "POST"
+                }).then(response => {
+                    // 시작 페이지로 이동
+                    window.location.href = '/todos/start';
+                })
             });
         }
     }

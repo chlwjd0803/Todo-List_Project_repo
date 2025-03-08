@@ -1,5 +1,6 @@
 package com.example.todo_list;
 
+import com.example.todo_list.service.UserSecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,9 @@ public class SecurityConfig {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserSecurityService userSecurityService;
 
     // 비밀번호 암호화를 위한 PasswordEncoder 빈 등록
     @Bean
@@ -42,10 +46,10 @@ public class SecurityConfig {
                         .requestMatchers("/css/**").permitAll()
 
 
-                        // 임시로 열어둠
-                        .requestMatchers("/todos/index/**").permitAll()
-                        .requestMatchers("/api/todos/index/**").permitAll()
-                        .requestMatchers("/js/**").permitAll()
+//                        // 임시로 열어둠
+//                        .requestMatchers("/todos/index/**").permitAll()
+//                        .requestMatchers("/api/todos/index/**").permitAll()
+//                        .requestMatchers("/js/**").permitAll()
                         .anyRequest().authenticated()  // 그 외는 인증 필요
                 )
                 .formLogin(form -> form
@@ -53,7 +57,7 @@ public class SecurityConfig {
                 .permitAll()
                 );
 
-        http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userSecurityService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

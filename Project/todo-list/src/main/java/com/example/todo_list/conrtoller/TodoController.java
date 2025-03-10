@@ -62,14 +62,10 @@ public class TodoController {
     public String index(Model md){
         List<Category> categories = todoService.getCategories();
         List<Todo> readyTodos = todoService.index("준비");
-        List<Todo> inProgressTodos = todoService.index("진행중");
-        List<Todo> stoppedTodos = todoService.index("중단됨");
         List<Todo> completedTodos = todoService.index("완료");
 
         List<StatusGroup> statuses = new ArrayList<>();
         statuses.add(new StatusGroup("준비", readyTodos));
-        statuses.add(new StatusGroup("진행중", inProgressTodos));
-        statuses.add(new StatusGroup("중단됨", stoppedTodos));
         statuses.add(new StatusGroup("완료", completedTodos));
 
         md.addAttribute("categories", categories);

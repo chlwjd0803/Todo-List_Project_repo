@@ -29,7 +29,7 @@ public class Todo {
     @Column
     private String title; //작업 제목
     @Column
-    private String status; //작업 상태(준비, 진행, 중단, 완료 등 4단계로 구성 예정)
+    private String status; //작업 상태(준비, 완료 두 가지 구성만 사용할것)
     @Column
     private LocalDate deadline;
 

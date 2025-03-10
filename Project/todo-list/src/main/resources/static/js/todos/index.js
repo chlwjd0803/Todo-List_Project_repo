@@ -123,7 +123,43 @@
                     body: JSON.stringify(task)
                 }).then(response => {
                     if (response.ok) {
-                        window.location.reload();
+                        // window.location.reload();
+
+                        // 클릭한 버튼이 속한 작업의 행을 가져옴
+                        const row = this.closest('tr');
+
+                        // 예시: 상태 텍스트의 data-status 속성을 업데이트
+                        const statusTextEl = row.querySelector('.status-text');
+                        statusTextEl.setAttribute("data-status", newStatus);
+                        statusTextEl.textContent = newStatus;
+
+                        // 상태 버튼들의 스타일 및 disabled 상태 업데이트
+                        const buttons = row.querySelectorAll(".status-btn");
+                        buttons.forEach(btn => {
+                            const btnStatus = btn.getAttribute("data-status");
+                            if (btnStatus === newStatus) {
+                                btn.style.backgroundColor = "#6c757d";
+                                btn.style.color = "#fff";
+                                btn.disabled = true;
+                            } else {
+                                btn.style.backgroundColor = "";
+                                btn.style.color = "";
+                                btn.disabled = false;
+                            }
+                        });
+
+                        // 새 상태에 해당하는 섹션을 선택합니다.
+                        // 예를 들어, 상태명이 "완료"라면 collapse-완료 섹션을 찾습니다.
+                        const targetCollapse = document.getElementById("collapse-" + newStatus);
+                        if (targetCollapse) {
+                            // 해당 섹션 내의 tbody 요소를 찾습니다.
+                            const targetTbody = targetCollapse.querySelector("tbody");
+                            if (targetTbody) {
+                                // 현재 행(row)을 새 tbody에 추가하여 이동시킵니다.
+                                targetTbody.appendChild(row);
+                            }
+                        }
+
                     } else {
                         alert("상태 변경 실패!");
                     }

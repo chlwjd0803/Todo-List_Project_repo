@@ -352,7 +352,7 @@
     });
 }
 
-// 수정 반영
+// 작업 수정
 {
     const taskEditBtn = document.querySelector("#task-edit-btn");
     taskEditBtn.addEventListener("click", function(){
@@ -383,26 +383,27 @@
 
 // 작업 삭제
 {
-    const taskDltBtn = document.querySelectorAll(".task-delete-btn");
-    // 삭제 버튼은 작업마다 존재하므로
-    taskDltBtn.forEach(btn => {
-        btn.addEventListener("click", (event) => {
-            if(!confirm("선택한 작업을 삭제하겠습니까?")) return;
-            const taskDeleteBtn = event.target;
-            const taskId = taskDeleteBtn.getAttribute("data-task-id");
-            console.log(`${taskId}번 작업 삭제버튼 클릭하였음.`);
+    const deleteBtn = document.querySelector("#task-delete-btn");
+    deleteBtn.addEventListener("click", (event) => {
+        if (!confirm("선택한 작업을 삭제하겠습니까?")) return;
 
-            const url = `/api/todos/index/deleteTask/${taskId}`;
-            fetch(url, {
-                method: "DELETE"
-            }).then(response => {
-                if(!response.ok){
-                    alert("작업 삭제 실패");
-                    return;
-                }
-                alert("해당 작업을 삭제하였습니다.");
-                window.location.reload();
-            });
+        // 모달 내의 숨겨진 input에서 작업 id 가져오기
+        const taskId = document.querySelector("#edit-task-id").value;
+        if (!taskId) {
+            alert("삭제할 작업이 선택되지 않았습니다.");
+            return;
+        }
+
+        const url = `/api/todos/index/deleteTask/${taskId}`;
+        fetch(url, {
+            method: "DELETE"
+        }).then(response => {
+            if (!response.ok) {
+                alert("작업 삭제 실패");
+                return;
+            }
+            alert("해당 작업을 삭제하였습니다.");
+            window.location.reload();
         });
     });
 }

@@ -68,11 +68,7 @@
                                             data-bs-title="{{title}}"
                                             data-bs-status="{{status}}"
                                             data-bs-deadline="{{deadline}}">
-                                        수정
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                            data-task-id="{{id}}">
-                                        삭제
+                                        관리
                                     </button>
                                 </div>
                             </div>
@@ -168,12 +164,13 @@
     </div>
 </div>
 
+
 <!-- 작업수정 모달 -->
 <div class="modal fade" id="task-edit-modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">작업 이름 수정</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">관리</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -194,6 +191,7 @@
                     <input type="hidden" id="edit-task-id">
                     <input type="hidden" id="edit-task-status">
                     <button type="button" class="btn btn-primary" id="task-edit-btn">수정하기</button>
+                    <button type="button" class="btn btn-danger" id="task-delete-btn">삭제하기</button>
                 </form>
             </div>
         </div>

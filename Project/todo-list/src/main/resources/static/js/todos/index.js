@@ -110,6 +110,71 @@
         });
 
         // 상태 버튼 클릭 이벤트 (업데이트 API 호출)
+        // const statusButtons = document.querySelectorAll(".status-btn");
+        // statusButtons.forEach(button => {
+        //     button.addEventListener("click", function() {
+        //         const taskId = this.getAttribute("data-id");
+        //         const newStatus = this.getAttribute("data-status");
+        //         const task = { id: taskId, status: newStatus };
+        //         const url = `/api/todos/index/updateStatus/${taskId}`;
+        //         fetch(url, {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //             body: JSON.stringify(task)
+        //         }).then(response => {
+        //             if (response.ok) {
+        //                 // window.location.reload();
+        //
+        //                 // 클릭한 버튼이 속한 작업의 행을 가져옴
+        //                 const row = this.closest('tr');
+        //
+        //                 // 예시: 상태 텍스트의 data-status 속성을 업데이트
+        //                 const statusTextEl = row.querySelector('.status-text');
+        //                 statusTextEl.setAttribute("data-status", newStatus);
+        //                 statusTextEl.textContent = newStatus;
+        //
+        //                 // 상태 버튼들의 스타일 및 disabled 상태 업데이트
+        //                 const buttons = row.querySelectorAll(".status-btn");
+        //                 buttons.forEach(btn => {
+        //                     const btnStatus = btn.getAttribute("data-status");
+        //                     if (btnStatus === newStatus) {
+        //                         btn.style.backgroundColor = "#6c757d";
+        //                         btn.style.color = "#fff";
+        //                         btn.disabled = true;
+        //                     } else {
+        //                         btn.style.backgroundColor = "";
+        //                         btn.style.color = "";
+        //                         btn.disabled = false;
+        //                     }
+        //                 });
+        //
+        //                 // 새 상태에 해당하는 섹션을 선택합니다.
+        //                 // 예를 들어, 상태명이 "완료"라면 collapse-완료 섹션을 찾습니다.
+        //                 // 새 상태에 해당하는 섹션을 선택합니다.
+        //                 const targetCollapse = document.getElementById("collapse-" + newStatus);
+        //                 if (targetCollapse) {
+        //                     // 해당 섹션 내의 tbody 요소를 찾습니다.
+        //                     const targetTbody = targetCollapse.querySelector("tbody");
+        //                     if (targetTbody) {
+        //                         // 애니메이션 효과를 위해 fly-in 클래스를 추가한 후 행을 이동합니다.
+        //                         row.classList.add("fly-in");
+        //                         targetTbody.appendChild(row);
+        //                         // 애니메이션 시간(0.5초) 후에 클래스 제거
+        //                         setTimeout(() => {
+        //                             row.classList.remove("fly-in");
+        //                         }, 500);
+        //                     }
+        //                 }
+        //
+        //
+        //             } else {
+        //                 alert("상태 변경 실패!");
+        //             }
+        //         });
+        //     });
+        // });
+
+        // 상태 버튼 클릭 이벤트 (업데이트 API 호출)
         const statusButtons = document.querySelectorAll(".status-btn");
         statusButtons.forEach(button => {
             button.addEventListener("click", function() {
@@ -123,18 +188,15 @@
                     body: JSON.stringify(task)
                 }).then(response => {
                     if (response.ok) {
-                        // window.location.reload();
-
-                        // 클릭한 버튼이 속한 작업의 행을 가져옴
-                        const row = this.closest('tr');
-
-                        // 예시: 상태 텍스트의 data-status 속성을 업데이트
-                        const statusTextEl = row.querySelector('.status-text');
+                        // 기존 row 대신 .task-item 사용
+                        const taskCard = this.closest('.task-item');
+                        // 업데이트: 작업 제목과 상태 정보는 내부에 별도 저장 (status-text은 여전히 유지)
+                        const statusTextEl = taskCard.querySelector('.status-text');
                         statusTextEl.setAttribute("data-status", newStatus);
                         statusTextEl.textContent = newStatus;
 
-                        // 상태 버튼들의 스타일 및 disabled 상태 업데이트
-                        const buttons = row.querySelectorAll(".status-btn");
+                        // 상태 버튼들의 스타일 업데이트 (필요 시 업데이트)
+                        const buttons = taskCard.querySelectorAll(".status-btn");
                         buttons.forEach(btn => {
                             const btnStatus = btn.getAttribute("data-status");
                             if (btnStatus === newStatus) {
@@ -148,24 +210,25 @@
                             }
                         });
 
-                        // 새 상태에 해당하는 섹션을 선택합니다.
-                        // 예를 들어, 상태명이 "완료"라면 collapse-완료 섹션을 찾습니다.
+                        // 새 상태 섹션으로 애니메이션 효과와 함께 이동 (섹션 id는 "collapse-" + newStatus)
                         const targetCollapse = document.getElementById("collapse-" + newStatus);
                         if (targetCollapse) {
-                            // 해당 섹션 내의 tbody 요소를 찾습니다.
-                            const targetTbody = targetCollapse.querySelector("tbody");
-                            if (targetTbody) {
-                                // 현재 행(row)을 새 tbody에 추가하여 이동시킵니다.
-                                targetTbody.appendChild(row);
+                            const targetTaskList = targetCollapse.querySelector(".task-list");
+                            if (targetTaskList) {
+                                taskCard.classList.add("fly-in");
+                                targetTaskList.appendChild(taskCard);
+                                setTimeout(() => {
+                                    taskCard.classList.remove("fly-in");
+                                }, 500);
                             }
                         }
-
                     } else {
                         alert("상태 변경 실패!");
                     }
                 });
             });
         });
+
     });
 
 }

@@ -43,62 +43,6 @@
     </div>
 </div>
 
-<!--{{#statuses}}-->
-<!--    <section class="status-sec">-->
-<!--        <h2>-->
-<!--            <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"-->
-<!--               role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">-->
-<!--                {{status_name}}-->
-<!--            </a>-->
-<!--        </h2>-->
-<!--        <div class="collapse show" id="collapse-{{status_name}}">-->
-<!--            <table class="table fixed-table">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                    <th>관리</th>-->
-<!--                    <th>카테고리</th>-->
-<!--                    <th>작업</th>-->
-<!--                    <th>마감기한</th>-->
-<!--                    <th>상태변경</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                {{#list}}-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"-->
-<!--                                    data-bs-toggle="modal"-->
-<!--                                    data-bs-target="#task-edit-modal"-->
-<!--                                    data-bs-id="{{id}}"-->
-<!--                                    data-bs-category-name="{{category.name}}"-->
-<!--                                    data-bs-title="{{title}}"-->
-<!--                                    data-bs-status="{{status}}"-->
-<!--                                    data-bs-deadline="{{deadline}}">-->
-<!--                                수정-->
-<!--                            </button>-->
-<!--                            <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"-->
-<!--                                    data-task-id="{{id}}">삭제</button>-->
-<!--                        </td>-->
-<!--                        <td>{{category.name}}</td>-->
-<!--                        <td>{{title}}</td>-->
-<!--                        <td class="status-text" data-status="{{status}}">{{status}}</td>-->
-<!--                        <td>{{deadline}}</td>-->
-<!--                        <td>-->
-<!--                            <div class="btn-group" role="group">-->
-<!--                                <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>-->
-<!--                                <button class="btn btn-outline-warning status-btn btn-custom" data-id="{{id}}" data-status="진행중">진행중</button>-->
-<!--                                <button class="btn btn-outline-danger status-btn btn-custom" data-id="{{id}}" data-status="중단됨">중단됨</button>-->
-<!--                                <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>-->
-<!--                            </div>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                {{/list}}-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-<!--    </section>-->
-<!--{{/statuses}}-->
-
 {{#statuses}}
     <section class="status-sec">
         <h2>

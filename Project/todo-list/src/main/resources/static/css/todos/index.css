@@ -42,7 +42,7 @@
     text-align: right;
 }
 
-/* 기존 fly-in 애니메이션 유지 */
+/* fly-in 애니메이션 */
 @keyframes fly-in {
     from {
         transform: translateX(100%);
@@ -57,56 +57,7 @@
     animation: fly-in 0.5s ease-out;
 }
 
-/* 기타 기존 .btn-custom 등은 그대로 유지 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.status-text {
-    display: none;
-}
-
-
-/* 테이블 너비 축소 */
-.fixed-table {
-    table-layout: fixed;
-    width: 100%;
-    border-collapse: separate;      /* 기본 경계선 분리 */
-    border-spacing: 0 10px;           /* 행 간격 10px 추가 */
-}
-.fixed-table th, .fixed-table td {
-    padding: 0.4rem;
-    word-wrap: break-word;  /* 내용이 넘치지 않도록 줄바꿈 */
-    border: 1px solid #dee2e6;        /* 얇은 회색 경계선 */
-}
-/* 헤더 패딩 및 폰트 스타일 조절 */
-.fixed-table thead th {
-    padding: 1rem;                  /* 헤더 여백 증가 */
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #f8f9fa;        /* 헤더 배경색 */
-}
-/* 본문 패딩 조절 */
-.fixed-table tbody td {
-    padding: 0.5rem;                /* 본문 여백 조절 */
-    font-size: 14px;
-}
-
-
-.task-delete-btn, .task-edit-btn{
-    margin-top: 2%;
-}
+/* 버튼 커스텀 스타일 */
 .btn-custom {
     border-radius: 20px !important;
     padding: 8px 16px;
@@ -117,38 +68,13 @@
 .btn-custom:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
-/* 첫 번째 열(관리열): 좁게 설정 */
-.fixed-table th:nth-child(1),
-.fixed-table td:nth-child(1) {
-    width: 8% !important;  /* 관리 버튼만 들어가므로 좁게 */
-    padding: 0.2rem 0.3rem !important; /* 패딩도 최소화 */
+
+/* 상태 텍스트 (숨김, JS 업데이트용) */
+.status-text {
+    display: none;
 }
 
-/* 두 번째 열(카테고리): 조금 더 줄임 */
-.fixed-table th:nth-child(2),
-.fixed-table td:nth-child(2) {
-    width: 12% !important;
-}
-
-/* 세 번째 열(작업): 기존의 20%에서 반 정도로 줄여 10%로 설정 */
-.fixed-table th:nth-child(3),
-.fixed-table td:nth-child(3) {
-    width: 16% !important;
-}
-
-/* 네 번째 열(상태변경): 그대로 유지 */
-.fixed-table th:nth-child(4),
-.fixed-table td:nth-child(4) {
-    width: 25% !important;
-}
-
-/*스크롤*/
-.status-sec > .collapse {
-    max-height: 300px; /* 필요에 따라 높이값 조정 가능 */
-    overflow-y: auto;
-}
-
-/*작업추가 컨테이너 고정*/
+/* 작업추가 컨테이너 고정 */
 #todo-new {
     position: fixed;
     left: 35%;
@@ -160,12 +86,12 @@
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
 }
-
 #todo-new:hover {
     bottom: 0;
 }
 
-#category-menu{
+/* 카테고리 메뉴 스타일 */
+#category-menu {
     position: sticky;
     top: 55px;
     z-index: 1000;
@@ -173,96 +99,37 @@
     backdrop-filter: blur(5px) !important;
 }
 
-/* 테이블 헤더 스타일: 더 큰 글꼴과 굵은 텍스트, 구분되는 배경색 */
-.fixed-table thead th {
-    font-size: 16px;         /* 헤더 텍스트 크기 증가 */
-    font-weight: bold;       /* 굵은 글씨 */
-    background-color: #f8f9fa; /* 밝은 배경으로 헤더 강조 */
-    border-bottom: 2px solid #dee2e6; /* 하단 경계선으로 구분 */
-    padding: 0.8rem;         /* 여백 증가로 읽기 쉽게 */
-}
-
-/* 테이블 본문 스타일: 조금 작은 글꼴과 적당한 여백 */
-.fixed-table tbody td {
-    font-size: 14px;         /* 본문 텍스트 크기 */
-    padding: 0.4rem;         /* 본문 여백 */
-}
-
-/* 카테고리 셀 스타일: 필요에 따라 색상이나 폰트 스타일을 조정 */
-.category-cell {
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
-}
-/* 카드 컴포넌트 (예: 카테고리 메뉴)의 여백 및 경계선 조절 */
+/* 카드 컴포넌트 스타일 (예: 카테고리 메뉴 카드) */
 .card {
     margin: 15px;
     padding: 15px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
 }
-@keyframes fly-in {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-.fly-in {
-    animation: fly-in 0.5s ease-out;
-}
-
-
-
 
 /* 왼쪽 사이드바 스타일 */
 #sidebar {
     padding: 15px;
 }
-
-/* 사이드바의 카테고리 카드의 너비를 100%로 설정 */
 #sidebar #category-menu {
     width: 100%;
 }
 
-
-
-
-
-/*다크모드*/
+/* 다크모드 스타일 */
 .dark-mode .status-sec {
     background-color: #2b2b2b;
     color: #e0e0e0;
 }
-.dark-mode .status-sec table {
-    background-color: #2b2b2b;
-    color: #e0e0e0;
-}
-.dark-mode .status-sec th,
-.dark-mode .status-sec td {
-    background-color: #2b2b2b;
-    color: #e0e0e0;
-    border-color: #444; /* 테이블 경계선 색상도 조정 */
-}
-
-.dark-mode #todo-new{
+.dark-mode #todo-new {
     background-color: rgba(0, 0, 0, 0.30);
     color: #e0e0e0;
 }
-
-.dark-mode #category-menu{
+.dark-mode #category-menu {
     background-color: rgba(21, 21, 21, 0.30);
     color: #e0e0e0;
 }
-
 .dark-mode .modal-header,
-.dark-mode .modal-body{
+.dark-mode .modal-body {
     background-color: rgb(55, 55, 55);
     color: #e0e0e0;
 }
-
-
-

@@ -44,7 +44,7 @@
 </div>
 
 {{#statuses}}
-    <section class="status-sec">
+    <section class="status-sec" data-status="{{status_name}}">
         <h2>
             <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"
                role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">
@@ -52,46 +52,50 @@
             </a>
         </h2>
         <div class="collapse show" id="collapse-{{status_name}}">
-            <!-- 새로 추가된 task-list 컨테이너 -->
-            <div class="task-list">
-                {{#list}}
-                    <div class="task-item" data-id="{{id}}">
-                        <div class="task-header">
-                            <h3 class="task-title">{{title}}</h3>
-                            <div class="task-actions">
-                                <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#task-edit-modal"
-                                        data-bs-id="{{id}}"
-                                        data-bs-category-name="{{category.name}}"
-                                        data-bs-title="{{title}}"
-                                        data-bs-status="{{status}}"
-                                        data-bs-deadline="{{deadline}}">
-                                    수정
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
-                                        data-task-id="{{id}}">
-                                    삭제
-                                </button>
+            <!-- 새로 추가된 상태 컨테이너 -->
+            <div class="status-container">
+                <div class="task-list">
+                    {{#list}}
+                        <div class="task-item" data-id="{{id}}">
+                            <div class="task-header">
+                                <h3 class="task-title">{{title}}</h3>
+                                <div class="task-actions">
+                                    <button type="button" class="btn btn-sm btn-outline-primary task-edit-btn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#task-edit-modal"
+                                            data-bs-id="{{id}}"
+                                            data-bs-category-name="{{category.name}}"
+                                            data-bs-title="{{title}}"
+                                            data-bs-status="{{status}}"
+                                            data-bs-deadline="{{deadline}}">
+                                        수정
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger task-delete-btn"
+                                            data-task-id="{{id}}">
+                                        삭제
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="status-text" data-status="{{status}}">{{status}}</div>
+                            <div class="task-details">
+                                <span class="task-deadline">마감: {{deadline}}</span>
+                                <span class="task-category">카테고리: {{category.name}}</span>
+                            </div>
+                            <div class="status-btn-group">
+                                <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
+                                <button class="btn btn-outline-warning status-btn btn-custom" data-id="{{id}}" data-status="진행중">진행중</button>
+                                <button class="btn btn-outline-danger status-btn btn-custom" data-id="{{id}}" data-status="중단됨">중단됨</button>
+                                <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
                             </div>
                         </div>
-                        <div class="status-text" data-status="{{status}}">{{status}}</div>
-                        <div class="task-details">
-                            <span class="task-deadline">마감: {{deadline}}</span>
-                            <span class="task-category">카테고리: {{category.name}}</span>
-                        </div>
-                        <div class="status-btn-group">
-                            <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
-                            <button class="btn btn-outline-warning status-btn btn-custom" data-id="{{id}}" data-status="진행중">진행중</button>
-                            <button class="btn btn-outline-danger status-btn btn-custom" data-id="{{id}}" data-status="중단됨">중단됨</button>
-                            <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
-                        </div>
-                    </div>
-                {{/list}}
+                    {{/list}}
+                </div>
             </div>
         </div>
     </section>
 {{/statuses}}
+
+
 
 
 

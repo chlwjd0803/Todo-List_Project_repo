@@ -52,6 +52,7 @@
             </a>
         </h2>
         <div class="collapse show" id="collapse-{{status_name}}">
+            <!-- 새로 추가된 task-list 컨테이너 -->
             <div class="task-list">
                 {{#list}}
                     <div class="task-item" data-id="{{id}}">
@@ -74,7 +75,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- 작업 상태는 숨겨두고, JS 업데이트 시 사용 -->
                         <div class="status-text" data-status="{{status}}">{{status}}</div>
                         <div class="task-details">
                             <span class="task-deadline">마감: {{deadline}}</span>
@@ -92,6 +92,7 @@
         </div>
     </section>
 {{/statuses}}
+
 
 
 

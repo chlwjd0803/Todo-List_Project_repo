@@ -4,8 +4,13 @@
     border: 1px solid #dee2e6;
     border-radius: 8px;
     padding: 16px;
-    margin-bottom: 12px;
+    /* 카드 간 간격을 위한 마진 */
+    margin: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* 고정된 최소 너비를 지정하여 일정 크기 유지 */
+    min-width: 280px;
+    /* 카드의 너비를 자동 조절하여 중앙 정렬에 도움 */
+    flex: 1 1 280px;
 }
 .task-item:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -74,6 +79,13 @@
     display: none;
 }
 
+/* task-list 컨테이너: 카드들을 중앙에 모으고 반응형 그리드 형태로 배치 */
+.task-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 /* 작업추가 컨테이너 고정 */
 #todo-new {
     position: fixed;
@@ -106,6 +118,40 @@
     border: 1px solid #e0e0e0;
     border-radius: 8px;
 }
+
+/* 기본 (화면 넓은 경우) - 한 줄에 4개 */
+.task-item {
+    flex: 1 1 calc((100% - 48px) / 4);
+    max-width: calc((100% - 48px) / 4);
+}
+
+/* 화면 너비 900px 이하일 때: 한 줄에 3개 */
+@media (max-width: 900px) {
+    .task-item {
+        flex: 1 1 calc((100% - 32px) / 3);
+        max-width: calc((100% - 32px) / 3);
+    }
+}
+
+/* 화면 너비 600px 이하일 때: 한 줄에 2개 */
+@media (max-width: 600px) {
+    .task-item {
+        flex: 1 1 calc((100% - 16px) / 2);
+        max-width: calc((100% - 16px) / 2);
+    }
+}
+
+/* 화면 너비 400px 이하일 때: 한 줄에 1개 */
+@media (max-width: 400px) {
+    .task-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+
+
+
 
 /* 왼쪽 사이드바 스타일 */
 #sidebar {

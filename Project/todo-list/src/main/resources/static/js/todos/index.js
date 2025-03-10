@@ -71,31 +71,29 @@
         const savedCategory = localStorage.getItem("selectedCategory") || "전체";
         let selectRadio;
 
-            if (savedCategory === "전체") {
-                selectRadio = document.getElementById("categoryradio-all");
+        if (savedCategory === "전체") {
+            selectRadio = document.getElementById("categoryradio-all");
+            selectRadio.checked = true;
+        } else {
+            selectRadio = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
+            if (selectRadio) {
                 selectRadio.checked = true;
-            } else {
-                selectRadio = document.querySelector(`input[name="categoryradio"][id="categoryradio-${savedCategory}"]`);
-                if (selectRadio) {
-                    selectRadio.checked = true;
-                }
             }
-            // 이벤트를 강제로 발생시켜 라디오 버튼에 따라 효과가 바로 나타나게함 (전체버튼에 대한 버그 수정)
-            if(selectRadio) selectRadio.dispatchEvent(new Event("change"));
+        }
+        // 이벤트를 강제로 발생시켜 라디오 버튼에 따라 효과가 바로 나타나게함 (전체버튼에 대한 버그 수정)
+        if(selectRadio) selectRadio.dispatchEvent(new Event("change"));
 
 
-            // 초기 필터링 적용
-            filterRowsByCategory(savedCategory);
+        // 초기 필터링 적용
+        filterRowsByCategory(savedCategory);
 
-            // 3. 상태 버튼 스타일 초기화 및 클릭 이벤트 등록
-            // (이 코드는 필터링 이후에 실행하여 필터링 display 상태를 덮어쓰지 않도록 합니다.)
-            const rows = document.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                // 기존에는 .status-text 요소에서 데이터를 가져왔지만,
-                // 만약 현재 구조가 그대로라면 그대로 사용
-                const dbStatus = row.querySelector('.status-text').getAttribute('data-status');
-            const buttons = row.querySelectorAll(".status-btn");
+        // 3. 상태 버튼 스타일 초기화 및 클릭 이벤트 등록
+        // (이 코드는 필터링 이후에 실행하여 필터링 display 상태를 덮어쓰지 않도록 합니다.)
 
+        const taskCards = document.querySelectorAll(".task-item");
+        taskCards.forEach(card => {
+            const dbStatus = card.querySelector('.status-text').getAttribute('data-status');
+            const buttons = card.querySelectorAll(".status-btn");
             buttons.forEach(button => {
                 const btnStatus = button.getAttribute("data-status");
                 if (btnStatus === dbStatus) {
@@ -109,6 +107,7 @@
                 }
             });
         });
+
 
         // 상태 버튼 클릭 이벤트 (업데이트 API 호출)
         const statusButtons = document.querySelectorAll(".status-btn");

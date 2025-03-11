@@ -332,25 +332,58 @@
 
 
 // 단일 작업 수정 모달 띄우기
-{
-    const taskEditModal = document.querySelector("#task-edit-modal");
-    taskEditModal.addEventListener("show.bs.modal", function(event){
-        const triggerBtn = event.relatedTarget;
+// {
+//     const taskEditModal = document.querySelector("#task-edit-modal");
+//     taskEditModal.addEventListener("show.bs.modal", function(event){
+//         const triggerBtn = event.relatedTarget;
+//
+//         const id = triggerBtn.getAttribute("data-bs-id"); // 속성 위에가서 추가해주기
+//         const title = triggerBtn.getAttribute("data-bs-title");
+//         const status = triggerBtn.getAttribute("data-bs-status");
+//         const category_name = triggerBtn.getAttribute("data-bs-category-name");
+//         const deadline = triggerBtn.getAttribute("data-bs-deadline");
+//
+//         document.querySelector("#edit-task-id").value = id;
+//         document.querySelector("#edit-task-title").value = title;
+//         document.querySelector("#edit-task-status").value = status;
+//         document.querySelector("#edit-task-category-name").value = category_name;
+//         document.querySelector("#edit-deadline").value = deadline;
+//
+//     });
+// }
 
-        const id = triggerBtn.getAttribute("data-bs-id"); // 속성 위에가서 추가해주기
-        const title = triggerBtn.getAttribute("data-bs-title");
-        const status = triggerBtn.getAttribute("data-bs-status");
-        const category_name = triggerBtn.getAttribute("data-bs-category-name");
-        const deadline = triggerBtn.getAttribute("data-bs-deadline");
+// 개별 작업 카드 클릭 시 관리 모달 띄우기
+const taskItems = document.querySelectorAll(".task-item");
+taskItems.forEach(item => {
+    item.addEventListener("click", function(e) {
+        // 만약 클릭한 요소가 이미 버튼이나 내부 컨트롤이라면 모달을 띄우지 않음
+        if (e.target.closest(".task-actions") || e.target.closest(".status-btn-group")) {
+            return;
+        }
 
-        document.querySelector("#edit-task-id").value = id;
+        // 작업 카드에서 필요한 데이터 추출
+        const taskId = this.getAttribute("data-id");
+        const title = this.querySelector(".task-title").textContent;
+        // .task-category 텍스트는 "카테고리: {이름}" 형태, 뒤쪽 부분만 추출
+        const categoryText = this.querySelector(".task-category").textContent.replace("카테고리:", "").trim();
+        // .task-deadline 텍스트는 "마감: {날짜}" 형태, 마찬가지
+        const deadlineText = this.querySelector(".task-deadline").textContent.replace("마감:", "").trim();
+        const status = this.querySelector(".status-text").getAttribute("data-status");
+
+        // 모달 내의 입력 필드에 데이터를 채워넣습니다.
+        document.querySelector("#edit-task-id").value = taskId;
         document.querySelector("#edit-task-title").value = title;
         document.querySelector("#edit-task-status").value = status;
-        document.querySelector("#edit-task-category-name").value = category_name;
-        document.querySelector("#edit-deadline").value = deadline;
+        document.querySelector("#edit-task-category-name").value = categoryText;
+        document.querySelector("#edit-deadline").value = deadlineText;
 
+        // Bootstrap Modal을 이용해 관리 모달을 띄웁니다.
+        const taskEditModal = document.getElementById("task-edit-modal");
+        const modal = new bootstrap.Modal(taskEditModal);
+        modal.show();
     });
-}
+});
+
 
 // 작업 수정
 {

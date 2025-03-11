@@ -120,35 +120,54 @@
     border-radius: 8px;
 }
 
-/* 기본 (화면 넓은 경우) - 한 줄에 4개 */
+/* 기본 (화면 넓은 경우) - 한 줄에 5개 */
 .task-item {
-    flex: 1 1 calc((100% - 48px) / 4);
-    max-width: calc((100% - 48px) / 4);
+    flex: 1 1 calc((100% - 64px) / 7); /* 5개이므로 4개의 gap (16px*4=64px) */
+    max-width: calc((100% - 64px) / 7);
 }
 
-/* 화면 너비 900px 이하일 때: 한 줄에 3개 */
-@media (max-width: 900px) {
+/* 화면 너비 900px 이하일 때: 한 줄에 4개 */
+@media (max-width: 2700px) {
     .task-item {
-        flex: 1 1 calc((100% - 32px) / 3);
-        max-width: calc((100% - 32px) / 3);
+        flex: 1 1 calc((100% - 48px) / 6); /* 4개, 3개의 gap */
+        max-width: calc((100% - 48px) / 6);
+    }
+}
+@media (max-width: 2400px) {
+    .task-item {
+        flex: 1 1 calc((100% - 48px) / 5); /* 4개, 3개의 gap */
+        max-width: calc((100% - 48px) / 5);
+    }
+}
+@media (max-width: 2100px) {
+    .task-item {
+        flex: 1 1 calc((100% - 48px) / 4); /* 4개, 3개의 gap */
+        max-width: calc((100% - 48px) / 4);
+    }
+}
+@media (max-width: 1800px) {
+    .task-item {
+        flex: 1 1 calc((100% - 48px) / 3); /* 4개, 3개의 gap */
+        max-width: calc((100% - 48px) / 3);
     }
 }
 
 /* 화면 너비 600px 이하일 때: 한 줄에 2개 */
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
     .task-item {
-        flex: 1 1 calc((100% - 16px) / 2);
+        flex: 1 1 calc((100% - 16px) / 2); /* 2개, 1개의 gap */
         max-width: calc((100% - 16px) / 2);
     }
 }
 
 /* 화면 너비 400px 이하일 때: 한 줄에 1개 */
-@media (max-width: 400px) {
+@media (max-width: 450px) {
     .task-item {
         flex: 1 1 100%;
         max-width: 100%;
     }
 }
+
 
 /* 상태 섹션의 헤더에 투명 오버레이 레이블 추가 */
 .status-sec {

@@ -26,3 +26,4 @@ INSERT INTO todo(title, status, category_id, deadline) VALUES ('스트레칭 하
 -- 음악 (category_id: 5)
 INSERT INTO todo(title, status, category_id, deadline) VALUES ('콘서트 티켓 구매', '준비', 5, '2025-06-17');
 INSERT INTO todo(title, status, category_id, deadline) VALUES ('악기 연습', '완료', 5, '2025-06-16');
+

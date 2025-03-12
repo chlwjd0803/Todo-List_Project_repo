@@ -65,6 +65,12 @@
         signupBtn.addEventListener("click", function(){
             const pw = document.getElementById("password").value;
             const cpw = document.getElementById("confirmPassword").value;
+
+            if(pw.length < 6){
+                alert("비밀번호 길이가 짧습니다.");
+                return;
+            }
+
             if(pw !== cpw){
                 alert("비밀번호 확인이 일치하지 않습니다.");
                 return;

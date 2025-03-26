@@ -6,6 +6,7 @@ import com.example.todo_list.entity.Todo;
 import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.repository.CategoryRepository;
 import com.example.todo_list.repository.TodoRepository;
+import com.example.todo_list.repository.WebUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -25,12 +26,17 @@ public class TodoService {
     private TodoRepository todoRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private WebUserRepository webUserRepository;
     // 기존 아이디 정렬, api 전송을 위해 남겨둠
     // 이 부분에서 유저의 것만 들고오게 변경
     public List<Todo> index() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        WebUser currentUser = (WebUser) authentication.getPrincipal();  // UserSecurityService가 WebUser 반환한다고 가정
+        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
+        WebUser currentUser = webUserRepository.findByUsername(username);
         Long userId = currentUser.getId();
+        log.info(currentUser.getUsername());
+        log.info(currentUser.getId()+"");
         return todoRepository.findByWebUserId(userId);
     }
 
@@ -41,7 +47,12 @@ public class TodoService {
     public List<Todo> index(String status) { return todoRepository.findByStatusOrderByDeadline(status); }
 
     public List<Category> getCategories() {
-        return categoryRepository.findAll();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
+        WebUser currentUser = webUserRepository.findByUsername(username);
+        Long userId = currentUser.getId();
+
+        return categoryRepository.findByWebUserId(userId);
     }
 
 
@@ -57,9 +68,13 @@ public class TodoService {
         todo.setCategory(category);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        WebUser currentUser = (WebUser) authentication.getPrincipal();
+        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
+        WebUser currentUser = webUserRepository.findByUsername(username);
+
 
         todo.setWebUser(currentUser);
+        log.info("정상출력");
+        log.info(currentUser.getUsername());
 
         return todoRepository.save(todo);
     }

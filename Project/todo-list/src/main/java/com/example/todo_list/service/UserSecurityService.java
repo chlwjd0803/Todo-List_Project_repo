@@ -27,9 +27,8 @@ public class UserSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<WebUser> _webUser = this.webUserRepository.findByUsername(username);
-        if(_webUser.isEmpty()) throw new UsernameNotFoundException("사용자를 찾을 수 없음");
-        WebUser webUser = _webUser.get();
+        WebUser webUser = this.webUserRepository.findByUsername(username);
+        if(webUser == null) throw new UsernameNotFoundException("사용자를 찾을 수 없음");
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         if("admin".equals(username)) authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));

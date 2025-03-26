@@ -33,7 +33,6 @@ public class WebUserService {
             return null;
         }
 
-
         WebUser webUser = new WebUser();
         webUser.setUsername(dto.getUsername());
         webUser.setEmail(dto.getEmail());
@@ -43,17 +42,16 @@ public class WebUserService {
     }
 
     public String login(WebUserDto dto) {
-        Optional<WebUser> op_user = webUserRepository.findByUsername(dto.getUsername());
-        if(op_user.isEmpty()){
+        WebUser webUser = webUserRepository.findByUsername(dto.getUsername());
+        if(webUser == null){
             log.info("사용자정보가 없습니다.");
             return null;
         }
-        WebUser user = op_user.get();
-        if(!passwordEncoder.matches(dto.getPassword(), user.getPassword())){
+        if(!passwordEncoder.matches(dto.getPassword(), webUser.getPassword())){
             log.info("비밀번호가 틀렸습니다.");
             return null;
         }
-        return jwtUtil.generateToken(user);
+        return jwtUtil.generateToken(webUser);
     }
 
     public ResponseCookie logout() {

@@ -58,23 +58,22 @@ public class TodoService {
 
     public Todo addTask(TodoDto dto) {
         Todo todo = dto.toEntity();
-        Category category = categoryRepository.findByName(todo.getCategoryName());
-        if(category == null) {
-            // 카테고리 새로 만들기
-            category = new Category();
-            category.setName(todo.getCategoryName());
-            categoryRepository.save(category);
-        }
-        todo.setCategory(category);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
         WebUser currentUser = webUserRepository.findByUsername(username);
 
-
+        // 단순히 이름 말고 유저의 것인지도 판단시켜야함
+        Category category = categoryRepository.findByName(todo.getCategoryName());
+        if(category == null) {
+            // 카테고리 새로 만들기
+            category = new Category();
+            category.setName(todo.getCategoryName());
+            category.setWebUser(currentUser);
+            categoryRepository.save(category);
+        }
+        todo.setCategory(category);
         todo.setWebUser(currentUser);
-        log.info("정상출력");
-        log.info(currentUser.getUsername());
 
         return todoRepository.save(todo);
     }

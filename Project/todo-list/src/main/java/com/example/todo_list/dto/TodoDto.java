@@ -42,8 +42,8 @@ public class TodoDto {
         // 카테고리가 미선택 되어있는 경우
         if(this.category_name == null || this.category_name.isEmpty()) return null;
         if(this.category_name.equals("전체")) {
-            newCate.setName("할일"); // 기본 작업 이름으로 초기화
-            this.category_name = newCate.getName(); // DTO에도 카테고리 할일로 지정했다고 저장
+            newCate.setName("작업"); // 기본 작업 이름으로 초기화
+            this.category_name = newCate.getName(); // DTO에도 카테고리 기본값으로 지정했다고 저장
         }
         // 기존 카테고리에 맵핑하는 경우
         else {
@@ -61,6 +61,7 @@ public class TodoDto {
 
 
         // 일단 유저는 미지정 상태로 넘기기
+        // 이때 넘기는 newCate도 가상이므로 크게 신경쓰지 않아도 됨
         return new Todo(id, null, newCate, this.title, this.status, deadline);
     }
 }

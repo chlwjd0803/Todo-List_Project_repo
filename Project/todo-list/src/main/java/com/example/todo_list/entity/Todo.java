@@ -21,11 +21,13 @@ public class Todo {
     private Long id;
     // 기존의 문자열 형태의 카테고리 대신, Category 엔티티와 연관관계 설정.
     @ManyToOne
+    @JoinColumn(name = "webUser_id") // 해당 작업은 유저 하나에 속하기 때문
+    private WebUser webUser;
+
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id") // 해당 작업은 유저 하나에 속하기 때문
-//    private User user;
+
     @Column
     private String title; //작업 제목
     @Column

@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 public class TodoDto {
     private Long id;
+    private Long webUserId;
     // 데이터 전송은 String으로 받되 엔티티와의 변환에서 String <-> Category 가 자유롭게 되어야함
     private String category_name;
     private String title;
@@ -25,6 +26,7 @@ public class TodoDto {
     public static TodoDto createTodoDto(Todo todo) {
         return new TodoDto(
                 todo.getId(),
+                todo.getWebUser().getId(),
                 todo.getCategoryName(),
                 todo.getTitle(),
                 todo.getStatus(),
@@ -57,6 +59,8 @@ public class TodoDto {
             deadline = LocalDate.parse(this.deadline_str, formatter);
         } else deadline = null;
 
-        return new Todo(id, newCate, this.title, this.status, deadline);
+
+        // 일단 유저는 미지정 상태로 넘기기
+        return new Todo(id, null, newCate, this.title, this.status, deadline);
     }
 }

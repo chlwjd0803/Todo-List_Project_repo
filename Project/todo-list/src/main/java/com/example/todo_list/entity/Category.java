@@ -17,6 +17,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @ManyToOne
+//    @JoinColumn(name = "webuser_id")
+//    private WebUser webUser;
+
+
     // 카테고리 이름을 저장하는 필드. 기존의 category 필드와 같은 역할.
     @Column(nullable = false)
     private String name;

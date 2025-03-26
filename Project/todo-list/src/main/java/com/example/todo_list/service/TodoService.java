@@ -3,11 +3,14 @@ package com.example.todo_list.service;
 import com.example.todo_list.dto.TodoDto;
 import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.repository.CategoryRepository;
 import com.example.todo_list.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +26,13 @@ public class TodoService {
     @Autowired
     private CategoryRepository categoryRepository;
     // 기존 아이디 정렬, api 전송을 위해 남겨둠
-    public List<Todo> index() { return todoRepository.findAll(Sort.by(Sort.Direction.ASC, "id")); }
+    // 이 부분에서 유저의 것만 들고오게 변경
+    public List<Todo> index() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WebUser currentUser = (WebUser) authentication.getPrincipal();  // UserSecurityService가 WebUser 반환한다고 가정
+        Long userId = currentUser.getId();
+        return todoRepository.findByWebUserId(userId);
+    }
 
     // 상태별로 나누어 정렬하기 위한 오버로딩 메소드, 데이터베이스 id순서 정렬
 //    public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
@@ -47,6 +56,10 @@ public class TodoService {
         }
         todo.setCategory(category);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WebUser currentUser = (WebUser) authentication.getPrincipal();
+
+        todo.setWebUser(currentUser);
 
         return todoRepository.save(todo);
     }

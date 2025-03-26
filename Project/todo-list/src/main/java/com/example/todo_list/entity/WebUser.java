@@ -3,6 +3,8 @@ package com.example.todo_list.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -24,6 +26,10 @@ public class WebUser {
     private String email;
     @Column
     private WebUserRole role;
+
+    // 유저 하나가 여러개의 카테고리를 가짐
+//    @OneToMany(mappedBy = "webuser")
+//    private List<Category> categories;
 
 //    @Enumerated(EnumType.STRING)
 //    @Column(nullable = false)

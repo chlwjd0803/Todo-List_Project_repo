@@ -30,7 +30,7 @@ public class CategoryDto {
         }
         return dtos;
     }
-
+    // null로 주는거 처리
     public Category toEntity() {
         return new Category(id, this.name, null);
     }

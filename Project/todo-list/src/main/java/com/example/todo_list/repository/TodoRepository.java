@@ -13,6 +13,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
 //    List<Todo> findByStatusOrderById(String status);
 
+    List<Todo> findByWebUserId(Long webUserId);
+
     List<Todo> findByCategoryId(Long categoryId);
 
     List<Todo> findByStatusOrderByDeadline(String status);

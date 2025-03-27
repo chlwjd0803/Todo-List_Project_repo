@@ -28,12 +28,18 @@ public class TodoService {
     private CategoryRepository categoryRepository;
     @Autowired
     private WebUserRepository webUserRepository;
+
+    private WebUser findCurUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
+        return webUserRepository.findByUsername(username);
+        // 유저가 없을때 예외도 처리해줄것
+    }
+
     // 기존 아이디 정렬, api 전송을 위해 남겨둠
     // 이 부분에서 유저의 것만 들고오게 변경
     public List<Todo> index() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
-        WebUser currentUser = webUserRepository.findByUsername(username);
+        WebUser currentUser = findCurUser();
         Long userId = currentUser.getId();
         log.info(currentUser.getUsername());
         log.info(currentUser.getId()+"");
@@ -44,27 +50,21 @@ public class TodoService {
 //    public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
 
     // 상태별로 나누어 정렬하기 위한 오버로딩 메소드, 날짜 순서 정렬
-    public List<Todo> index(String status) { return todoRepository.findByStatusOrderByDeadline(status); }
+    public List<Todo> index(String status) {
+        return todoRepository.findByStatusAndWebUserIdOrderByDeadline(status, findCurUser().getId());
+    }
 
     public List<Category> getCategories() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
-        WebUser currentUser = webUserRepository.findByUsername(username);
-        Long userId = currentUser.getId();
-
-        return categoryRepository.findByWebUserId(userId);
+        return categoryRepository.findByWebUserId(findCurUser().getId());
     }
 
 
     public Todo addTask(TodoDto dto) {
         Todo todo = dto.toEntity();
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
-        WebUser currentUser = webUserRepository.findByUsername(username);
+        WebUser currentUser = findCurUser();
 
         // 단순히 이름 말고 유저의 것인지도 판단시켜야함
-        Category category = categoryRepository.findByName(todo.getCategoryName());
+        Category category = categoryRepository.findByNameAndWebUserId(todo.getCategoryName(), currentUser.getId());
         if(category == null) {
             // 카테고리 새로 만들기
             category = new Category();
@@ -94,12 +94,14 @@ public class TodoService {
 
     @Transactional
     public TodoDto editTask(Long id, TodoDto dto) {
+        WebUser currentUser = findCurUser();
         Todo target = todoRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("수정 실패, 대상 작업이 존재하지 않습니다."));
         log.info("데이터베이스에 있는 카테고리 이름 : " + target.getCategoryName());
         log.info("받아온 정보의 카테고리 이름 : " + dto.getCategory_name());
 
-        Category editCate = categoryRepository.findByName(dto.getCategory_name());
+        Category editCate = categoryRepository.findByNameAndWebUserId(dto.getCategory_name(), currentUser.getId());
+        log.info(editCate.getName());
         if(editCate == null)
             throw new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다.");
 

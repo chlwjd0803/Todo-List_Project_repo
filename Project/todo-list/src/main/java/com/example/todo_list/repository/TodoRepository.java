@@ -17,5 +17,5 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
     List<Todo> findByCategoryId(Long categoryId);
 
-    List<Todo> findByStatusOrderByDeadline(String status);
+    List<Todo> findByStatusAndWebUserIdOrderByDeadline(String status, Long webUserId);
 }

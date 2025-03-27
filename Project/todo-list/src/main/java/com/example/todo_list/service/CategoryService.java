@@ -3,30 +3,48 @@ package com.example.todo_list.service;
 import com.example.todo_list.dto.CategoryDto;
 import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.entity.WebUser;
 import com.example.todo_list.repository.CategoryRepository;
 import com.example.todo_list.repository.TodoRepository;
+import com.example.todo_list.repository.WebUserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private TodoRepository todoRepository;
+    @Autowired
+    private WebUserRepository webUserRepository;
+
+    private WebUser findCurUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName(); // 또는 ((UserDetails)authentication.getPrincipal()).getUsername();
+        return webUserRepository.findByUsername(username);
+    }
 
     public Category categoryAdd(CategoryDto dto) {
-        // 카테고리 이름이 겹치는지 확인할까?
-        // 카테고리 이름이 비거나 null인지 확인할까?
-        if(dto.getName() == null || dto.getName().equals(""))
-            throw new IllegalArgumentException("카테고리 이름이 입력되지 않았거나 공백입니다.");
-        if(categoryRepository.findByName(dto.getName()) != null)
-            throw new IllegalArgumentException("카테고리 이름이 이미 존재합니다.");
+        WebUser currentUser = findCurUser();
 
+        if(dto.getName() == null || dto.getName().equals("")){
+            log.info("카테고리 이름이 입력되지 않았거나 공백입니다.");
+            return null;
+        }
+        if(categoryRepository.findByNameAndWebUserId(dto.getName(), currentUser.getId()) != null){
+            log.info("카테고리 이름이 이미 존재합니다.");
+            return null;
+        }
         Category category = dto.toEntity();
+        category.setWebUser(currentUser); // 현재 로그인한 사용자의 것으로 만듦
 
         return categoryRepository.save(category);
     }
@@ -58,8 +76,10 @@ public class CategoryService {
 
     @Transactional
     public List<CategoryDto> categoryDeleteAll() {
-        List<Category> cateAll = categoryRepository.findAll();
-        List<Todo> todoAll = todoRepository.findAll();
+        WebUser currentUser = findCurUser();
+        // 해당하는 유저의 것만 일괄 삭제하므로 해당 유저의 정보만 얻어옴
+        List<Category> cateAll = categoryRepository.findByWebUserId(currentUser.getId());
+        List<Todo> todoAll = todoRepository.findByWebUserId(currentUser.getId());
         todoRepository.deleteAll(todoAll);
         categoryRepository.deleteAll(cateAll);
         return CategoryDto.createCategoryDtoList(cateAll);

@@ -101,8 +101,7 @@ public class TodoService {
         log.info("받아온 정보의 카테고리 이름 : " + dto.getCategory_name());
 
         Category editCate = categoryRepository.findByNameAndWebUserId(dto.getCategory_name(), currentUser.getId());
-        log.info(editCate.getName());
-        if(editCate == null)
+        if(editCate == null) // 해당 이름으로 검색했는데 없다면
             throw new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다.");
 
         target.patch(dto, editCate);

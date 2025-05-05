@@ -62,7 +62,7 @@ public class TodoService {
     }
 
 
-    public Todo addTask(TodoDto dto) {
+    public Todo addTasktoEntity(TodoDto dto){
         Todo todo = dto.toEntity();
         WebUser currentUser = findCurUser();
 
@@ -78,6 +78,44 @@ public class TodoService {
         todo.setCategory(category);
         todo.setWebUser(currentUser);
 
+        return todo;
+    }
+
+    public Todo addTask(TodoDto dto) {
+//        Todo todo = dto.toEntity();
+//        WebUser currentUser = findCurUser();
+//
+//        // 단순히 이름 말고 유저의 것인지도 판단시켜야함
+//        Category category = categoryRepository.findByNameAndWebUserId(todo.getCategoryName(), currentUser.getId());
+//        if(category == null) {
+//            // 카테고리 새로 만들기
+//            category = new Category();
+//            category.setName(todo.getCategoryName());
+//            category.setWebUser(currentUser);
+//            categoryRepository.save(category);
+//        }
+//        todo.setCategory(category);
+//        todo.setWebUser(currentUser);
+        Todo todo = addTasktoEntity(dto);
+        return todoRepository.save(todo);
+    }
+
+    public Todo todayAddTask(TodoDto dto) {
+//        Todo todo = dto.toEntity();
+//        WebUser currentUser = findCurUser();
+//
+//        Category category = categoryRepository.findByNameAndWebUserId(todo.getCategoryName(), currentUser.getId());
+//        if(category == null) {
+//            // 카테고리 새로 만들기
+//            category = new Category();
+//            category.setName(todo.getCategoryName());
+//            category.setWebUser(currentUser);
+//            categoryRepository.save(category);
+//        }
+//        todo.setCategory(category);
+//        todo.setWebUser(currentUser);
+        Todo todo = addTasktoEntity(dto);
+        todo.setDeadline(LocalDate.now());
         return todoRepository.save(todo);
     }
 
@@ -119,6 +157,7 @@ public class TodoService {
         todoRepository.delete(target);
         return TodoDto.createTodoDto(target);
     }
+
 
 
 }

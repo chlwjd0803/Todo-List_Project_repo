@@ -4,6 +4,7 @@ import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;

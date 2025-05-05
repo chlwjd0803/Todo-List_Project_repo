@@ -3,69 +3,165 @@
 <!-- index.css 재사용 -->
 <link rel="stylesheet" type="text/css" href="/css/todos/index.css">
 
-<div class="container-fluid mt-3">
-    <!-- 페이지 제목 -->
-    <h1>오늘 할 일</h1>
-
-    <!-- 상태별 섹션 (서버에서 todayTasks만 전달) -->
-    {{#statuses}}
-        <section class="status-sec" data-status="{{status_name}}">
-            <h2>
-                <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"
-                   role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">
-                    {{status_name}}
-                </a>
-            </h2>
-            <div class="collapse show" id="collapse-{{status_name}}">
-                <div class="status-container">
-                    <div class="task-list">
-                        {{#list}}
-                            <div class="task-item" data-id="{{id}}">
-                                <div class="task-header">
-                                    <h3 class="task-title">{{title}}</h3>
-                                    <div class="task-actions">
-                                        <div class="status-btn-group-inline">
-                                            <button class="btn btn-outline-primary status-btn btn-custom"
-                                                    data-id="{{id}}" data-status="준비">준비</button>
-                                            <button class="btn btn-outline-success status-btn btn-custom"
-                                                    data-id="{{id}}" data-status="완료">완료</button>
-                                        </div>
+{{#statuses}}
+    <section class="status-sec" data-status="{{status_name}}">
+        <h2>
+            <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"
+               role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">
+                {{status_name}}
+            </a>
+        </h2>
+        <div class="collapse show" id="collapse-{{status_name}}">
+            <!-- 새로 추가된 상태 컨테이너 -->
+            <div class="status-container">
+                <div class="task-list">
+                    {{#list}}
+                        <div class="task-item" data-id="{{id}}">
+                            <div class="task-header">
+                                <h3 class="task-title">{{title}}</h3>
+                                <div class="task-actions">
+                                    <div class="status-btn-group-inline">
+                                        <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
+                                        <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
                                     </div>
                                 </div>
-                                <div class="status-text" data-status="{{status}}">{{status}}</div>
-                                <div class="task-details">
-                                    <span class="task-deadline">마감: {{deadline}}</span>
-                                    <span class="task-category">카테고리: {{category.name}}</span>
-                                </div>
                             </div>
-                        {{/list}}
-                    </div>
+                            <div class="status-text" data-status="{{status}}">{{status}}</div>
+                            <div class="task-details">
+                                <span class="task-deadline">마감: {{deadline}}</span>
+                                <span class="task-category">카테고리: {{category.name}}</span>
+                            </div>
+                        </div>
+
+                    {{/list}}
                 </div>
             </div>
-        </section>
-    {{/statuses}}
+        </div>
+    </section>
+{{/statuses}}
 
-    <!-- 작업 추가 폼 (index.mustache와 동일) -->
-    <div class="card m-2" id="todo-new">
-        <div class="card-body">
-            <form>
-                <div class="mb-3 row align-items-end">
-                    <div class="col-md-5">
-                        <label for="new-task" class="form-label">작업추가</label>
-                        <input type="text" class="form-control" id="new-task" name="title">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="deadline-date" class="form-label">마감일</label>
-                        <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">
-                    </div>
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
-                    </div>
+<!--작업추가 컨테이너-->
+<div class="card m-2" id="todo-new">
+    <div class="card-body">
+        <form>
+            <div class="mb-3 row align-items-end">
+                <!-- 작업 제목 입력 필드 (6 컬럼) -->
+                <div class="col-md-5">
+                    <label for="new-task" class="form-label">작업추가</label>
+                    <input type="text" class="form-control" id="new-task" name="title">
                 </div>
-            </form>
+                <!-- 달력 선택 칸 (3 컬럼) -->
+                <div class="col-md-4">
+                    <label for="deadline-date" class="form-label">마감일</label>
+                    <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">
+                </div>
+                <!-- 추가 버튼 (3 컬럼) -->
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 작업수정 모달 -->
+<div class="modal fade" id="task-edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">관리</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="edit-task-category-name" class="form-label">카테고리(존재하는 카테고리만 입력)</label>
+                        <input type="text" class="form-control" id="edit-task-category-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-task-title" class="form-label">작업이름</label>
+                        <input type="text" class="form-control" id="edit-task-title">
+                    </div>
+                    <!--                    col-md-4, name="deadline"   ????-->
+                    <div class="mb-3">
+                        <label for="edit-deadline" class="form-label">마감일</label>
+                        <input type="date" class="form-control form-control-sm" id="edit-deadline">
+                    </div>
+                    <input type="hidden" id="edit-task-id">
+                    <input type="hidden" id="edit-task-status">
+                    <button type="button" class="btn btn-primary" id="task-edit-btn">수정하기</button>
+                    <button type="button" class="btn btn-danger" id="task-delete-btn">삭제하기</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+
+
+<!--<div class="container-fluid mt-3">-->
+<!--    &lt;!&ndash; 페이지 제목 &ndash;&gt;-->
+<!--    <h1>오늘 할 일</h1>-->
+
+<!--    &lt;!&ndash; 상태별 섹션 (서버에서 todayTasks만 전달) &ndash;&gt;-->
+<!--    {{#statuses}}-->
+<!--        <section class="status-sec" data-status="{{status_name}}">-->
+<!--            <h2>-->
+<!--                <a class="text-decoration-none" data-bs-toggle="collapse" href="#collapse-{{status_name}}"-->
+<!--                   role="button" aria-expanded="true" aria-controls="collapse-{{status_name}}">-->
+<!--                    {{status_name}}-->
+<!--                </a>-->
+<!--            </h2>-->
+<!--            <div class="collapse show" id="collapse-{{status_name}}">-->
+<!--                <div class="status-container">-->
+<!--                    <div class="task-list">-->
+<!--                        {{#list}}-->
+<!--                            <div class="task-item" data-id="{{id}}">-->
+<!--                                <div class="task-header">-->
+<!--                                    <h3 class="task-title">{{title}}</h3>-->
+<!--                                    <div class="task-actions">-->
+<!--                                        <div class="status-btn-group-inline">-->
+<!--                                            <button class="btn btn-outline-primary status-btn btn-custom"-->
+<!--                                                    data-id="{{id}}" data-status="준비">준비</button>-->
+<!--                                            <button class="btn btn-outline-success status-btn btn-custom"-->
+<!--                                                    data-id="{{id}}" data-status="완료">완료</button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="status-text" data-status="{{status}}">{{status}}</div>-->
+<!--                                <div class="task-details">-->
+<!--                                    <span class="task-deadline">마감: {{deadline}}</span>-->
+<!--                                    <span class="task-category">카테고리: {{category.name}}</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        {{/list}}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--    {{/statuses}}-->
+
+<!--    &lt;!&ndash; 작업 추가 폼 (index.mustache와 동일) &ndash;&gt;-->
+<!--    <div class="card m-2" id="todo-new">-->
+<!--        <div class="card-body">-->
+<!--            <form>-->
+<!--                <div class="mb-3 row align-items-end">-->
+<!--                    <div class="col-md-5">-->
+<!--                        <label for="new-task" class="form-label">작업추가</label>-->
+<!--                        <input type="text" class="form-control" id="new-task" name="title">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-4">-->
+<!--                        <label for="deadline-date" class="form-label">마감일</label>-->
+<!--                        <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">-->
+<!--                    </div>-->
+<!--                    <div class="col-md-3">-->
+<!--                        <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- index.js 재사용 -->
 <script src="/js/todos/today.js"></script>

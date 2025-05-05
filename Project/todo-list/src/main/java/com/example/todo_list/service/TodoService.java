@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -41,8 +42,6 @@ public class TodoService {
     public List<Todo> index() {
         WebUser currentUser = findCurUser();
         Long userId = currentUser.getId();
-        log.info(currentUser.getUsername());
-        log.info(currentUser.getId()+"");
         return todoRepository.findByWebUserId(userId);
     }
 
@@ -56,6 +55,10 @@ public class TodoService {
 
     public List<Category> getCategories() {
         return categoryRepository.findByWebUserId(findCurUser().getId());
+    }
+
+    public List<Todo> today(String status) {
+        return todoRepository.findByStatusAndWebUserIdAndDeadline(status, findCurUser().getId(), LocalDate.now());
     }
 
 
@@ -116,4 +119,6 @@ public class TodoService {
         todoRepository.delete(target);
         return TodoDto.createTodoDto(target);
     }
+
+
 }

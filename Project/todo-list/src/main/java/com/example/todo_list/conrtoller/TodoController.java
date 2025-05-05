@@ -25,11 +25,7 @@ import java.util.List;
 @RequestMapping("/todos")
 public class TodoController {
     @Autowired
-    private TodoRepository todoRepository;
-    @Autowired
     private TodoService todoService;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     // 시작화면 테스트중
     @GetMapping("/start")
@@ -71,5 +67,18 @@ public class TodoController {
         md.addAttribute("categories", categories);
         md.addAttribute("statuses", statuses);
         return "todos/index";
+    }
+
+    @GetMapping("/today")
+    public String today(Model md){
+        List<Todo> todayReadyTodos = todoService.today("준비");
+        List<Todo> todayCompletedTodos = todoService.today("완료");
+
+        List<StatusGroup> statuses = new ArrayList<>();
+        statuses.add(new StatusGroup("준비", todayReadyTodos));
+        statuses.add(new StatusGroup("완료", todayCompletedTodos));
+
+        md.addAttribute("statuses", statuses);
+        return "todos/today";
     }
 }

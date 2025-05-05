@@ -331,27 +331,6 @@
 }
 
 
-// 단일 작업 수정 모달 띄우기
-// {
-//     const taskEditModal = document.querySelector("#task-edit-modal");
-//     taskEditModal.addEventListener("show.bs.modal", function(event){
-//         const triggerBtn = event.relatedTarget;
-//
-//         const id = triggerBtn.getAttribute("data-bs-id"); // 속성 위에가서 추가해주기
-//         const title = triggerBtn.getAttribute("data-bs-title");
-//         const status = triggerBtn.getAttribute("data-bs-status");
-//         const category_name = triggerBtn.getAttribute("data-bs-category-name");
-//         const deadline = triggerBtn.getAttribute("data-bs-deadline");
-//
-//         document.querySelector("#edit-task-id").value = id;
-//         document.querySelector("#edit-task-title").value = title;
-//         document.querySelector("#edit-task-status").value = status;
-//         document.querySelector("#edit-task-category-name").value = category_name;
-//         document.querySelector("#edit-deadline").value = deadline;
-//
-//     });
-// }
-
 // 개별 작업 카드 클릭 시 관리 모달 띄우기
 const taskItems = document.querySelectorAll(".task-item");
 taskItems.forEach(item => {

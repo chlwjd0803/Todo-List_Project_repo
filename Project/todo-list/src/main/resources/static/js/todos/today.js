@@ -111,18 +111,14 @@
 {
     const taskAddBtn = document.querySelector("#task-add-btn");
     taskAddBtn.addEventListener("click", function(){
-        // const selectedCategory = document.querySelector(`input[name="categoryradio"]:checked`);
-        // if(!selectedCategory){
-        //     alert("카테고리를 선택하여 주세요");
-        //     return;
-        // }
+        const selectedCategory = document.querySelector(`select[id=select-task-category]`);
+        if(!selectedCategory){
+            alert("카테고리를 선택하여 주세요");
+            return;
+        }
 
-        // const deadlineInput = document.querySelector("#deadline-date");
-
-        // if(!deadlineInput.value || deadlineInput.value === '') deadlineInput.value = null;
-        // 작업 대신에 카테고리 지정 가능하게 변경할 준비 하기
         const task = {
-            category_name : "작업",
+            category_name : selectedCategory.value,
             title : document.querySelector("#new-task").value,
             status : "준비",
             deadline_str : null

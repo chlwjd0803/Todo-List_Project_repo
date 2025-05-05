@@ -50,13 +50,16 @@
                     <label for="new-task" class="form-label">작업추가</label>
                     <input type="text" class="form-control" id="new-task" name="title">
                 </div>
-                <!-- 달력 선택 칸 (3 컬럼) -->
-                <div class="col-md-4">
-                    <label for="deadline-date" class="form-label">마감일</label>
-                    <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">
+                <div class="col-md-5">
+                    <label for="edit-task-category-name" class="form-label">카테고리</label>
+                    <select class="form-select" aria-label="Default select example" id="edit-task-category-name">
+                        {{#categories}}
+                            <option value="{{name}}">{{name}}</option>
+                        {{/categories}}
+                    </select>
                 </div>
                 <!-- 추가 버튼 (3 컬럼) -->
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <button type="button" class="btn btn-primary" id="task-add-btn">추가</button>
                 </div>
             </div>

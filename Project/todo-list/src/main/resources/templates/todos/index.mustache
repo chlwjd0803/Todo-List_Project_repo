@@ -86,12 +86,12 @@
         <form>
             <div class="mb-3 row align-items-end">
                 <!-- 작업 제목 입력 필드 (6 컬럼) -->
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <label for="new-task" class="form-label">작업추가</label>
                     <input type="text" class="form-control" id="new-task" name="title">
                 </div>
                 <!-- 달력 선택 칸 (3 컬럼) -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="deadline-date" class="form-label">마감일</label>
                     <input type="date" class="form-control form-control-sm" id="deadline-date" name="deadline">
                 </div>
@@ -163,10 +163,9 @@
                         <label for="edit-task-category-name" class="form-label">카테고리</label>
                         <select class="form-select" aria-label="Default select example" id="edit-task-category-name">
                             {{#categories}}
-                                <option value="{{id}}">{{name}}</option>
+                                <option value="{{name}}">{{name}}</option>
                             {{/categories}}
                         </select>
-
                     </div>
                     <div class="mb-3">
                         <label for="edit-task-title" class="form-label">작업이름</label>

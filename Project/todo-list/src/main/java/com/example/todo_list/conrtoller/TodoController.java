@@ -71,6 +71,7 @@ public class TodoController {
 
     @GetMapping("/today")
     public String today(Model md){
+        List<Category> categories = todoService.getCategories();
         List<Todo> todayReadyTodos = todoService.today("준비");
         List<Todo> todayCompletedTodos = todoService.today("완료");
 
@@ -78,6 +79,7 @@ public class TodoController {
         statuses.add(new StatusGroup("준비", todayReadyTodos));
         statuses.add(new StatusGroup("완료", todayCompletedTodos));
 
+        md.addAttribute("categories", categories);
         md.addAttribute("statuses", statuses);
         return "todos/today";
     }

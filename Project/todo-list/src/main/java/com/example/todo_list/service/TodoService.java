@@ -159,5 +159,7 @@ public class TodoService {
     }
 
 
-
+    public List<Todo> schedule() {
+        return todoRepository.findByDeadlineIsNotNull();
+    }
 }

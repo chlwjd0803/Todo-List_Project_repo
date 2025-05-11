@@ -1,35 +1,11 @@
-{{>layouts/header}}
+{{>layouts/header}}          <!-- 기존 레이아웃 헤더 include -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.min.css" rel="stylesheet"/>
+<link href="/css/todos/calendar.css" rel="stylesheet"/>  <!-- 직접 만든 CSS -->
 
-<!-- CSS 파일 분리: 예시로 /css/calendar/index.css 를 연결 -->
-<link rel="stylesheet" type="text/css" href="/css/todos/calendar.css">
+<div id="calendar"></div>    <!-- 달력이 그려질 영역 -->
 
-<div class="calendar-container my-5">
-    <!-- 달력 헤더: 이전/다음 버튼과 현재 월 표시 -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <button id="prevMonth" class="btn btn-outline-secondary btn-lg">&lt;</button>
-        <h2 id="monthYear" class="mb-0"></h2>
-        <button id="nextMonth" class="btn btn-outline-secondary btn-lg">&gt;</button>
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
+<script src="/js/todos/calendar.js"></script>  <!-- 직접 만든 JS -->
 
-    <!-- 달력 테이블 -->
-    <table class="table table-bordered calendar-table">
-        <thead>
-        <tr class="text-center bg-light">
-            <th>일</th>
-            <th>월</th>
-            <th>화</th>
-            <th>수</th>
-            <th>목</th>
-            <th>금</th>
-            <th>토</th>
-        </tr>
-        </thead>
-        <tbody id="calendarBody">
-        <!-- 달력 데이터는 자바스크립트로 채워집니다 -->
-        </tbody>
-    </table>
-</div>
-
-<script src="/js/todos/calendar.js"></script>
 
 {{>layouts/footer}}

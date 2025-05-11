@@ -34,7 +34,9 @@ public class TodoController {
     }
 
     @GetMapping("/calendar")
-    public String calendar(){
+    public String calendar(Model md){
+        List<Todo> todos = todoService.schedule();
+        md.addAttribute("todos", todos);
         return "/todos/calendar";
     }
 

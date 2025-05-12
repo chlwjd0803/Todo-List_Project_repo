@@ -1,23 +1,17 @@
 package com.example.todo_list.conrtoller;
 
 import com.example.todo_list.dto.StatusGroup;
-import com.example.todo_list.dto.TodoDto;
 import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
-import com.example.todo_list.repository.CategoryRepository;
-import com.example.todo_list.repository.TodoRepository;
 import com.example.todo_list.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -37,7 +31,7 @@ public class TodoController {
     public String calendar(Model md){
         List<Todo> todos = todoService.schedule();
         md.addAttribute("todos", todos);
-        return "/todos/calendar";
+        return "schedue";
     }
 
     @GetMapping("/login")
@@ -84,5 +78,16 @@ public class TodoController {
         md.addAttribute("categories", categories);
         md.addAttribute("statuses", statuses);
         return "todos/today";
+    }
+
+    @GetMapping("/schedule")
+    public String schedule(Model md){
+        List<Todo> tomorrow = todoService.getTomorrowTodos();
+        List<Todo> sevenDays = todoService.getSevenDaysTodos();
+        List<Todo> fourteenDays = todoService.getFourteenDaysTodos();
+        md.addAttribute("tomorrow", tomorrow);
+        md.addAttribute("sevenDays", sevenDays);
+        md.addAttribute("fourteenDays", fourteenDays);
+        return "todos/schedule";
     }
 }

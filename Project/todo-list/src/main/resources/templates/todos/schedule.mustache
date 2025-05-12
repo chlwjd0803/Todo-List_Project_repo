@@ -1,0 +1,65 @@
+{{>layouts/header}}
+
+<div class="container mt-4">
+    <h1>다가오는 일정</h1>
+
+    <!-- 내일 섹션 -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            내일
+        </div>
+        <ul class="list-group list-group-flush">
+            {{#tomorrow}}
+                <li class="list-group-item">
+                    <strong>{{title}}</strong><br/>
+                    <small class="text-muted">{{deadline}}</small>
+                </li>
+            {{/tomorrow}}
+            {{^tomorrow}}
+                <li class="list-group-item text-center text-muted">
+                    일정이 없습니다.
+                </li>
+            {{/tomorrow}}
+        </ul>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            1주일 이내로 남음
+        </div>
+        <ul class="list-group list-group-flush">
+            {{#sevenDays}}
+                <li class="list-group-item">
+                    <strong>{{title}}</strong><br/>
+                    <small class="text-muted">{{deadline}}</small>
+                </li>
+            {{/sevenDays}}
+            {{^sevenDays}}
+                <li class="list-group-item text-center text-muted">
+                    일정이 없습니다.
+                </li>
+            {{/sevenDays}}
+        </ul>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning text-white">
+            2주일 이내로 남음
+        </div>
+        <ul class="list-group list-group-flush">
+            {{#fourteenDays}}
+                <li class="list-group-item">
+                    <strong>{{title}}</strong><br/>
+                    <small class="text-muted">{{deadline}}</small>
+                </li>
+            {{/fourteenDays}}
+            {{^fourteenDays}}
+                <li class="list-group-item text-center text-muted">
+                    일정이 없습니다.
+                </li>
+            {{/fourteenDays}}
+        </ul>
+    </div>
+</div>
+
+{{>layouts/footer}}

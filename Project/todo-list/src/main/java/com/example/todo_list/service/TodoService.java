@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -82,38 +83,11 @@ public class TodoService {
     }
 
     public Todo addTask(TodoDto dto) {
-//        Todo todo = dto.toEntity();
-//        WebUser currentUser = findCurUser();
-//
-//        // 단순히 이름 말고 유저의 것인지도 판단시켜야함
-//        Category category = categoryRepository.findByNameAndWebUserId(todo.getCategoryName(), currentUser.getId());
-//        if(category == null) {
-//            // 카테고리 새로 만들기
-//            category = new Category();
-//            category.setName(todo.getCategoryName());
-//            category.setWebUser(currentUser);
-//            categoryRepository.save(category);
-//        }
-//        todo.setCategory(category);
-//        todo.setWebUser(currentUser);
         Todo todo = addTasktoEntity(dto);
         return todoRepository.save(todo);
     }
 
     public Todo todayAddTask(TodoDto dto) {
-//        Todo todo = dto.toEntity();
-//        WebUser currentUser = findCurUser();
-//
-//        Category category = categoryRepository.findByNameAndWebUserId(todo.getCategoryName(), currentUser.getId());
-//        if(category == null) {
-//            // 카테고리 새로 만들기
-//            category = new Category();
-//            category.setName(todo.getCategoryName());
-//            category.setWebUser(currentUser);
-//            categoryRepository.save(category);
-//        }
-//        todo.setCategory(category);
-//        todo.setWebUser(currentUser);
         Todo todo = addTasktoEntity(dto);
         todo.setDeadline(LocalDate.now());
         return todoRepository.save(todo);
@@ -161,5 +135,24 @@ public class TodoService {
 
     public List<Todo> schedule() {
         return todoRepository.findByDeadlineIsNotNull();
+    }
+
+    public List<Todo> getTomorrowTodos() {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        return todoRepository.findByStatusAndWebUserIdAndDeadline("준비", findCurUser().getId(), tomorrow);
+    }
+
+    public List<Todo> getSevenDaysTodos(){
+        LocalDate start = LocalDate.now().plusDays(2);
+        LocalDate end = LocalDate.now().plusDays(7);
+        return todoRepository.findByStatusAndWebUserIdAndDeadlineBetween("준비", findCurUser().getId(),
+                start, end);
+    }
+
+    public List<Todo> getFourteenDaysTodos(){
+        LocalDate start = LocalDate.now().plusDays(8);
+        LocalDate end = LocalDate.now().plusDays(14);
+        return todoRepository.findByStatusAndWebUserIdAndDeadlineBetween("준비", findCurUser().getId(),
+                start, end);
     }
 }

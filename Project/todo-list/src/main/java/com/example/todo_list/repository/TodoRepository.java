@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -24,4 +25,7 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     List<Todo> findByStatusAndWebUserIdAndDeadline(String status, Long webUserId, LocalDate deadline);
 
     List<Todo> findByDeadlineIsNotNull();
+
+    List<Todo> findByStatusAndWebUserIdAndDeadlineBetween(
+            String status, Long webUserId, LocalDate deadline, LocalDate deadline2);
 }

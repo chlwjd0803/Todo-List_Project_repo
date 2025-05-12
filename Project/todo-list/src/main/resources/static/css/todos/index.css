@@ -1,3 +1,14 @@
+/* ---------- 추가: 최상단에 붙여주세요 ---------- */
+:root {
+    /* 글래스모피즘용 색상 변수 */
+    --glass-bg: rgba(255,255,255,0.15);
+    --glass-bg-hover: rgba(255,255,255,0.25);
+    --glass-border: rgba(255,255,255,0.3);
+    /* 포인트 그라데이션 */
+    --grad-start: #6a11cb;
+    --grad-end: #2575fc;
+}
+
 /* 작업 카드 스타일 */
 .task-item {
     background-color: #fff;
@@ -112,6 +123,11 @@
     backdrop-filter: blur(5px) !important;
 }
 
+#category-menu .card-header{
+    background-color: #ffffff
+}
+
+
 /* 카드 컴포넌트 스타일 (예: 카테고리 메뉴 카드) */
 .card {
     margin: 15px;
@@ -168,104 +184,6 @@
     }
 }
 
-
-/* 상태 섹션의 헤더에 투명 오버레이 레이블 추가 */
-.status-sec {
-    position: relative;
-    padding-top: 50px; /* 레이블 공간 확보 */
-}
-
-.status-sec::before {
-    content: attr(data-status);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3); /* 투명한 검정 배경 */
-    color: #fff;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    z-index: 1;
-}
-
-/* (선택 사항) 섹션 내용이 레이블과 겹치지 않도록 */
-.status-sec > *:not(.status-sec::before) {
-    position: relative;
-    z-index: 2;
-}
-
-/* 상태 컨테이너 스타일 */
-.status-container {
-    background-color: rgba(255, 255, 255, 0.8); /* 반투명 흰색 배경 */
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 12px;
-}
-
-/* 상태 섹션 오버레이 레이블 (원하는 경우 추가) */
-.status-sec {
-    position: relative;
-    padding-top: 50px; /* 오버레이 레이블 공간 확보 */
-}
-.status-sec::before {
-    content: attr(data-status);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    z-index: 1;
-}
-
-/* 왼쪽 사이드바 스타일 */
-#sidebar {
-    padding: 15px;
-}
-#sidebar #category-menu {
-    width: 100%;
-}
-
-/* 다크모드 스타일 */
-.dark-mode .status-sec {
-    background-color: #2b2b2b;
-    color: #e0e0e0;
-}
-.dark-mode #todo-new {
-    background-color: rgba(0, 0, 0, 0.30);
-    color: #e0e0e0;
-}
-.dark-mode #category-menu {
-    background-color: rgba(21, 21, 21, 0.30);
-    color: #e0e0e0;
-}
-.dark-mode .modal-header,
-.dark-mode .modal-body {
-    background-color: rgb(55, 55, 55);
-    color: #e0e0e0;
-}
-
-
-/* ---------- 추가: 최상단에 붙여주세요 ---------- */
-:root {
-    /* 글래스모피즘용 색상 변수 */
-    --glass-bg: rgba(255,255,255,0.15);
-    --glass-bg-hover: rgba(255,255,255,0.25);
-    --glass-border: rgba(255,255,255,0.3);
-    /* 포인트 그라데이션 */
-    --grad-start: #6a11cb;
-    --grad-end:   #2575fc;
-}
-
 /* 카드(할일) 스타일 덮어쓰기 */
 .task-item {
     /* 기존 background-color, border 제거하고 덮어쓰기 */
@@ -291,9 +209,20 @@
     opacity: 0.85 !important;
 }
 
+/* index.css 맨 아래에 추가 */
+#category-menu .btn-check:checked + .btn-custom {
+    background: linear-gradient(135deg, #ff0000, #0217ff) !important;
+    color: #fff               !important;
+    border: none              !important;
+    box-shadow: 0 0 0 .2rem rgba(2,23,255,0.5) !important;
+}
+#category-menu .btn-check:checked + .btn-custom:hover {
+    opacity: 0.9 !important;
+}
+
 /* 네비게이션 바 그라데이션 변경 */
 nav.navbar {
-    background: linear-gradient(90deg, var(--grad-start), var(--grad-end))!important;
+    background: linear-gradient(135deg, var(--grad-start), var(--grad-end))!important;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2)!important;
 }
 
@@ -316,3 +245,91 @@ nav.navbar {
     background: rgba(255,255,255,0.5)!important;
     backdrop-filter: blur(5px)!important;
 }
+
+/* ——— 준비/완료 섹션 토글 버튼 스타일 ——— */
+.status-sec h2 {
+    margin-bottom: 8px;
+}
+
+.status-sec h2 a {
+    display: inline-block;
+    padding: 6px 14px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--grad-start), var(--grad-end)) !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.status-sec h2 a:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+}
+
+/* ▼ 아이콘 추가 및 회전 효과 */
+.status-sec h2 a::after {
+    content: '▼';
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+    vertical-align: middle;
+}
+
+.status-sec h2 a[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
+
+
+
+/* 다크모드 스타일 */
+.dark-mode .status-sec {
+    background-color: #2b2b2b;
+    color: #e0e0e0;
+}
+.dark-mode #todo-new {
+    background-color: rgba(0, 0, 0, 0.30);
+    color: #e0e0e0;
+}
+.dark-mode #category-menu {
+    background-color: rgba(21, 21, 21, 0.30);
+    color: #e0e0e0;
+}
+.dark-mode .modal-header,
+.dark-mode .modal-body {
+    background-color: rgb(55, 55, 55);
+    color: #e0e0e0;
+}
+
+.dark-mode .status-container{
+    background-color: rgb(0,0,0);
+}
+
+.dark-mode .btn-custom {
+    background: linear-gradient(135deg, #575757, #303030) !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.dark-mode #category-menu .btn-check:checked + .btn-custom {
+    background: linear-gradient(135deg, #d1d1d1, #686868) !important;
+    color: #fff               !important;
+    border: none              !important;
+    box-shadow: 0 0 0 .2rem rgb(255, 255, 255) !important;
+}
+
+.dark-mode .status-sec h2 a {
+    background: linear-gradient(135deg, #d1d1d1, #686868) !important;
+    color: #fff !important;
+}
+
+.dark-mode #category-menu .card-header{
+    background-color: rgba(21, 21, 21, 0.30);
+    color: #e0e0e0;
+}
+

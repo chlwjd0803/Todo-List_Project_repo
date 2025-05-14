@@ -24,14 +24,5 @@ public class Category {
     // 카테고리 이름을 저장하는 필드. 기존의 category 필드와 같은 역할.
     @Column(nullable = false)
     private String name;
-
-    // 양방향 관계 설정: 해당 카테고리에 속한 Todo 리스트.
-    // 카테고리 하나가 여러개의 Todo 작업의 값에 대응되므로
-    @OneToMany(mappedBy = "category")
-    private List<Todo> todos;
-
-    public boolean isEmpty() {
-        return name.isEmpty();
-    }
 }
 

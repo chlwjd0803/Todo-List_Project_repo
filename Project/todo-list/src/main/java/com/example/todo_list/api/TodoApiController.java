@@ -49,6 +49,13 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @PatchMapping("/updateFavorite/{id}")
+    public ResponseEntity<?> updateFavorite(@PathVariable Long id){
+        Todo check = todoService.updateFavorite(id);
+        return (check!=null) ? ResponseEntity.ok(check) :
+                ResponseEntity.badRequest().build();
+    }
+
     @PatchMapping("/index/editTask/{id}")
     public ResponseEntity<TodoDto> editTask(@PathVariable Long id, @RequestBody TodoDto dto) {
         TodoDto editDto = todoService.editTask(id, dto);

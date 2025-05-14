@@ -148,4 +148,10 @@ public class TodoService {
         return todoRepository.findByStatusAndWebUserIdAndDeadlineBetween("준비", findCurUser().getId(),
                 start, end);
     }
+
+    public Todo updateFavorite(Long id) {
+        Todo target = todoRepository.findById(id).orElseThrow( () -> new IllegalArgumentException("작업이 없습니다."));
+        target.setFavorite(!target.getFavorite());
+        return todoRepository.save(target);
+    }
 }

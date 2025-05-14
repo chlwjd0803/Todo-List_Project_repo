@@ -284,6 +284,14 @@ nav.navbar {
     transform: rotate(180deg);
 }
 
+.btn-favorite i {
+    font-size: 1.6rem;    /* 아이콘 크기 */
+    color: #FFC107;       /* 골드 색상 */
+    transition: transform 0.15s ease;
+}
+.btn-favorite i:hover {
+    transform: scale(1.2);
+}
 
 
 

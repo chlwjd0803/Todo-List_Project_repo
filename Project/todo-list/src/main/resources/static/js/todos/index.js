@@ -164,8 +164,38 @@
             });
         });
 
-    });
+        // 즐겨찾기 버튼 클릭 이벤트 (별 토글)
+        const favButtons = document.querySelectorAll(".btn-favorite");
+        favButtons.forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                // 카드 전체 클릭 이벤트와 겹치지 않도록 전파 차단
+                e.stopPropagation();
 
+                const taskId = this.getAttribute("data-id");
+                // API 엔드포인트 (PATCH로 favorite 상태 업데이트)
+                const url = `/api/todos/updateFavorite/${taskId}`;
+
+                // 현재 아이콘 상태 검사
+                const starEl = this.querySelector(".star-icon");
+                const willFavorite = starEl.textContent === "☆";
+
+                fetch(url, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ favorite: willFavorite })
+                }).then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    // 성공 시 UI 업데이트
+                    starEl.textContent = willFavorite ? "★" : "☆";
+                }).catch(error => {
+                    console.error("즐겨찾기 변경 실패:", error);
+                    alert("즐겨찾기 상태 변경에 실패했습니다.");
+                });
+            });
+        });
+    });
 }
 
 

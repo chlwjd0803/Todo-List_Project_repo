@@ -24,30 +24,12 @@ public class WebUser {
     private String password;
     @Column(nullable = false, unique = true)
     private String email;
-    @Column
-    private WebUserRole role;
 
-    // 유저 하나가 여러개의 카테고리를 가짐
-//    @OneToMany(mappedBy = "webuser")
-//    private List<Category> categories;
-
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private Role role;
-//    @OneToMany(mappedBy = "user") // 유저에게 속한 투두들을 들고오기위함
-//    private List<Todo> todos;
-
-
-    // 추후 개발 예정, 일단 모두 null값을 가질 것
-//    @Column
-//    private LocalDateTime createdAt;
-//    @Column
-//    private LocalDateTime updatedAt;
-//    @Column
-//    private LocalDateTime lastLoginAt;
-//    @Column
-//    private String account_status;
-//    @Column
-//    private String phone_number;
+    @Builder
+    public WebUser(String username, String password, String email){
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
 }

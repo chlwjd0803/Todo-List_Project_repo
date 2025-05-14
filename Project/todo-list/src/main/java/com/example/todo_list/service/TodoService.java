@@ -9,6 +9,7 @@ import com.example.todo_list.repository.TodoRepository;
 import com.example.todo_list.repository.WebUserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,8 @@ public class TodoService {
     private CategoryRepository categoryRepository;
     @Autowired
     private WebUserRepository webUserRepository;
+    @Autowired
+    private BasicErrorController basicErrorController;
 
     private WebUser findCurUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,22 +67,18 @@ public class TodoService {
 
 
     public Todo addTasktoEntity(TodoDto dto){
-        Todo todo = dto.toEntity();
         WebUser currentUser = findCurUser();
-
-        // 단순히 이름 말고 유저의 것인지도 판단시켜야함
-        Category category = categoryRepository.findByNameAndWebUserId(todo.getCategoryName(), currentUser.getId());
-        if(category == null) {
-            // 카테고리 새로 만들기
-            category = new Category();
-            category.setName(todo.getCategoryName());
-            category.setWebUser(currentUser);
-            categoryRepository.save(category);
+        Category selectCategory = categoryRepository.findByNameAndWebUserId(dto.getCategory_name(), currentUser.getId()).orElse(null);
+        if(selectCategory == null){
+            Category basicCategory = categoryRepository.findByNameAndWebUserId("작업", currentUser.getId()).orElse(null);
+            if(basicCategory == null){
+                selectCategory = new Category("작업", currentUser);
+                categoryRepository.save(selectCategory);
+            }
+            else selectCategory = basicCategory;
         }
-        todo.setCategory(category);
-        todo.setWebUser(currentUser);
 
-        return todo;
+        return dto.toEntity(currentUser, selectCategory);
     }
 
     public Todo addTask(TodoDto dto) {
@@ -115,9 +114,8 @@ public class TodoService {
         log.info("데이터베이스에 있는 카테고리 이름 : " + target.getCategoryName());
         log.info("받아온 정보의 카테고리 이름 : " + dto.getCategory_name());
 
-        Category editCate = categoryRepository.findByNameAndWebUserId(dto.getCategory_name(), currentUser.getId());
-        if(editCate == null) // 해당 이름으로 검색했는데 없다면
-            throw new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다.");
+        Category editCate = categoryRepository.findByNameAndWebUserId(dto.getCategory_name(), currentUser.getId())
+                .orElseThrow( () -> new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다."));
 
         target.patch(dto, editCate);
         Todo edited = todoRepository.save(target);

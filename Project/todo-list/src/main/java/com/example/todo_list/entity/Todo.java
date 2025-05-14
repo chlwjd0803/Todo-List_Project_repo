@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 
@@ -34,6 +33,15 @@ public class Todo {
     private String status; //작업 상태(준비, 완료 두 가지 구성만 사용할것)
     @Column
     private LocalDate deadline;
+
+    @Builder
+    public Todo(WebUser webUser, Category category, String title, String status, LocalDate deadline) {
+        this.webUser = webUser;
+        this.category = category;
+        this.title = title;
+        this.status = status;
+        this.deadline = deadline;
+    }
 
     // DTO에서 카테고리 이름을 문자열로 반환받기 위함
     public String getCategoryName() {

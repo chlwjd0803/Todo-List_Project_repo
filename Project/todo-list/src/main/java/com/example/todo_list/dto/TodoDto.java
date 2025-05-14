@@ -2,6 +2,7 @@ package com.example.todo_list.dto;
 
 import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.entity.WebUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +36,7 @@ public class TodoDto {
         );
     }
 
-    public Todo toEntity(){
+    public Todo toEntity(WebUser curUser, Category selectCategory){
         // this->DTO status는 문자열 그대로 쓰되 category는 문자열에서 객체로 변환하는 방식을 사용하여야함
         Category newCate = new Category(); // 미할당 상태로 선언
 
@@ -63,6 +64,6 @@ public class TodoDto {
 
         // 일단 유저는 미지정 상태로 넘기기
         // 이때 넘기는 newCate도 가상이므로 크게 신경쓰지 않아도 됨
-        return new Todo(id, null, newCate, this.title, this.status, deadline);
+        return new Todo(curUser, selectCategory, this.title, this.status, deadline);
     }
 }

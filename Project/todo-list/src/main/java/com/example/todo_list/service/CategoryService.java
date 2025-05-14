@@ -39,11 +39,11 @@ public class CategoryService {
             log.info("카테고리 이름이 입력되지 않았거나 공백입니다.");
             return null;
         }
-        if(categoryRepository.findByNameAndWebUserId(dto.getName(), currentUser.getId()) != null){
+        if(categoryRepository.findByNameAndWebUserId(dto.getName(), currentUser.getId()).orElse(null) != null){
             log.info("카테고리 이름이 이미 존재합니다.");
             return null;
         }
-        Category category = dto.toEntity();
+        Category category = new Category(dto.getName(), currentUser);
         category.setWebUser(currentUser); // 현재 로그인한 사용자의 것으로 만듦
 
         return categoryRepository.save(category);

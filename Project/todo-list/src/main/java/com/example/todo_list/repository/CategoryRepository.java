@@ -12,7 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findByWebUserId(Long Id);
 
-    Category findByNameAndWebUserId(String name, Long webUserId);
+    Optional<Category> findByNameAndWebUserId(String name, Long webUserId);
 
     @Override
     List<Category> findAll();

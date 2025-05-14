@@ -31,8 +31,6 @@ public class TodoService {
     private CategoryRepository categoryRepository;
     @Autowired
     private WebUserRepository webUserRepository;
-    @Autowired
-    private BasicErrorController basicErrorController;
 
     private WebUser findCurUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -48,9 +46,6 @@ public class TodoService {
         Long userId = currentUser.getId();
         return todoRepository.findByWebUserId(userId);
     }
-
-    // 상태별로 나누어 정렬하기 위한 오버로딩 메소드, 데이터베이스 id순서 정렬
-//    public List<Todo> index(String status) { return todoRepository.findByStatusOrderById(status); }
 
     // 상태별로 나누어 정렬하기 위한 오버로딩 메소드, 날짜 순서 정렬
     public List<Todo> index(String status) {

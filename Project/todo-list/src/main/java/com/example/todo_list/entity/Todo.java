@@ -33,14 +33,17 @@ public class Todo {
     private String status; //작업 상태(준비, 완료 두 가지 구성만 사용할것)
     @Column
     private LocalDate deadline;
+    @Column
+    private Boolean favorite;
 
     @Builder
-    public Todo(WebUser webUser, Category category, String title, String status, LocalDate deadline) {
+    public Todo(WebUser webUser, Category category, String title, String status, LocalDate deadline, boolean favorite) {
         this.webUser = webUser;
         this.category = category;
         this.title = title;
         this.status = status;
         this.deadline = deadline;
+        this.favorite = favorite;
     }
 
     // DTO에서 카테고리 이름을 문자열로 반환받기 위함

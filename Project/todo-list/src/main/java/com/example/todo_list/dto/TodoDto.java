@@ -64,6 +64,6 @@ public class TodoDto {
 
         // 일단 유저는 미지정 상태로 넘기기
         // 이때 넘기는 newCate도 가상이므로 크게 신경쓰지 않아도 됨
-        return new Todo(curUser, selectCategory, this.title, this.status, deadline);
+        return new Todo(curUser, selectCategory, this.title, this.status, deadline, false);
     }
 }

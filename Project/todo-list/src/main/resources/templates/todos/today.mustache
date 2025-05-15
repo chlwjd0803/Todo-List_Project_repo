@@ -21,14 +21,16 @@
                                 <h3 class="task-title">{{title}}</h3>
                                 <div class="task-actions">
                                     <div class="status-btn-group-inline">
-                                        <span class="star-icon">
-                                            {{#favorite}}
-                                                <i class="fa-solid fa-star fa-2x"></i>
-                                            {{/favorite}}
-                                            {{^favorite}}
-                                                <i class="fa-regular fa-star fa-2x"></i>
-                                            {{/favorite}}
+                                        <button class="btn btn-sm btn-favorite" data-id="{{id}}">
+                                            <span class="star-icon">
+                                                {{#favorite}}
+                                                    <i class="fa-solid fa-star fa-2x"></i>
+                                                {{/favorite}}
+                                                {{^favorite}}
+                                                    <i class="fa-regular fa-star fa-2x"></i>
+                                                {{/favorite}}
                                             </span>
+                                        </button>
                                         <button class="btn btn-outline-primary status-btn btn-custom" data-id="{{id}}" data-status="준비">준비</button>
                                         <button class="btn btn-outline-success status-btn btn-custom" data-id="{{id}}" data-status="완료">완료</button>
                                     </div>

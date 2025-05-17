@@ -38,20 +38,6 @@ public class TodoDto {
 
     public Todo toEntity(WebUser curUser, Category selectCategory){
         // this->DTO status는 문자열 그대로 쓰되 category는 문자열에서 객체로 변환하는 방식을 사용하여야함
-        Category newCate = new Category(); // 미할당 상태로 선언
-
-        // 카테고리 문자열이 null 이거나 빈 문자열일 경우
-        // 카테고리가 미선택 되어있는 경우
-        if(this.category_name == null || this.category_name.isEmpty()) return null;
-        if(this.category_name.equals("전체")) {
-            newCate.setName("작업"); // 기본 작업 이름으로 초기화
-            this.category_name = newCate.getName(); // DTO에도 카테고리 기본값으로 지정했다고 저장
-        }
-        // 기존 카테고리에 맵핑하는 경우
-        else {
-            newCate.setName(this.category_name);
-        }
-
         // String으로 받은 날짜를 Localdatetime 자료형에 맞게 변환하여야함
         LocalDate deadline;
 

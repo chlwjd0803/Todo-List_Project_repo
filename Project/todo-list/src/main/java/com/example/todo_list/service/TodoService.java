@@ -60,6 +60,9 @@ public class TodoService {
         return todoRepository.findByStatusAndWebUserIdAndDeadline(status, findCurUser().getId(), LocalDate.now());
     }
 
+    public List<Todo> favorite(String status) {
+        return todoRepository.findByStatusAndWebUserIdAndFavorite(status, findCurUser().getId(), true);
+    }
 
     public Todo addTasktoEntity(TodoDto dto){
         WebUser currentUser = findCurUser();
@@ -84,6 +87,12 @@ public class TodoService {
     public Todo todayAddTask(TodoDto dto) {
         Todo todo = addTasktoEntity(dto);
         todo.setDeadline(LocalDate.now());
+        return todoRepository.save(todo);
+    }
+
+    public Todo favoriteAddTask(TodoDto dto) {
+        Todo todo = addTasktoEntity(dto);
+        todo.setFavorite(true);
         return todoRepository.save(todo);
     }
 
@@ -154,4 +163,7 @@ public class TodoService {
         target.setFavorite(!target.getFavorite());
         return todoRepository.save(target);
     }
+
+
+
 }

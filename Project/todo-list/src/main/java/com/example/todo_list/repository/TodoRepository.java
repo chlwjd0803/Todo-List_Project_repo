@@ -28,4 +28,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
 
     List<Todo> findByStatusAndWebUserIdAndDeadlineBetween(
             String status, Long webUserId, LocalDate deadline, LocalDate deadline2);
+
+    List<Todo> findByStatusAndWebUserIdAndFavorite(String status, Long webUserId, boolean favorite);
 }

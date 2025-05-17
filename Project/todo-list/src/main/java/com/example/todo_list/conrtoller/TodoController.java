@@ -80,6 +80,21 @@ public class TodoController {
         return "todos/today";
     }
 
+    @GetMapping("/favorite")
+    public String favorite(Model md){
+        List<Category> categories = todoService.getCategories();
+        List<Todo> favReadyTodos = todoService.favorite("준비");
+        List<Todo> favCompletedTodos = todoService.favorite("완료");
+
+        List<StatusGroup> statuses = new ArrayList<>();
+        statuses.add(new StatusGroup("준비", favReadyTodos));
+        statuses.add(new StatusGroup("완료", favCompletedTodos));
+
+        md.addAttribute("categories", categories);
+        md.addAttribute("statuses", statuses);
+        return "todos/favorite";
+    }
+
     @GetMapping("/schedule")
     public String schedule(Model md){
         List<Todo> tomorrow = todoService.getTomorrowTodos();

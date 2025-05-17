@@ -40,6 +40,13 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @PostMapping("/favorite/addTask")
+    public ResponseEntity<Todo> favoriteAddTask(@RequestBody TodoDto dto){
+        Todo favAdded = todoService.favoriteAddTask(dto);
+        return (favAdded != null) ? ResponseEntity.ok().body(favAdded)
+                : ResponseEntity.badRequest().build();
+    }
+
     @PostMapping("/index/updateStatus/{id}")
     public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
         String newStatus = request.get("status");

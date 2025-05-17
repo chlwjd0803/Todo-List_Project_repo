@@ -1,88 +1,357 @@
 {{>layouts/header}}
 
 <style>
-    .hero{
-        background: linear-gradient(135deg, #6a11cb, #2575fc);
+    body {
+        background-color: #ffffff;
+        color: #000;
+        margin: 0;
+        padding: 0;
     }
 
-    .dark-mode .hero {
-        background: linear-gradient(135deg, #000000, #888888);
+    .hero {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
     }
+
+    .video-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        color: #ffffff;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 2rem;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+    }
+
+    .hero-content .btn {
+        margin-top: 2rem;
+        padding: 0.75rem 2rem;
+        border-radius: 30px;
+        background: #6f42c1;
+        color: #fff;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .hero-content .btn:hover {
+        background: #5a35a1;
+    }
+
+    .features {
+        padding: 5rem 2rem;
+        background: #f4f0ff;
+    }
+
+    .feature-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-card i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #6f42c1;
+    }
+
+    .feature-card h5 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .feature-card p {
+        color: #666;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .about {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 5rem 2rem;
+        background: #ffffff;
+        color: #333;
+    }
+
+    .about .image {
+        flex: 1;
+        padding: 1rem;
+    }
+
+    .about .image img {
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .about .text {
+        flex: 1;
+        padding: 1rem 2rem;
+    }
+
+    .about h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .about ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .about ul li::before {
+        content: '✔️';
+        margin-right: 0.5rem;
+    }
+
+    .about ul li {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+
+    .about .btn {
+        margin-top: 1rem;
+        border-radius: 30px;
+        background: #6f42c1;
+        color: #fff;
+    }
+
+    .about .btn:hover {
+        background: #5a35a1;
+    }
+
+    .cta {
+        background: linear-gradient(135deg, #6f42c1, #9c6ade);
+        color: #fff;
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .cta h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .cta p {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+    }
+
+    .cta .btn {
+        background: #fff;
+        color: #6f42c1;
+        border-radius: 30px;
+        padding: 0.75rem 2rem;
+    }
+
+    .cta .btn:hover {
+        background: #f0e6ff;
+    }
+
+    /* 다크모드에서 전체 배경 및 텍스트 */
+    .dark-mode {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+    }
+
+    /* Hero 섹션 - 텍스트 */
+    .dark-mode .hero-content {
+        color: #ffffff;
+    }
+
+    /* Features 섹션 */
+    .dark-mode .features {
+        background-color: #2c2c2c;
+    }
+
+    .dark-mode .feature-card {
+        background-color: #3a3a3a;
+        color: #e0e0e0;
+    }
+
+    .dark-mode .feature-card h5 {
+        color: #ffffff;
+    }
+
+    .dark-mode .feature-card p {
+        color: #bbbbbb;
+    }
+
+    /* About 섹션 */
+    .dark-mode .about {
+        background-color: #2b2b2b;
+        color: #dddddd;
+    }
+
+    .dark-mode .about ul li {
+        color: #cccccc;
+    }
+
+    .dark-mode .about .btn {
+        background-color: #6f42c1;
+        color: #fff;
+    }
+
+    .dark-mode .about .btn:hover {
+        background-color: #5a35a1;
+    }
+
+    /* CTA 섹션 */
+    .dark-mode .cta {
+        background: linear-gradient(135deg, #3e2c60, #553285);
+        color: #ffffff;
+    }
+
+    .dark-mode .cta .btn {
+        background: #ffffff;
+        color: #6f42c1;
+    }
+
+    .dark-mode .cta .btn:hover {
+        background: #ddd2f7;
+    }
+
+
+    @media (max-width: 768px) {
+        .about {
+            flex-direction: column;
+        }
+
+        .hero-content h1 {
+            font-size: 2.2rem;
+        }
+    }
+
+
 </style>
 
-
-<!-- 스타일 개선된 Hero Section -->
-<section class="hero text-white py-5">
-    <div class="container text-center">
-        <h1 class="display-3 fw-bold">Power J Todo-List에 오신 것을 환영합니다.</h1>
-        <p class="lead">쉽고 직관적으로 할 일을 기록하고 관리하세요!</p>
-        <a href="https://github.com/chlwjd0803/Todo-List_Project_repo" class="btn btn-lg btn-outline-light mt-3" target="_blank">패치노트 보기</a>
+<!-- Hero Section -->
+<section class="hero">
+    <video class="video-bg" autoplay loop muted>
+        <source src="/videos/startmain.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="hero-content">
+        <h1>Power J Todo-List에 오신 것을 환영합니다.</h1>
+        <p>쉽고 직관적으로 할 일을 기록하고 관리하세요!</p>
+        <a href="https://github.com/chlwjd0803/Todo-List_Project_repo" target="_blank" class="btn">패치노트 보기</a>
     </div>
 </section>
 
-<!-- 기능 섹션 개선 -->
-<section class="features py-5 bg-light">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 border-0 shadow-lg">
-                    <div class="card-body">
-                        <i class="bi bi-check-circle display-4 text-success"></i>
-                        <h5 class="card-title mt-3 fw-bold">할 일 관리</h5>
-                        <p class="card-text">간편한 UI로 일정과 할 일을 쉽게 정리하세요.</p>
-                    </div>
-                </div>
+<!-- Features Section -->
+<section class="features container">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-check2-square"></i>
+                <h5>할 일 관리</h5>
+                <p>간편한 UI로 일정과 할 일을 쉽게 정리하세요.</p>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 border-0 shadow-lg">
-                    <div class="card-body">
-                        <i class="bi bi-bar-chart-line display-4 text-info"></i>
-                        <h5 class="card-title mt-3 fw-bold">통계 및 분석</h5>
-                        <p class="card-text">완료율을 확인하고 업무 효율성을 높이세요.</p>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-bar-chart-line"></i>
+                <h5>통계 및 분석</h5>
+                <p>완료율을 확인하고 업무 효율성을 높이세요.</p>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 border-0 shadow-lg">
-                    <div class="card-body">
-                        <i class="bi bi-cloud-upload display-4 text-warning"></i>
-                        <h5 class="card-title mt-3 fw-bold">클라우드 동기화</h5>
-                        <p class="card-text">언제 어디서나 할 일을 저장하고 접근하세요.</p>
-                    </div>
-                </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="bi bi-cloud-arrow-up"></i>
+                <h5>클라우드 동기화</h5>
+                <p>언제 어디서나 할 일을 저장하고 접근하세요.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- About Section (개선) -->
-<section class="about py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 mb-4 mb-md-0">
-                <img src="/images/landing-image.jpg" alt="About Us" class="img-fluid rounded shadow">
-            </div>
-            <div class="col-md-6">
-                <h2 class="fw-bold">CJ TodoList는 무엇이 다를까요?</h2>
-                <p>우리는 단순한 일정 관리가 아닌, 사용자의 업무 흐름을 최적화하는 솔루션을 제공합니다.</p>
-                <ul>
-                    <li>✔️ 간편한 UI와 UX</li>
-                    <li>✔️ 강력한 일정 관리 기능</li>
-                    <li>✔️ 실시간 동기화 지원</li>
-                </ul>
-                <a href="/about" class="btn btn-primary mt-3">더 알아보기</a>
-            </div>
-        </div>
+<!-- About Section -->
+<section class="about container">
+    <div class="image">
+        <img src="/images/landing-image.jpg" alt="About Us">
+    </div>
+    <div class="text">
+        <h2>CJ TodoList는 무엇이 다를까요?</h2>
+        <p>우리는 단순한 일정 관리가 아닌, 사용자의 업무 흐름을 최적화하는 솔루션을 제공합니다.</p>
+        <ul>
+            <li>간편한 UI와 UX</li>
+            <li>강력한 일정 관리 기능</li>
+            <li>실시간 동기화 지원</li>
+        </ul>
+        <a href="/about" class="btn mt-3">더 알아보기</a>
     </div>
 </section>
 
-<!-- CTA 섹션 -->
-<section class="cta text-white py-5 text-center">
-    <div class="container">
-        <h2 class="display-4 fw-bold">지금 바로 시작하세요!</h2>
-        <p class="lead">무료로 가입하고 효율적인 일정 관리의 시작을 경험해보세요.</p>
-        <a href="/signup" class="btn btn-lg btn-warning text-dark fw-bold">회원가입 하기</a>
-    </div>
+<!-- CTA Section -->
+<section class="cta">
+    <h2>지금 바로 시작하세요!</h2>
+    <p>무료로 가입하고 효율적인 일정 관리의 시작을 경험해보세요.</p>
+    <a href="/signup" class="btn">회원가입 하기</a>
 </section>
+
+<script>
+    function applyVideoForTheme(isDark) {
+        const video = document.querySelector(".video-bg");
+        const source = video.querySelector("source");
+        const newSrc = isDark ? "/videos/startmain-dark.mp4" : "/videos/startmain.mp4";
+
+        // 현재와 다를 경우만 변경
+        if (source.getAttribute("src") !== newSrc) {
+            source.setAttribute("src", newSrc);
+            video.load(); // 비디오 다시 로드
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggle = document.getElementById('darkModeToggle');
+        const currentTheme = localStorage.getItem('theme');
+        const isDark = currentTheme === 'dark';
+
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+        }
+
+        applyVideoForTheme(isDark);
+
+        toggle.addEventListener('change', function () {
+            const isNowDark = this.checked;
+            document.body.classList.toggle('dark-mode', isNowDark);
+            localStorage.setItem('theme', isNowDark ? 'dark' : 'light');
+            applyVideoForTheme(isNowDark);
+        });
+    });
+</script>
 
 {{>layouts/footer}}

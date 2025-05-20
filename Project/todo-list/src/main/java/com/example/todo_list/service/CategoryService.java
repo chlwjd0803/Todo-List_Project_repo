@@ -32,6 +32,11 @@ public class CategoryService {
         return webUserRepository.findByUsername(username);
     }
 
+    public List<Category> getCategories() {
+        return categoryRepository.findByWebUserId(findCurUser().getId());
+    }
+
+
     public Category categoryAdd(CategoryDto dto) {
         WebUser currentUser = findCurUser();
 

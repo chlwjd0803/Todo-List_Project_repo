@@ -3,6 +3,7 @@ package com.example.todo_list.conrtoller;
 import com.example.todo_list.dto.StatusGroup;
 import com.example.todo_list.entity.Category;
 import com.example.todo_list.entity.Todo;
+import com.example.todo_list.service.CategoryService;
 import com.example.todo_list.service.TodoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.util.List;
 public class TodoController {
     @Autowired
     private TodoService todoService;
+    @Autowired
+    private CategoryService categoryService;
 
     // 시작화면 테스트중
     @GetMapping("/start")
@@ -52,7 +55,7 @@ public class TodoController {
     // 전체 목록 보기
     @GetMapping("/index")
     public String index(Model md){
-        List<Category> categories = todoService.getCategories();
+        List<Category> categories = categoryService.getCategories();
         List<Todo> readyTodos = todoService.index("준비");
         List<Todo> completedTodos = todoService.index("완료");
 
@@ -67,7 +70,7 @@ public class TodoController {
 
     @GetMapping("/today")
     public String today(Model md){
-        List<Category> categories = todoService.getCategories();
+        List<Category> categories = categoryService.getCategories();
         List<Todo> todayReadyTodos = todoService.today("준비");
         List<Todo> todayCompletedTodos = todoService.today("완료");
 
@@ -82,7 +85,7 @@ public class TodoController {
 
     @GetMapping("/favorite")
     public String favorite(Model md){
-        List<Category> categories = todoService.getCategories();
+        List<Category> categories = categoryService.getCategories();
         List<Todo> favReadyTodos = todoService.favorite("준비");
         List<Todo> favCompletedTodos = todoService.favorite("완료");
 

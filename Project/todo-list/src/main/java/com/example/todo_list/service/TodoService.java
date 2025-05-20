@@ -52,10 +52,6 @@ public class TodoService {
         return todoRepository.findByStatusAndWebUserIdOrderByDeadline(status, findCurUser().getId());
     }
 
-    public List<Category> getCategories() {
-        return categoryRepository.findByWebUserId(findCurUser().getId());
-    }
-
     public List<Todo> today(String status) {
         return todoRepository.findByStatusAndWebUserIdAndDeadline(status, findCurUser().getId(), LocalDate.now());
     }

@@ -60,7 +60,7 @@ public class TodoService {
         return todoRepository.findByStatusAndWebUserIdAndFavorite(status, findCurUser().getId(), true);
     }
 
-    public Todo addTasktoEntity(TodoDto dto){
+    private Todo addTasktoEntity(TodoDto dto){
         WebUser currentUser = findCurUser();
         Category selectCategory = categoryRepository.findByNameAndWebUserId(dto.getCategory_name(), currentUser.getId()).orElse(null);
         if(selectCategory == null){

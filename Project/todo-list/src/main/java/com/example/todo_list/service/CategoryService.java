@@ -50,7 +50,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDto categoryEdit(Long id, Category dto) {
+    public CategoryDto categoryEdit(Long id, CategoryDto dto) {
         Category target = categoryRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("수정 실패, 대상 카테고리가 존재하지 않습니다."));
 

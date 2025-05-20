@@ -30,13 +30,6 @@ public class TodoController {
         return "/todos/start";
     }
 
-    @GetMapping("/calendar")
-    public String calendar(Model md){
-        List<Todo> todos = todoService.schedule();
-        md.addAttribute("todos", todos);
-        return "schedue";
-    }
-
     @GetMapping("/login")
     public String login(){
         return "/todos/login";

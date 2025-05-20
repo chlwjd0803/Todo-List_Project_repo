@@ -130,11 +130,6 @@ public class TodoService {
         return TodoDto.createTodoDto(target);
     }
 
-
-    public List<Todo> schedule() {
-        return todoRepository.findByDeadlineIsNotNull();
-    }
-
     public List<Todo> getTomorrowTodos() {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         return todoRepository.findByStatusAndWebUserIdAndDeadline("준비", findCurUser().getId(), tomorrow);

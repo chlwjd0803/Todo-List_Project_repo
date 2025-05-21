@@ -24,7 +24,7 @@ public class TodoApiController {
     public List<Todo> index(){ return todoService.index(); }
 
 
-    @PostMapping("/index/addTask")
+    @PostMapping("/index/task")
     public ResponseEntity<Todo> addTask(@RequestBody TodoDto dto){
         Todo added = todoService.addTask(dto);
         return (added != null) ?
@@ -32,7 +32,7 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping("/today/addTask")
+    @PostMapping("/today/task")
     public ResponseEntity<Todo> todayAddTask(@RequestBody TodoDto dto){
         Todo todayAdded = todoService.todayAddTask(dto);
         return (todayAdded != null) ?
@@ -40,7 +40,7 @@ public class TodoApiController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping("/favorite/addTask")
+    @PostMapping("/favorite/task")
     public ResponseEntity<Todo> favoriteAddTask(@RequestBody TodoDto dto){
         Todo favAdded = todoService.favoriteAddTask(dto);
         return (favAdded != null) ? ResponseEntity.ok().body(favAdded)
@@ -63,14 +63,14 @@ public class TodoApiController {
                 ResponseEntity.badRequest().build();
     }
 
-    @PatchMapping("/index/editTask/{id}")
+    @PatchMapping("/index/task/{id}")
     public ResponseEntity<TodoDto> editTask(@PathVariable Long id, @RequestBody TodoDto dto) {
         TodoDto editDto = todoService.editTask(id, dto);
         log.info(editDto.toString());
         return ResponseEntity.status(HttpStatus.OK).body(editDto);
     }
 
-    @DeleteMapping("/index/deleteTask/{id}")
+    @DeleteMapping("/index/task/{id}")
     public ResponseEntity<TodoDto> deleteTask(@PathVariable Long id){
         TodoDto deleteDto = todoService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);

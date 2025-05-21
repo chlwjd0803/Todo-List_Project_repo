@@ -164,7 +164,7 @@
         }
         console.log(task);
 
-        const url = `/api/todos/today/addTask`;
+        const url = `/api/todos/today/task`;
 
         fetch(url, {
             method: "POST",
@@ -227,7 +227,7 @@ taskItems.forEach(item => {
         }
         console.log(task);
 
-        const url = "/api/todos/index/editTask/" + task.id;
+        const url = "/api/todos/index/task/" + task.id;
 
         fetch(url, {
             method: "PATCH",
@@ -256,7 +256,7 @@ taskItems.forEach(item => {
             return;
         }
 
-        const url = `/api/todos/index/deleteTask/${taskId}`;
+        const url = `/api/todos/index/task/${taskId}`;
         fetch(url, {
             method: "DELETE"
         }).then(response => {

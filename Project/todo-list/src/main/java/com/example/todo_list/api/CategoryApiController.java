@@ -21,7 +21,7 @@ public class CategoryApiController {
     @Autowired
     CategoryService categoryService;
 
-    @PostMapping("/categoryAdd")
+    @PostMapping("/category")
     public ResponseEntity<Category> categoryAdd(@RequestBody CategoryDto dto) {
         Category added = categoryService.categoryAdd(dto);
         return (added != null) ?
@@ -31,20 +31,20 @@ public class CategoryApiController {
 
 
     // 카테고리 아이디가 넘어감, Dto는 넘어온 JSON
-    @PatchMapping("/categoryEdit/{id}")
+    @PatchMapping("/category/{id}")
     public ResponseEntity<CategoryDto> categoryEdit(@PathVariable Long id, @RequestBody CategoryDto dto){
         CategoryDto editDto = categoryService.categoryEdit(id, dto);
 //        log.info(editDto.toString());
         return ResponseEntity.status(HttpStatus.OK).body(editDto);
     }
 
-    @DeleteMapping("/categoryDelete/{id}")
+    @DeleteMapping("/category/{id}")
     public ResponseEntity<CategoryDto> categoryDelete(@PathVariable Long id){
         CategoryDto deleteDto = categoryService.categoryDelete(id);
         return ResponseEntity.status(HttpStatus.OK).body(deleteDto);
     }
 
-    @DeleteMapping("/categoryDelete/all")
+    @DeleteMapping("/category")
     public ResponseEntity<List<CategoryDto>> categoryDeleteAll(){
         List<CategoryDto> deleteDtos = categoryService.categoryDeleteAll();
         return ResponseEntity.status(HttpStatus.OK).body(deleteDtos);

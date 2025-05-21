@@ -213,7 +213,7 @@
         const category = {
             name : document.querySelector("#add-category-name").value
         }
-        const url = "/api/todos/index/categoryAdd"
+        const url = "/api/todos/index/category"
 
         fetch(url, {
             method: "POST",
@@ -266,7 +266,7 @@
             name : newName
         }
 
-        const url = "/api/todos/index/categoryEdit/" + category.id;
+        const url = "/api/todos/index/category/" + category.id;
 
         fetch(url, {
             method: "PATCH",
@@ -300,7 +300,7 @@
 
         // 전체 라디오버튼이 눌린 상태에서는 모두 삭제
         if(cateId === 0){
-            const url = `/api/todos/index/categoryDelete/all`
+            const url = `/api/todos/index/category`
 
             fetch(url, {
                 method: "DELETE"
@@ -313,7 +313,7 @@
         }
         // 아니면 해당 카테고리만 삭제
         else{
-            const url = `/api/todos/index/categoryDelete/${cateId}`;
+            const url = `/api/todos/index/category/${cateId}`;
 
             fetch(url, {
                 method: "DELETE"
@@ -350,7 +350,7 @@
        }
        console.log(task);
 
-       const url = `/api/todos/index/addTask`;
+       const url = `/api/todos/index/task`;
 
        fetch(url, {
            method: "POST",
@@ -414,7 +414,7 @@ taskItems.forEach(item => {
         }
         console.log(task);
 
-        const url = "/api/todos/index/editTask/" + task.id;
+        const url = "/api/todos/index/task/" + task.id;
 
         fetch(url, {
             method: "PATCH",
@@ -443,7 +443,7 @@ taskItems.forEach(item => {
             return;
         }
 
-        const url = `/api/todos/index/deleteTask/${taskId}`;
+        const url = `/api/todos/index/task/${taskId}`;
         fetch(url, {
             method: "DELETE"
         }).then(response => {

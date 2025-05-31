@@ -30,4 +30,8 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
             String status, Long webUserId, LocalDate deadline, LocalDate deadline2);
 
     List<Todo> findByStatusAndWebUserIdAndFavorite(String status, Long webUserId, boolean favorite);
+
+    long countByWebUserId(Long webUserId);
+
+    long countByWebUserIdAndStatus(Long webUserId, String status);
 }

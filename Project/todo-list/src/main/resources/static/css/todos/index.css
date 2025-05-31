@@ -341,3 +341,15 @@ nav.navbar {
     color: #e0e0e0;
 }
 
+.dark-mode .task-deadline{
+    color: #aeaeae;
+}
+
+.dark-mode .task-category{
+    color: #aeaeae;
+}
+
+.dark-mode .fa-star{
+    color: #ffffff;
+}
+

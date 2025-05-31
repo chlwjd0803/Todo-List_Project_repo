@@ -1,0 +1,178 @@
+{{>layouts/header}}
+
+<title>마이 페이지</title>
+<style>
+    /* 컨테이너를 두 칼럼으로 배치하기 위한 스타일 */
+    .container {
+        /* 두 칼럼을 충분히 담을 수 있도록 너비를 조절했습니다 */
+        width: 1000px;
+        margin: 50px auto;
+        font-family: "나눔고딕", sans-serif;
+    }
+    .content-wrapper {
+        display: flex;
+        gap: 40px; /* 왼쪽/오른쪽 칼럼 간격 */
+    }
+    .left-section {
+        flex: 1; /* 왼쪽 칼럼 비율 */
+    }
+    .right-section {
+        flex: 1; /* 오른쪽 칼럼 비율 */
+    }
+
+    /* 왼쪽 칼럼 (인사, 진척도, 내 순위) */
+    .left-section h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .progress-section, .rank-section {
+        margin-top: 30px;
+    }
+    .progress-section h3,
+    .rank-section h3 {
+        margin-bottom: 12px;
+        color: #333;
+    }
+    .progress-bar {
+        width: 100%;
+        height: 24px;
+        background-color: #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+    .progress-fill {
+        height: 100%;
+        background-color: #4caf50;
+        text-align: center;
+        color: white;
+        line-height: 24px;
+        font-weight: bold;
+    }
+    .rank-number {
+        font-size: 1.5em;
+        color: #ff5722;
+    }
+
+    /* 오른쪽 칼럼 (상위 10명 랭킹) */
+    .top-rank-section h3 {
+        margin-bottom: 12px;
+        color: #333;
+    }
+    .top-rank-section table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+    }
+    .top-rank-section th,
+    .top-rank-section td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: center;
+    }
+    .top-rank-section th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+    .top-rank-section tbody tr:nth-child(odd) {
+        background-color: #fafafa;
+    }
+
+    .dark-mode .top-rank-section th {
+        background-color: #333 !important;
+        color: #ffffff !important;
+        border: 1px solid #444;
+    }
+
+    .dark-mode .top-rank-section td {
+        color: #ffffff !important;
+        border: 1px solid #444;
+    }
+
+    .dark-mode .top-rank-section tbody tr:nth-child(odd) {
+        background-color: #2e2e2e;
+    }
+
+    .dark-mode .top-rank-section tbody tr:nth-child(even) {
+        background-color: #262626;
+    }
+
+    .dark-mode .top-rank-section tbody tr.my-row {
+        background-color: #1f1f1f !important;
+        color: #ffffff !important;
+    }
+
+    .dark-mode .top-rank-section table {
+        background-color: #2b2b2b;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .dark-mode .left-section h2,
+    .dark-mode .progress-section h3,
+    .dark-mode .rank-section h3,
+    .dark-mode .top-rank-section h3 {
+        color: #ffffff !important;
+    }
+
+    .dark-mode .left-section p {
+        color: #ffffff !important;
+    }
+
+
+</style>
+
+<div class="container">
+    <div class="content-wrapper">
+
+        <!-- 왼쪽 칼럼: 인사, 진척도, 내 순위 -->
+        <div class="left-section">
+            <!-- 1) 사용자 이름 표시 -->
+            <h2>안녕하세요, {{username}}님!</h2>
+
+            <!-- 2) 진척도 표시 -->
+            <div class="progress-section">
+                <h3>현재 진척도</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{progress}}%;">
+                        {{progress}}%
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3) 순위 표시 -->
+            <div class="rank-section">
+                <h3>나의 순위</h3>
+                <p>전체 사용자 중 <span class="rank-number">{{rank}}</span>위</p>
+            </div>
+        </div>
+
+        <!-- 오른쪽 칼럼: 상위 10명 랭킹 -->
+        <div class="right-section">
+            <div class="top-rank-section">
+                <h3>상위 10명 랭킹</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>사용자</th>
+                        <th>진척도</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#topUsers}}
+                        <tr>
+                            <td>{{rank}}</td>
+                            <td>{{username}}</td>
+                            <td>{{progress}}%</td>
+                        </tr>
+                    {{/topUsers}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{>layouts/footer}}

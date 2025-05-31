@@ -4,16 +4,23 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.example.todo_list.entity.WebUser;
 
 @Component
 public class JwtUtil {
     // 서명에 사용할 비밀 키 (노출되지 않도록 주의)
-    private final String secretKey = "your-very-secure-secret-key";
+    @Value("${jwt.secret}")
+    private String secretKey;
 
-    // 토큰 만료 시간 (예: 24시간)
-    private final long expirationMs = 86400000;
+    @Value("${jwt.expirationMs}")
+    private long expirationMs;
+    // 토큰 만료 시간
+
+
 
     // 토큰 생성 메서드
     public String generateToken(WebUser user) {

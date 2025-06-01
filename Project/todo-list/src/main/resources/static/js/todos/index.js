@@ -441,7 +441,7 @@ taskItems.forEach(item => {
             alert("작업 이름은 13글자를 초과할 수 없습니다.");
             return;
         }
-        
+
         const task = {
             id : document.querySelector("#edit-task-id").value,
             title : document.querySelector("#edit-task-title").value,

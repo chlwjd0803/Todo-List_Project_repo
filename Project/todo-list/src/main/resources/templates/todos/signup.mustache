@@ -81,7 +81,9 @@
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">이메일 주소</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요"
+                       required pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       title="example@domain.com 형식으로 입력해주세요">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">비밀번호</label>
@@ -104,12 +106,18 @@
             const cpw = document.getElementById("confirmPassword").value;
 
             if(pw.length < 6){
-                alert("비밀번호 길이가 짧습니다.");
+                alert("비밀번호 길이가 짧습니다. 6자 이상으로 기입해주세요.");
                 return;
             }
 
             if(pw !== cpw){
                 alert("비밀번호 확인이 일치하지 않습니다.");
+                return;
+            }
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+            if (!emailRegex.test(document.querySelector("#email").value)) {
+                alert("유효한 이메일 주소를 입력해주세요.");
                 return;
             }
 
@@ -131,7 +139,7 @@
             }).then(response => {
                 const msg = (response.ok) ? "회원가입에 성공했습니다." : "아이디 또는 이메일이 중복되었습니다.";
                 alert(msg);
-                window.location.href = "/todos/login";  // 회원가입 후 로그인페이지로 이동
+                if(response.ok) window.location.href = "/todos/login";  // 회원가입 후 로그인페이지로 이동
                 // window.location.reload();
             });
 

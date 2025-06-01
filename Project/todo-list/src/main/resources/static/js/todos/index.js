@@ -210,6 +210,18 @@
 {
     const cateAddBtn = document.querySelector("#category-add-btn");
     cateAddBtn.addEventListener("click", function() {
+
+        const check = document.querySelector("#add-category-name").value.trim();
+
+        if (!check || check.length === 0){
+            alert("카테고리 이름을 빈 문자로 지정할 수 없습니다.");
+            return;
+        }
+        if (check.length > 13){
+            alert("카테고리 이름은 12자를 초과할 수 없습니다.");
+            return;
+        }
+
         const category = {
             name : document.querySelector("#add-category-name").value
         }
@@ -254,6 +266,10 @@
         }
         if(newName === `전체`){
             alert(`"전체"라는 이름으로 카테고리를 설정할 수 없습니다.`);
+            return;
+        }
+        if(newName.length > 13){
+            alert("카테고리 이름은 12자를 초과할 수 없습니다.");
             return;
         }
         for(let i=0; i < allRadio.length; i++) if(allRadio[i].id === `categoryradio-${newName}`){
@@ -338,6 +354,16 @@
            return;
        }
 
+       const check = document.querySelector("#new-task").value.trim();
+       if (!check || check.length === 0){
+           alert("작업 이름을 비울 수 없습니다.");
+           return;
+       }
+       if (check.length > 13){
+           alert("작업 이름은 12글자를 초과할 수 없습니다");
+           return;
+       }
+
        const deadlineInput = document.querySelector("#deadline-date");
 
        if(!deadlineInput.value || deadlineInput.value === '') deadlineInput.value = null;
@@ -405,6 +431,17 @@ taskItems.forEach(item => {
 {
     const taskEditBtn = document.querySelector("#task-edit-btn");
     taskEditBtn.addEventListener("click", function(){
+        const checkTask = document.querySelector("#edit-task-title").value.trim();
+
+        if(!checkTask || checkTask.length === 0){
+            alert("작업 이름을 비울 수 없습니다.");
+            return;
+        }
+        if(checkTask.length > 13){
+            alert("작업 이름은 13글자를 초과할 수 없습니다.");
+            return;
+        }
+        
         const task = {
             id : document.querySelector("#edit-task-id").value,
             title : document.querySelector("#edit-task-title").value,

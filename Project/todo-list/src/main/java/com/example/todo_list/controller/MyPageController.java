@@ -1,4 +1,4 @@
-package com.example.todo_list.conrtoller;
+package com.example.todo_list.controller;
 
 import com.example.todo_list.dto.MyPageDto;
 import com.example.todo_list.service.MyPageService;

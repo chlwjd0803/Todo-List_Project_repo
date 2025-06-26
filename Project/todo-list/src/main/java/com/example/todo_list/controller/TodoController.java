@@ -1,4 +1,4 @@
-package com.example.todo_list.conrtoller;
+package com.example.todo_list.controller;
 
 import com.example.todo_list.dto.StatusGroup;
 import com.example.todo_list.entity.Category;

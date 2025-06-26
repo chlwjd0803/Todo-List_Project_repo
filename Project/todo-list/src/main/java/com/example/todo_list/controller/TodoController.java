@@ -27,17 +27,17 @@ public class TodoController {
     // 시작화면 테스트중
     @GetMapping("/start")
     public String start(){
-        return "todos/start";
+        return "/todos/start";
     }
 
     @GetMapping("/login")
     public String login(){
-        return "todos/login";
+        return "/todos/login";
     }
 
     @GetMapping("/signup")
     public String signup(){
-        return "todos/signup";
+        return "/todos/signup";
     }
 
 //    @GetMapping("/todos/statistic")
